@@ -37,6 +37,9 @@ class XYBot:
 
         self.enable_private_chat_gpt = main_config['enable_private_chat_gpt']
 
+        # 初始化数据库
+        self.chatroom_db = ChatroomDatabase()
+
     async def message_handler(self, recv) -> None:
         message_type = recv.get('type', -1)
         if message_type == 1:  # 是文本消息
@@ -81,12 +84,39 @@ class XYBot:
             else:
                 recv['atUserList'] = []
 
+           # 检查群组是否存在，如果不存在则创建
+            group_info = self.chatroom_db.get_group_info(recv['from'])
+            if not group_info:
+                group_name = recv.get('signature', {}).get(
+                    'msgsource', {}).get('membercount', '未知群组')
+                self.chatroom_db.create_group(
+                    recv['from'], f"群组({group_name})")
+                logger.info(f"创建新群组: {recv['from']}, 名称: 群组({group_name})")
+
+            # 将群聊消息插入数据库
+            self.chatroom_db.add_message(
+                group_wxid=recv['from'],
+                user_wxid=recv['sender'],
+                username=recv['sender'],  # 假设sender就是用户名，如果有单独的用户名字段，请替换
+                content=recv['content'],
+                msg_type='text'
+            )
+
         else:
             recv['sender'] = recv['fromUser']
             recv['from'] = recv['fromUser']
             recv.pop('fromUser')
 
             recv['atUserList'] = []
+
+            # 将私聊消息插入数据库
+            self.chatroom_db.add_message(
+                group_wxid='private',  # 对于私聊，我们使用'private'作为群组ID
+                user_wxid=recv['sender'],
+                username=recv['sender'],
+                content=recv['content'],
+                msg_type='text'
+            )
 
         logger.info(f"[收到文本消息]:{recv}")
 
