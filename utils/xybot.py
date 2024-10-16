@@ -88,12 +88,11 @@ class XYBot:
 
            # 检查群组是否存在，如果不存在则创建
             group_info = self.chatroom_db.get_group_info(recv['from'])
-            if not group_info:
-                group_name = recv.get('signature', {}).get(
-                    'msgsource', {}).get('membercount', '未知群组')
-                self.chatroom_db.create_group(
-                    recv['from'], f"群组({group_name})")
-                logger.info(f"创建新群组: {recv['from']}, 名称: 群组({group_name})")
+        if not group_info:
+            group_name = recv.get('signature', {}).get('msgsource', {}).get('membercount', '未知群组')
+            self.chatroom_db.create_group(recv['from'], f"群组({group_name})")
+            logger.info(f"创建新群组: {recv['from']}, 名称: 群组({group_name})")
+
 
             # 将群聊消息插入数据库
             self.chatroom_db.add_message(

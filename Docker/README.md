@@ -421,4 +421,8 @@ sudo docker-compose build
 sudo docker-compose up -d
 # 前台运行
 sudo docker-compose up
+
+
+# 编辑文件
+ sudo docker exec -it W3Bot /bin/bash
 ```
