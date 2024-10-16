@@ -23,6 +23,7 @@ class PluginManager:
             config = yaml.safe_load(f.read())
 
         self.excluded_plugins = config["excluded_plugins"]
+        logger.info("管理员: ", config["admins"])
 
     def refresh_keywords(self):
         self.keywords.clear()
