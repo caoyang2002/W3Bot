@@ -77,8 +77,7 @@ class ChatroomDatabase:
                 WHERE GROUP_WXID=? AND USER_WXID=?
             """, (username, content, timestamp, msg_type, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已添加消息: {group_wxid}, {
-                        user_wxid}, {username}")
+            logger.info(f"[聊天室数据库] 已添加消息: {group_wxid}, {user_wxid}, {username}")
         finally:
             cursor.close()
 
@@ -109,8 +108,7 @@ class ChatroomDatabase:
             cursor.execute(
                 "UPDATE CHATROOMDATA SET IS_WHITELIST=? WHERE GROUP_WXID=? AND USER_WXID=?", (status, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已设置白名单状态: {
-                        group_wxid}, {user_wxid}, {status}")
+            logger.info(f"[聊天室数据库] 已设置白名单状态: {group_wxid}, {user_wxid}, {status}")
         finally:
             cursor.close()
 
@@ -124,8 +122,7 @@ class ChatroomDatabase:
             cursor.execute(
                 "UPDATE CHATROOMDATA SET IS_BLACKLIST=? WHERE GROUP_WXID=? AND USER_WXID=?", (status, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已设置黑名单状态: {
-                        group_wxid}, {user_wxid}, {status}")
+            logger.info(f"[聊天室数据库] 已设置黑名单状态: {group_wxid}, {user_wxid}, {status}")
         finally:
             cursor.close()
 
@@ -139,8 +136,7 @@ class ChatroomDatabase:
             cursor.execute(
                 "UPDATE CHATROOMDATA SET IS_WARNED=? WHERE GROUP_WXID=? AND USER_WXID=?", (status, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已设置警告状态: {group_wxid}, {
-                        user_wxid}, {status}")
+            logger.info(f"[聊天室数据库] 已设置警告状态: {group_wxid}, {user_wxid}, {status}")
         finally:
             cursor.close()
 
@@ -154,8 +150,7 @@ class ChatroomDatabase:
             cursor.execute("UPDATE CHATROOMDATA SET BOT_CONFIDENCE=? WHERE GROUP_WXID=? AND USER_WXID=?",
                            (confidence, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已更新机器人置信度: {group_wxid}, {
-                        user_wxid}, {confidence}")
+            logger.info(f"[聊天室数据库] 已更新机器人置信度: {group_wxid}, {user_wxid}, {confidence}")
         finally:
             cursor.close()
 
@@ -166,11 +161,9 @@ class ChatroomDatabase:
         cursor = self.database.cursor()
         try:
             self._check_user(group_wxid, user_wxid)
-            cursor.execute(f"UPDATE CHATROOMDATA SET {
-                           field_name}=? WHERE GROUP_WXID=? AND USER_WXID=?", (value, group_wxid, user_wxid))
+            cursor.execute(f"UPDATE CHATROOMDATA SET {field_name}=? WHERE GROUP_WXID=? AND USER_WXID=?", (value, group_wxid, user_wxid))
             self.database.commit()
-            logger.info(f"[聊天室数据库] 已更新额外字段 {field_name}: {
-                        group_wxid}, {user_wxid}, {value}")
+            logger.info(f"[聊天室数据库] 已更新额外字段 {field_name}: {group_wxid}, {user_wxid}, {value}")
         finally:
             cursor.close()
 

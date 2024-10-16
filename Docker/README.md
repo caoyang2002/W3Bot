@@ -410,6 +410,15 @@ docker restart wechat-service-xybot
 
 您想尝试哪种方法来重启服务？如果您遇到任何问题或需要进一步的解释，请告诉我。
 
+# 构建
+
 ```bash
+# 运行前先构建 -d 表示后太运行
+sudo docker-compose up --build -d
+# 构建而不运行
+sudo docker-compose build
+# 后台运行
+sudo docker-compose up -d
+# 前台运行
 sudo docker-compose up
 ```
