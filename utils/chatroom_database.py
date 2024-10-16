@@ -15,10 +15,6 @@ class ChatroomDatabase:
             logger.warning("检测到聊天室数据库不存在，正在创建数据库")
             conn = sqlite3.connect("chatroomdata.db")
             c = conn.cursor()
-            c.execute("""CREATE TABLE GROUPINFO (
-                GROUP_WXID TEXT PRIMARY KEY,
-                GROUP_NAME TEXT
-            )""")
             c.execute("""CREATE TABLE CHATROOMDATA (
                 GROUP_WXID TEXT,
                 USER_WXID TEXT,
@@ -32,9 +28,7 @@ class ChatroomDatabase:
                 IS_BLACKLIST INT,
                 IS_WARNED INT,
                 BOT_CONFIDENCE REAL,
-                DAILY_MESSAGE_COUNT INT,
-                PRIMARY KEY (GROUP_WXID, USER_WXID),
-                FOREIGN KEY (GROUP_WXID) REFERENCES GROUPINFO(GROUP_WXID)
+                PRIMARY KEY (GROUP_WXID, USER_WXID)
             )""")
             conn.commit()
             c.close()
@@ -53,72 +47,6 @@ class ChatroomDatabase:
         except Exception as error:
             logger.error(error)
 
-    # 群组管理方法
-    def create_group(self, group_wxid, group_name):
-        return self._execute_in_queue(self._create_group, group_wxid, group_name)
-
-    def _create_group(self, group_wxid, group_name):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute("INSERT INTO GROUPINFO (GROUP_WXID, GROUP_NAME) VALUES (?, ?)",
-                           (group_wxid, group_name))
-            self.database.commit()
-            logger.info(f"[聊天室数据库] 已创建群组: {group_wxid}, {group_name}")
-        finally:
-            cursor.close()
-
-    def update_group_name(self, group_wxid, new_group_name):
-        return self._execute_in_queue(self._update_group_name, group_wxid, new_group_name)
-
-    def _update_group_name(self, group_wxid, new_group_name):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute(
-                "UPDATE GROUPINFO SET GROUP_NAME=? WHERE GROUP_WXID=?", (new_group_name, group_wxid))
-            self.database.commit()
-            logger.info(f"[聊天室数据库] 已更新群组名称: {group_wxid}, {new_group_name}")
-        finally:
-            cursor.close()
-
-    def delete_group(self, group_wxid):
-        return self._execute_in_queue(self._delete_group, group_wxid)
-
-    def _delete_group(self, group_wxid):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute(
-                "DELETE FROM GROUPINFO WHERE GROUP_WXID=?", (group_wxid,))
-            cursor.execute(
-                "DELETE FROM CHATROOMDATA WHERE GROUP_WXID=?", (group_wxid,))
-            self.database.commit()
-            logger.info(f"[聊天室数据库] 已删除群组及其所有数据: {group_wxid}")
-        finally:
-            cursor.close()
-
-    def get_group_info(self, group_wxid):
-        return self._execute_in_queue(self._get_group_info, group_wxid)
-
-    def _get_group_info(self, group_wxid):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute(
-                "SELECT * FROM GROUPINFO WHERE GROUP_WXID=?", (group_wxid,))
-            return cursor.fetchone()
-        finally:
-            cursor.close()
-
-    def get_all_groups(self):
-        return self._execute_in_queue(self._get_all_groups)
-
-    def _get_all_groups(self):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute("SELECT * FROM GROUPINFO")
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-
-    # 用户管理方法
     def _check_user(self, group_wxid, user_wxid):
         cursor = self.database.cursor()
         try:
@@ -128,8 +56,8 @@ class ChatroomDatabase:
                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 cursor.execute("""
                     INSERT INTO CHATROOMDATA 
-                    (GROUP_WXID, USER_WXID, JOIN_TIME, NICKNAME_CHANGE_COUNT, IS_WHITELIST, IS_BLACKLIST, IS_WARNED, BOT_CONFIDENCE, DAILY_MESSAGE_COUNT)
-                    VALUES (?, ?, ?, 0, 0, 0, 0, 0.0, 0)
+                    (GROUP_WXID, USER_WXID, JOIN_TIME, NICKNAME_CHANGE_COUNT, IS_WHITELIST, IS_BLACKLIST, IS_WARNED, BOT_CONFIDENCE)
+                    VALUES (?, ?, ?, 0, 0, 0, 0, 0.0)
                 """, (group_wxid, user_wxid, current_time))
                 self.database.commit()
         finally:
@@ -145,7 +73,7 @@ class ChatroomDatabase:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             cursor.execute("""
                 UPDATE CHATROOMDATA 
-                SET USERNAME=?, MESSAGE_CONTENT=?, MESSAGE_TIMESTAMP=?, MESSAGE_TYPE=?, DAILY_MESSAGE_COUNT = DAILY_MESSAGE_COUNT + 1
+                SET USERNAME=?, MESSAGE_CONTENT=?, MESSAGE_TIMESTAMP=?, MESSAGE_TYPE=? 
                 WHERE GROUP_WXID=? AND USER_WXID=?
             """, (username, content, timestamp, msg_type, group_wxid, user_wxid))
             self.database.commit()
@@ -231,30 +159,18 @@ class ChatroomDatabase:
         finally:
             cursor.close()
 
-    def get_user_stats(self, user_wxid):
-        return self._execute_in_queue(self._get_user_stats, user_wxid)
+    def update_extra_field(self, group_wxid, user_wxid, field_name, value):
+        return self._execute_in_queue(self._update_extra_field, group_wxid, user_wxid, field_name, value)
 
-    def _get_user_stats(self, user_wxid):
+    def _update_extra_field(self, group_wxid, user_wxid, field_name, value):
         cursor = self.database.cursor()
         try:
-            cursor.execute("""
-                SELECT GROUP_WXID, NICKNAME_CHANGE_COUNT, DAILY_MESSAGE_COUNT
-                FROM CHATROOMDATA
-                WHERE USER_WXID=?
-            """, (user_wxid,))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-
-    def reset_daily_message_count(self):
-        return self._execute_in_queue(self._reset_daily_message_count)
-
-    def _reset_daily_message_count(self):
-        cursor = self.database.cursor()
-        try:
-            cursor.execute("UPDATE CHATROOMDATA SET DAILY_MESSAGE_COUNT = 0")
+            self._check_user(group_wxid, user_wxid)
+            cursor.execute(f"UPDATE CHATROOMDATA SET {
+                           field_name}=? WHERE GROUP_WXID=? AND USER_WXID=?", (value, group_wxid, user_wxid))
             self.database.commit()
-            logger.info("[聊天室数据库] 已重置所有用户的每日消息计数")
+            logger.info(f"[聊天室数据库] 已更新额外字段 {field_name}: {
+                        group_wxid}, {user_wxid}, {value}")
         finally:
             cursor.close()
 
