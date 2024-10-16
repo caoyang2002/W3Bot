@@ -2,6 +2,8 @@
 #
 #  This program is licensed under the GNU General Public License v3.0.
 
+# 个人聊天
+
 import yaml
 from loguru import logger
 from openai import AsyncOpenAI
@@ -31,14 +33,16 @@ class PrivateChatGpt:
         self.gpt_max_token = main_config["gpt_max_token"]  # gpt 最大token
         self.gpt_temperature = main_config["gpt_temperature"]  # gpt 温度
 
-        self.private_chat_gpt_price = main_config["private_chat_gpt_price"]  # 私聊gpt使用价格（单次）
+        # 私聊gpt使用价格（单次）
+        self.private_chat_gpt_price = main_config["private_chat_gpt_price"]
         self.dialogue_count = main_config["dialogue_count"]  # 保存的对话轮数
         self.clear_dialogue_keyword = main_config["clear_dialogue_keyword"]
 
         sensitive_words_path = "sensitive_words.yml"  # 加载敏感词yml
         with open(sensitive_words_path, "r", encoding="utf-8") as f:  # 读取设置
             sensitive_words_config = yaml.safe_load(f.read())
-        self.sensitive_words = sensitive_words_config["sensitive_words"]  # 敏感词列表
+        # 敏感词列表
+        self.sensitive_words = sensitive_words_config["sensitive_words"]
 
         self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人
 
@@ -66,12 +70,14 @@ class PrivateChatGpt:
                 self.bot.send_text_msg(wxid, out_message)
                 logger.info(f'[发送信息]{out_message}| [发送到] {wxid}')
             else:
-                gpt_answer = await self.chatgpt(wxid, gpt_request_message)  # 调用chatgpt函数
+                # 调用chatgpt函数
+                gpt_answer = await self.chatgpt(wxid, gpt_request_message)
                 if gpt_answer[0]:  # 如果没有错误
                     self.bot.send_text_msg(wxid, gpt_answer[1])  # 发送回答
                     logger.info(f'[发送信息]{gpt_answer[1]}| [发送到] {wxid}')
                     if wxid not in self.admins or not self.db.get_whitelist(wxid):
-                        self.db.add_points(wxid, -self.private_chat_gpt_price)  # 扣除积分，管理员不扣
+                        self.db.add_points(
+                            wxid, -self.private_chat_gpt_price)  # 扣除积分，管理员不扣
                 else:
                     out_message = f"出现错误⚠️！\n{gpt_answer[1]}"  # 如果有错误，发送错误信息
                     self.bot.send_text_msg(wxid, out_message)
@@ -81,9 +87,11 @@ class PrivateChatGpt:
             logger.info(f'[发送信息]{error}| [发送到] {wxid}')
 
     async def chatgpt(self, wxid: str, message: str):  # 这个函数请求了openai的api
-        request_content = self.compose_gpt_dialogue_request_content(wxid, message)  # 构成对话请求内容，返回一个包含之前对话的列表
+        request_content = self.compose_gpt_dialogue_request_content(
+            wxid, message)  # 构成对话请求内容，返回一个包含之前对话的列表
 
-        client = AsyncOpenAI(api_key=self.openai_api_key, base_url=self.openai_api_base)
+        client = AsyncOpenAI(api_key=self.openai_api_key,
+                             base_url=self.openai_api_base)
         try:
             chat_completion = await client.chat.completions.create(
                 messages=request_content,
@@ -93,7 +101,8 @@ class PrivateChatGpt:
             )  # 调用openai api
 
             self.save_gpt_dialogue_request_content(wxid, request_content,
-                                                   chat_completion.choices[0].message.content)  # 保存对话请求与回答内容
+                                                   # 保存对话请求与回答内容
+                                                   chat_completion.choices[0].message.content)
             return True, chat_completion.choices[0].message.content  # 返回对话回答内容
         except Exception as error:
             return False, error
@@ -105,17 +114,22 @@ class PrivateChatGpt:
             init_data = {"data": []}
             json_data = init_data
 
-        previous_dialogue = json_data['data'][self.dialogue_count * -2:]  # 获取指定轮数的对话，乘-2是因为一轮对话包含了1个请求和1个答复
-        request_content = [{"role": "system", "content": "You are a helpful assistant that says things in plain text."}]
+        # 获取指定轮数的对话，乘-2是因为一轮对话包含了1个请求和1个答复
+        previous_dialogue = json_data['data'][self.dialogue_count * -2:]
+        request_content = [
+            {"role": "system", "content": "You are a helpful assistant that says things in plain text."}]
         request_content += previous_dialogue  # 将之前的对话加入到api请求内容中
 
-        request_content.append({"role": "user", "content": new_message})  # 将用户新的问题加入api请求内容
+        request_content.append(
+            {"role": "user", "content": new_message})  # 将用户新的问题加入api请求内容
 
         return request_content
 
     def save_gpt_dialogue_request_content(self, wxid: str, request_content: list, gpt_response: str) -> None:
-        request_content.append({"role": "assistant", "content": gpt_response})  # 将gpt回答加入到api请求内容
-        request_content = request_content[self.dialogue_count * -2:]  # 将列表切片以符合指定的对话轮数，乘-2是因为一轮对话包含了1个请求和1个答复
+        request_content.append(
+            {"role": "assistant", "content": gpt_response})  # 将gpt回答加入到api请求内容
+        # 将列表切片以符合指定的对话轮数，乘-2是因为一轮对话包含了1个请求和1个答复
+        request_content = request_content[self.dialogue_count * -2:]
 
         json_data = {"data": request_content}  # 构成保存需要的json数据
         self.db.save_private_gpt_data(wxid, json_data)  # 保存到数据库中

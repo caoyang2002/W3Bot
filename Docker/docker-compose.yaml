@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   W3Bot:
-    image: 'henryxiaoyang/w3bot:latest'
+    image: 'henryxiaoyang/xybot:latest'
     restart: unless-stopped
     container_name: 'W3Bot'
     environment:
