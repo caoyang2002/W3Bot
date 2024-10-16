@@ -2,7 +2,10 @@ version: '3.3'
 
 services:
   W3Bot:
-    image: 'caoyang2002/w3bot:latest'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: 'caoyang2002/w3bot:latest'
     restart: unless-stopped
     container_name: 'W3Bot'
     environment:
