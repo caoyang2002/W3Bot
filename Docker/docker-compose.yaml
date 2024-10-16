@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  W3Bot:
+  w3bot:
     build:
       context: .
       dockerfile: Dockerfile
