@@ -1,21 +1,37 @@
-# XYBot 微信机器人
+# W3Bot 微信机器人
+
+> 本机器人 frok 自 [XYBot](https://github.com/HenryXiaoYang/XYBot)
 
 <p align="center">
-    <img alt="XYBot微信机器人logo" width="240" src="https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/logo/xybot_logo.png?raw=true">
+    <img alt="XYBot微信机器人logo" width="240" src="/docs/images/w3bot.png">
 </p>
 
-XYBot是一个可运行于Linux和Windows的基于Hook的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
+# 面对 Web3 治理的优化
 
-XYBot提供了多种功能，包括获取天气🌤️、获取新闻📰、ChatGPT聊天🗣️、Hypixel玩家查询🎮、随机图片📷、随机链接🔗、随机群成员👥、五子棋♟️、签到✅、查询积分📊、积分榜🏆、积分转送💰、积分抽奖🎁、积分红包🧧等。🎉
+## 机器人清理
 
-XYBot拥有独立的经济系统，其中基础货币称为”积分“。💰
+1. 使用行为特征分析，检测机器人，超出阈值者第一次警告，第二次列入监控名单，第三次列入黑名单
 
-XYBot还提供了管理员功能，包括修改积分💰、修改白名单📝、重置签到状态🔄、获取机器人通讯录📚、热加载/卸载/重载插件🔄等。🔒
+2. 本机器人会保留非白名单用户行为特征
 
-XYBot详细的部署教程可以在项目的Wiki中找到。📚 同时，XYBot还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
+3. 知识库问答
 
-✅高度可自定义！
-✅支持自我编写插件！
+---
+
+# 原文档介绍
+
+XYBot 是一个可运行于 Linux 和 Windows 的基于 Hook 的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
+
+XYBot 提供了多种功能，包括获取天气 🌤️、获取新闻 📰、ChatGPT 聊天 🗣️、Hypixel 玩家查询 🎮、随机图片 📷、随机链接 🔗、随机群成员 👥、五子棋 ♟️、签到 ✅、查询积分 📊、积分榜 🏆、积分转送 💰、积分抽奖 🎁、积分红包 🧧 等。🎉
+
+XYBot 拥有独立的经济系统，其中基础货币称为”积分“。💰
+
+XYBot 还提供了管理员功能，包括修改积分 💰、修改白名单 📝、重置签到状态 🔄、获取机器人通讯录 📚、热加载/卸载/重载插件 🔄 等。🔒
+
+XYBot 详细的部署教程可以在项目的 Wiki 中找到。📚 同时，XYBot 还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
+
+✅ 高度可自定义！
+✅ 支持自我编写插件！
 
 <p align="center">
     <a href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-red.svg" alt="GPLv3 License"></a>
@@ -25,42 +41,42 @@ XYBot详细的部署教程可以在项目的Wiki中找到。📚 同时，XYBot�
 
 ## 公告
 
-由于需要频繁的更新维护，XYBot版本号格式将会发生变化，v0.0.7后面的版本号将会按照以下格式进行更新：
+由于需要频繁的更新维护，XYBot 版本号格式将会发生变化，v0.0.7 后面的版本号将会按照以下格式进行更新：
 
-v大版本.功能版本.Bug修复版本
+v 大版本.功能版本.Bug 修复版本
 
 例如：
 
-- v1.0.1是v1.0.0的Bug修复版本
-- v1.1.0是v1.0.0的功能版本
-- v1.1.1是v1.1.0的Bug修复版本
+- v1.0.1 是 v1.0.0 的 Bug 修复版本
+- v1.1.0 是 v1.0.0 的功能版本
+- v1.1.1 是 v1.1.0 的 Bug 修复版本
 
 ## 功能列表
 
 用户功能:
 
-- 获取天气🌤️
-- 获取新闻📰
+- 获取天气 🌤️
+- 获取新闻 📰
 - ChatGPT🗣️
-- Hypixel玩家查询🎮
-- 随机图图📷
-- 随机链接🔗
-- 五子棋♟️
-- 签到✅
-- 查询积分📊
-- 积分榜🏆
-- 积分转送💰
-- 积分抽奖🎁
-- 积分红包🧧
+- Hypixel 玩家查询 🎮
+- 随机图图 📷
+- 随机链接 🔗
+- 五子棋 ♟️
+- 签到 ✅
+- 查询积分 📊
+- 积分榜 🏆
+- 积分转送 💰
+- 积分抽奖 🎁
+- 积分红包 🧧
 
 管理员功能:
 
-- 修改积分💰
-- 修改白名单📝
-- 重置签到状态🔄
-- 获取机器人通讯录📚
-- 热加载/卸载/重载插件🔄
-- 查看已加载插件ℹ️
+- 修改积分 💰
+- 修改白名单 📝
+- 重置签到状态 🔄
+- 获取机器人通讯录 📚
+- 热加载/卸载/重载插件 🔄
+- 查看已加载插件 ℹ️
 
 ## XYBot 文档 📄
 
@@ -80,7 +96,7 @@ ChatGPT
 ![ChatGPT Example 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gpt3.png?raw=true)
 ![ChatGPT Example 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gpt4.png?raw=true)
 
-私聊ChatGPT
+私聊 ChatGPT
 ![Private ChatGPT Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/private_gpt.png?raw=true)
 
 天气查询
@@ -89,19 +105,19 @@ ChatGPT
 五子棋
 ![Gomoku Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gomoku.png?raw=true)
 
-## 自我编写插件🧑‍💻
+## 自我编写插件 🧑‍💻
 
 请参考模板插件：
 
-**[🔗模板插件仓库️](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)**
+**[🔗 模板插件仓库️](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)**
 
-## XYBot交流群
+## XYBot 交流群
 
 <p align="center">
     <img alt="XYBot二维码" width="360" src="https://file.yangres.com/xybot-wechatgroup.jpeg">
 </p>
 
-[**🔗图片会被缓存，点我查看最新二维码**](https://file.yangres.com/xybot-wechatgroup.jpeg)
+[**🔗 图片会被缓存，点我查看最新二维码**](https://file.yangres.com/xybot-wechatgroup.jpeg)
 
 ## 捐赠
 
@@ -112,7 +128,7 @@ ChatGPT
 
 ## FAQ❓❓❓
 
-#### ARM架构能不能运行?🤔️
+#### ARM 架构能不能运行?🤔️
 
 不行
 
@@ -122,21 +138,21 @@ ChatGPT
 
 #### 最长能运行多久？🤔️
 
-XYBot内置了防微信自动退出登录功能，可以保持长时间运行。
+XYBot 内置了防微信自动退出登录功能，可以保持长时间运行。
 
 ## 特别感谢
 
-https://github.com/ChisBread/wechat-box/ 感谢提供了Docker容器相关的信息！
+https://github.com/ChisBread/wechat-box/ 感谢提供了 Docker 容器相关的信息！
 
-https://github.com/sayue2019/wechat-service-allin 感谢提供了Docker容器相关的信息！
+https://github.com/sayue2019/wechat-service-allin 感谢提供了 Docker 容器相关的信息！
 
-https://github.com/cixingguangming55555/wechat-bot v0.0.7之前用的Hook，非常好用，感谢！
+https://github.com/cixingguangming55555/wechat-bot v0.0.7 之前用的 Hook，非常好用，感谢！
 
-https://github.com/ttttupup/wxhelper/ v0.0.7及之后用的Hook，功能很多，感谢！
+https://github.com/ttttupup/wxhelper/ v0.0.7 及之后用的 Hook，功能很多，感谢！
 
-https://github.com/miloira/wxhook 感谢这个项目提供了Windows环境下微信的启动与注入Hook的工具！
+https://github.com/miloira/wxhook 感谢这个项目提供了 Windows 环境下微信的启动与注入 Hook 的工具！
 
-https://github.com/nefarius/Injector 感谢这个项目提供了Docker环境下微信的注入Hook的工具！
+https://github.com/nefarius/Injector 感谢这个项目提供了 Docker 环境下微信的注入 Hook 的工具！
 
 https://github.com/lich0821 感谢这个项目的作者写的微信版本号修复代码！参考了下，非常感谢！
 
@@ -163,4 +179,3 @@ https://github.com/lich0821 感谢这个项目的作者写的微信版本号修�
       />
     </picture>
 </p>
-

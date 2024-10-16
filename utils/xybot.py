@@ -53,11 +53,13 @@ class XYBot:
         elif message_type == 49:  # 很多消息都用了这个type，content里大量使用了xml，需要进一步判断
             await self.xml_message_handler(recv)
         else:  # 其他消息，type不存在或者还未知干啥用的
+            print(message_type)
             logger.info(f"[其他消息] {recv}")
 
     async def text_message_handler(self, recv) -> None:
         # 预处理消息
-        recv['signature'] = xmltodict.parse(recv['signature'].replace('\n', '').replace('\t', ''))
+        recv['signature'] = xmltodict.parse(
+            recv['signature'].replace('\n', '').replace('\t', ''))
 
         if recv['fromUser'].endswith('@chatroom'):
             recv['fromType'] = 'chatroom'
@@ -71,7 +73,8 @@ class XYBot:
             recv['from'] = recv['fromUser']
             recv.pop('fromUser')
 
-            recv['atUserList'] = recv.get('signature', {}).get('msgsource', {}).get('atuserlist', '')
+            recv['atUserList'] = recv.get('signature', {}).get(
+                'msgsource', {}).get('atuserlist', '')
             if recv['atUserList']:
                 recv['atUserList'] = list(recv['atUserList'].split(','))
             else:
@@ -113,7 +116,8 @@ class XYBot:
             # 私聊GPT，指令优先级大于GPT所以这个if在后面
             elif recv['fromType'] == "friend":
                 if not isinstance(self.enable_private_chat_gpt, bool):
-                    raise Exception('Unknown enable_private_chat_gpt 未知的私聊gpt设置！')
+                    raise Exception(
+                        'Unknown enable_private_chat_gpt 未知的私聊gpt设置！')
                 elif self.enable_private_chat_gpt is True:
                     await asyncio.create_task(private_chat_gpt.run(recv))
                     return
