@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
 function start_xybot() {
-    while :
-    do
-        python3 start.py
-        sleep 10
-    done
+  while :; do
+    python3 start.py
+    sleep 10
+  done
 }
 
-cd /home/app/XYBot || exit
+cd /home/app/W3Bot || exit
 start_xybot &
 wait

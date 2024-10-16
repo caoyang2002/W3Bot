@@ -5,14 +5,14 @@
 1. 构建 Docker 镜像
 
 ```bash
-sudo docker build -t henryxiaoyang/xybot:latest .
+sudo docker build -t caoyang2002/w3bot:latest .
 ```
 
 - `docker build`:
 
   - 这是 Docker 的子命令，用于从 Dockerfile 构建一个新的 Docker 镜像。
 
-- `-t henryxiaoyang/xybot:latest`:
+- `-t caoyang2002/w3bot:latest`:
 
   - `-t` 选项用于给新构建的镜像添加一个标签（tag）。
   - `henryxiaoyang/xybot` 是镜像名称。
@@ -37,7 +37,7 @@ sudo docker build -t henryxiaoyang/xybot:latest .
 
 4. 如果构建成功，新的镜像将被创建并存储在本地 Docker 镜像库中。
 
-5. 新镜像将被标记为 `henryxiaoyang/xybot:latest`。
+5. 新镜像将被标记为 `henryxiaoyang/w3bot:latest`。
 
 6. 如果有同名的旧镜像，它将失去 `latest` 标签，但仍然保留在系统中。
 
@@ -47,7 +47,7 @@ sudo docker build -t henryxiaoyang/xybot:latest .
 - 构建过程可能需要一些时间，取决于 Dockerfile 的复杂度和网络速度（如果需要下载基础镜像或其他资源）。
 - 如果你不是 "henryxiaoyang" Docker Hub 账号的所有者，你可能需要修改镜像名称以匹配你自己的 Docker Hub 用户名。
 
-构建完成后，你可以使用 `docker images` 命令来查看新创建的镜像，或者使用 `docker run henryxiaoyang/xybot:latest` 来运行这个新镜像的容器。
+构建完成后，你可以使用 `docker images` 命令来查看新创建的镜像，或者使用 `docker run henryxiaoyang/w3bot:latest` 来运行这个新镜像的容器。
 
 2. 运行
 
@@ -61,7 +61,6 @@ docker-compose up
 
 ```bash
 docker run henryxiaoyang/xybot:latest
-
 ```
 
 这个命令：
@@ -238,4 +237,179 @@ docker-compose logs
 
 # 停止并删除所有容器
 docker-compose down
+```
+
+# Docker
+
+当然，我可以帮您了解如何删除 Docker 镜像和容器。以下是一些常用的命令：
+
+删除容器：
+
+1. 停止正在运行的容器：
+
+   ```bash
+   sudo docker stop <容器ID或名称>
+   ```
+
+2. 删除容器：
+
+   ```bash
+   sudo docker rm <容器ID或名称>
+   ```
+
+3. 强制删除正在运行的容器：
+
+   ```bash
+   sudo docker rm -f <容器ID或名称>
+   ```
+
+4. 删除所有停止的容器：
+   ```bash
+   sudo docker container prune
+   ```
+
+删除镜像：
+
+1. 删除指定镜像：
+
+   ```bash
+   sudo docker rmi <镜像ID或名称>
+   ```
+
+2. 强制删除镜像（即使有容器正在使用）：
+
+   ```bash
+   sudo docker rmi -f <镜像ID或名称>
+   ```
+
+3. 删除所有未使用的镜像：
+   ```bash
+   sudo docker image prune -a
+   ```
+
+其他有用的命令：
+
+1. 列出所有容器（包括停止的）：
+
+   ```bash
+   sudo docker ps -a
+   ```
+
+2. 列出所有镜像：
+
+   ```bash
+   sudo docker images
+   ```
+
+3. 清理整个系统（删除停止的容器、未使用的网络、悬挂镜像和构建缓存）：
+   ```bash
+   sudo docker system prune
+   ```
+
+使用这些命令时请小心，特别是使用强制删除或批量删除命令时。确保您不会删除重要的数据或正在使用的资源。
+
+如果您想删除特定的容器或镜像，您需要先使用 `docker ps -a` 或 `docker images` 命令来获取它们的 ID 或名称。
+
+是否需要我对任何特定的命令进行更详细的解释？
+
+# 修改 docker 文件
+
+```bash
+sudo docker exec -it W3Bot /bin/bash
+```
+
+# 重启容器
+
+```bash
+docker restart wechat-service-xybot
+```
+
+根据您提供的 docker-compose.yml 文件，我们可以看到您的服务名称是 "w3bot"，容器名称是 "W3Bot"。要重启这个服务，您有几种方法：
+
+1. 使用 docker-compose（推荐）：
+
+   # Restarting Docker Compose Services
+
+   ## Method 1: 使用 docker-compose (Recommended)
+
+   1. Navigate to the directory containing your docker-compose.yml file.
+
+   2. To restart a specific service:
+
+      ```
+      docker-compose restart w3bot
+      ```
+
+   3. To restart all services defined in the docker-compose.yml:
+      ```
+      docker-compose restart
+      ```
+
+   ## Method 2: 使用 docker 命令
+
+   1. To restart by container name:
+      ```
+      docker restart W3Bot
+      ```
+
+   ## Method 3: Stop and Start
+
+   1. Stop the service:
+
+      ```
+      docker-compose stop w3bot
+      ```
+
+   2. Start the service:
+      ```
+      docker-compose start w3bot
+      ```
+
+   ## Method 4: Down and Up (Recreates containers)
+
+   1. Bring down all services:
+
+      ```
+      docker-compose down
+      ```
+
+   2. Bring up all services:
+      ```
+      docker-compose up -d
+      ```
+
+   Note: This method recreates the containers, which might take longer than a simple restart.
+
+   Remember to run these commands in the directory containing your docker-compose.yml file. If you're not in that directory, you'll need to specify the file path:
+
+   ```
+   docker-compose -f /path/to/docker-compose.yml restart w3bot
+   ```
+
+   If you encounter permission issues, you may need to use sudo before these commands.
+
+   我创建了一个指南，详细说明了多种重启 Docker Compose 服务的方法。根据您的具体需求，您可以选择最合适的方法。
+
+2. 使用 Docker 命令：
+   如果您想直接使用 Docker 命令，可以这样做：
+
+   ```
+   sudo docker restart W3Bot
+   ```
+
+3. 停止后重新启动：
+   如果简单的重启没有解决问题，您可以尝试先停止服务，然后再启动：
+   ```
+   sudo docker-compose stop w3bot
+   sudo docker-compose start w3bot
+   ```
+
+请注意，这些命令应该在包含 docker-compose.yml 文件的目录中运行。如果您在其他目录，需要指定 docker-compose.yml 文件的路径。
+
+另外，您的配置中设置了 `restart: unless-stopped`，这意味着容器会在崩溃时自动重启，除非被明确停止。
+
+您想尝试哪种方法来重启服务？如果您遇到任何问题或需要进一步的解释，请告诉我。
+
+```bash
+sudo docker-compose up
 ```
