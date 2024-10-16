@@ -1,21 +1,21 @@
-version: "3.3"
+version: '3.3'
 
 services:
-    xybot:
-        image: "henryxiaoyang/xybot:latest"
-        restart: unless-stopped
-        container_name: "XYBot"
-        environment:
-            WC_AUTO_RESTART: "yes"
-        ports:
-            - "4000:8080"
-        extra_hosts:
-            - "dldir1.qq.com:127.0.0.1"
-        volumes:
-              - "XYBot:/home/app/XYBot/"
-              - "XYBot-wechatfiles:/home/app/WeChat Files/"
-        tty: true
+  W3Bot:
+    image: 'henryxiaoyang/W3Bot:latest'
+    restart: unless-stopped
+    container_name: 'W3Bot'
+    environment:
+      WC_AUTO_RESTART: 'yes'
+    ports:
+      - '4000:8080'
+    extra_hosts:
+      - 'dldir1.qq.com:127.0.0.1'
+    volumes:
+      - 'W3Bot:/home/app/W3Bot/'
+      - 'W3Bot-wechatfiles:/home/app/WeChat Files/'
+    tty: true
 
 volumes:
-    XYBot:
-    XYBot-wechatfiles:
+  W3Bot:
+  W3Bot-wechatfiles:

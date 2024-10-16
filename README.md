@@ -16,6 +16,25 @@
 
 3. 知识库问答
 
+# docker 开发部署
+
+```bash
+# 构建 Docker 镜像
+sudo docker build -t caoyang2002/w3bot:latest .
+
+# 运行 Docker 容器
+docker-compose up
+
+# 交互
+docker exec -it w3bot /bin/bash
+
+# 停止 Docker 容器
+docker-compose down
+
+# 删除 Docker 镜像
+docker rmi -f caoyang2002/w3bot:latest
+```
+
 ---
 
 # 原文档介绍

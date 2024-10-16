@@ -53,7 +53,7 @@ class XYBot:
         elif message_type == 49:  # 很多消息都用了这个type，content里大量使用了xml，需要进一步判断
             await self.xml_message_handler(recv)
         else:  # 其他消息，type不存在或者还未知干啥用的
-            print(message_type)
+            print("[未知的消息类型]", message_type)
             logger.info(f"[其他消息] {recv}")
 
     async def text_message_handler(self, recv) -> None:
