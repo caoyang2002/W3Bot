@@ -21,6 +21,8 @@ class XYBot:
     def __init__(self):
         with open("./main_config.yml", "r", encoding="utf-8") as f:  # 读取设置
             main_config = yaml.safe_load(f.read())
+            logger.info("读取配置文件成功")
+        logger.info("配置信息: ", main_config)
         self.command_prefix = main_config["command_prefix"]  # 命令前缀
         logger.debug(f"指令前缀为(如果是空则不会显示): {self.command_prefix}")
 
