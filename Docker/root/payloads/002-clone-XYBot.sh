@@ -2,4 +2,4 @@
 
 cd /home/app || exit
 git clone https://github.com/caoyang2002/W3Bot.git
-cd XYBot || exit
+cd W3Bot || exit
