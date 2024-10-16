@@ -104,7 +104,7 @@ class ChatroomDatabase:
         finally:
             cursor.close()
 
-    def get_user_data(self, user_wxid):
+    def get_user_data(self, group_wxid,user_wxid):
         return self._execute_in_queue(self._get_user_data, user_wxid)
 
     def _get_user_data(self, user_wxid):
