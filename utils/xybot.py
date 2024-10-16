@@ -10,6 +10,7 @@ import yaml
 from loguru import logger
 
 import pywxdll
+from utils.chatroom_database import ChatroomDatabase
 from utils.plugin_manager import plugin_manager
 from utils.private_chat_gpt import private_chat_gpt
 from utils.singleton import singleton

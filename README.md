@@ -3,8 +3,9 @@
 > 本机器人 frok 自 [XYBot](https://github.com/HenryXiaoYang/XYBot)
 
 <p align="center">
-    <img alt="XYBot微信机器人logo" width="240" src="/docs/images/w3bot.png">
+    <img alt="XYBot微信机器人logo" width="240" src="./docs/images/w3bot.png">
 </p>
+
 
 # 面对 Web3 治理的优化
 
@@ -16,7 +17,7 @@
 
 3. 知识库问答
 
-# docker 开发部署
+# docker 自部署
 
 ```bash
 # 构建 Docker 镜像
@@ -34,6 +35,87 @@ docker-compose down
 # 删除 Docker 镜像
 docker rmi -f caoyang2002/w3bot:latest
 ```
+
+
+
+
+
+# 开发
+
+## Linux 一键部署
+
+### 安装 Docker
+
+装好了可跳过
+
+官方教程链接🔗：
+
+https://docs.docker.com/get-docker/
+
+### 2. 安装 Docker Compose
+
+一样，已装好可跳过
+
+https://docs.docker.com/compose/install/
+
+### 3. 拉取 Docker 镜像
+
+这一步以及后面遇到权限问题请在前面加个 `sudo`。
+
+```bash
+docker pull henryxiaoyang/xybot:latestCopy to clipboardErrorCopied
+```
+
+### 4. 启动容器
+
+指令：
+
+```bash
+docker run -d \
+  --name XYBot \
+  --restart unless-stopped \
+  -e WC_AUTO_RESTART=yes \
+  -p 4000:8080 \
+  --add-host dldir1.qq.com:127.0.0.1 \
+  -v XYBot:/home/app/XYBot/ \
+  -v XYBot-wechatfiles:/home/app/WeChat\ Files/ \
+  -t henryxiaoyang/xybot:latestCopy to clipboardErrorCopied
+```
+
+Docker-compose:
+
+```
+XYBot/Docker/docker-compose.yaml
+version: "3.3"
+
+services:
+    xybot:
+        image: "henryxiaoyang/xybot:latest"
+        restart: unless-stopped
+        container_name: "XYBot"
+        environment:
+            WC_AUTO_RESTART: "yes"
+        ports:
+            - "4000:8080"
+        extra_hosts:
+            - "dldir1.qq.com:127.0.0.1"
+        volumes:
+              - "XYBot:/home/app/XYBot/"
+              - "XYBot-wechatfiles:/home/app/WeChat Files/"
+        tty: true
+
+volumes:
+    XYBot:
+    XYBot-wechatfiles:Copy to clipboardErrorCopied
+```
+
+### 5. 登陆微信
+
+在浏览器中打开 `http://<你的ip地址>:4000/vnc.html` 访问 VNC。
+
+![VNC WeChat Login](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/windows_deployment/vnc_wechat_login.png?raw=true)
+
+扫描微信二维码并登录，登陆后 XYBot 将自动启动。
 
 ---
 
