@@ -24,27 +24,32 @@ class chatroom(PluginInterface):
     async def run(self, recv):
         group_wxid = recv['from'] if recv['fromType'] == 'chatroom' else 'private'
         user_wxid = recv['sender']
-        username = recv.get('senderName', 'Unknown')
-        message_content = recv.get('content', '')
-        message_type = recv.get('type', 'Unknown')
+        username = recv.get('senderName', user_wxid)
+        content = recv.get('content', '')
+        msg_type = recv.get('type', 'Unknown')
 
-        # 添加或更新用户信息
-        self.db.add_or_update_user(group_wxid, user_wxid, username, message_content, message_type)
+        # 检查群组是否存在，如果不存在则创建
+        if recv['fromType'] == 'chatroom':
+            group_info = self.db.get_group_info(group_wxid)
+            if not group_info:
+                group_name = recv.get('signature', {}).get('msgsource', {}).get('membercount', '未知群组')
+                self.db.create_group(group_wxid, f"群组({group_name})")
+                logger.info(f"创建新群组: {group_wxid}, 名称: 群组({group_name})")
+
+        # 添加消息到数据库
+        self.db.add_message(group_wxid, user_wxid, username, content, msg_type)
 
         # 查询用户信息
         user_data = self.db.get_user_data(group_wxid, user_wxid)
 
         if user_data:
             fields = [
-                "群组ID", "用户ID", "用户名", "最后消息内容", "最后消息时间", "最后消息类型",
-                "加入时间", "昵称修改次数", "白名单状态", "黑名单状态", "警告状态", "机器人置信度"
+                "群组ID", "用户ID", "用户名", "最后消息内容", "最后消息时间", "最后消息类型"
             ]
             out_message = "用户信息:\n"
             for i, field in enumerate(fields):
                 if i < len(user_data):
                     value = user_data[i]
-                    if field in ["白名单状态", "黑名单状态", "警告状态"]:
-                        value = "是" if value else "否"
                     out_message += f"{field}: {value}\n"
         else:
             out_message = f"未找到用户 {user_wxid} 的信息。"

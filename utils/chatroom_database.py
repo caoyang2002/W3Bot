@@ -28,13 +28,13 @@ class ChatroomDatabase:
                     MESSAGE_CONTENT TEXT,
                     MESSAGE_TIMESTAMP TEXT,
                     MESSAGE_TYPE TEXT,
-                    JOIN_TIME TEXT,
-                    NICKNAME_CHANGE_COUNT INTEGER,
-                    IS_WHITELIST INTEGER,
-                    IS_BLACKLIST INTEGER,
-                    IS_WARNED INTEGER,
-                    BOT_CONFIDENCE REAL,
                     PRIMARY KEY (GROUP_WXID, USER_WXID)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS GROUPS (
+                    GROUP_WXID TEXT PRIMARY KEY,
+                    GROUP_NAME TEXT
                 )
             """)
             conn.commit()
@@ -46,6 +46,55 @@ class ChatroomDatabase:
         except Exception as error:
             logger.error(f"数据库操作错误: {error}")
             return None
+
+    def get_group_info(self, group_wxid):
+        return self._execute_in_queue(self._get_group_info, group_wxid)
+
+    def _get_group_info(self, group_wxid):
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM GROUPS WHERE GROUP_WXID=?", (group_wxid,))
+                return cursor.fetchone()
+        except sqlite3.Error as e:
+            logger.error(f"获取群组信息时发生SQL错误: {e}")
+            return None
+
+    def create_group(self, group_wxid, group_name):
+        return self._execute_in_queue(self._create_group, group_wxid, group_name)
+
+    def _create_group(self, group_wxid, group_name):
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("INSERT OR REPLACE INTO GROUPS (GROUP_WXID, GROUP_NAME) VALUES (?, ?)", 
+                               (group_wxid, group_name))
+                conn.commit()
+            logger.info(f"群组已创建或更新: {group_wxid}, {group_name}")
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"创建群组时发生SQL错误: {e}")
+            return False
+
+    def add_message(self, group_wxid, user_wxid, username, content, msg_type):
+        return self._execute_in_queue(self._add_message, group_wxid, user_wxid, username, content, msg_type)
+
+    def _add_message(self, group_wxid, user_wxid, username, content, msg_type):
+        try:
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT OR REPLACE INTO CHATROOMDATA 
+                    (GROUP_WXID, USER_WXID, USERNAME, MESSAGE_CONTENT, MESSAGE_TIMESTAMP, MESSAGE_TYPE)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (group_wxid, user_wxid, username, content, current_time, msg_type))
+                conn.commit()
+            logger.info(f"消息已添加: {group_wxid}, {user_wxid}")
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"添加消息时发生SQL错误: {e}")
+            return False
 
     def get_user_data(self, group_wxid, user_wxid):
         return self._execute_in_queue(self._get_user_data, group_wxid, user_wxid)
@@ -66,38 +115,3 @@ class ChatroomDatabase:
         except sqlite3.Error as e:
             logger.error(f"获取用户数据时发生SQL错误: {e}")
             return None
-
-    def add_or_update_user(self, group_wxid, user_wxid, username, message_content, message_type):
-        return self._execute_in_queue(self._add_or_update_user, group_wxid, user_wxid, username, message_content, message_type)
-
-    def _add_or_update_user(self, group_wxid, user_wxid, username, message_content, message_type):
-        try:
-            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            with sqlite3.connect(self.db_path) as conn:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT OR REPLACE INTO CHATROOMDATA 
-                    (GROUP_WXID, USER_WXID, USERNAME, MESSAGE_CONTENT, MESSAGE_TIMESTAMP, MESSAGE_TYPE, JOIN_TIME, 
-                     NICKNAME_CHANGE_COUNT, IS_WHITELIST, IS_BLACKLIST, IS_WARNED, BOT_CONFIDENCE)
-                    VALUES (?, ?, ?, ?, ?, ?, 
-                            COALESCE((SELECT JOIN_TIME FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), ?),
-                            COALESCE((SELECT NICKNAME_CHANGE_COUNT FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), 0),
-                            COALESCE((SELECT IS_WHITELIST FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), 0),
-                            COALESCE((SELECT IS_BLACKLIST FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), 0),
-                            COALESCE((SELECT IS_WARNED FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), 0),
-                            COALESCE((SELECT BOT_CONFIDENCE FROM CHATROOMDATA WHERE GROUP_WXID=? AND USER_WXID=?), 0.0))
-                """, (group_wxid, user_wxid, username, message_content, current_time, message_type,
-                      group_wxid, user_wxid, current_time,
-                      group_wxid, user_wxid,
-                      group_wxid, user_wxid,
-                      group_wxid, user_wxid,
-                      group_wxid, user_wxid,
-                      group_wxid, user_wxid))
-                conn.commit()
-            logger.info(f"用户数据已添加或更新: {group_wxid}, {user_wxid}")
-            return True
-        except sqlite3.Error as e:
-            logger.error(f"添加或更新用户数据时发生SQL错误: {e}")
-            return False
-
-    # 可以根据需要添加更多方法，如更新特定字段、删除用户等
