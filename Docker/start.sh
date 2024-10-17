@@ -54,18 +54,18 @@ check_command_status
 
 # 删除相关容器
 echo "删除相关容器..."
-sudo docker ps -a --format '{{.ID}}\t{{.Names}}' | grep -E 'docker-w3bot|W3Bot' | awk '{print $1}' | xargs -r docker rm -f
+sudo docker ps -a --format '{{.ID}}\t{{.Names}}' | grep -E 'docker-w3bot|W3Bot' | awk '{print $1}' | xargs -r sudo docker rm -f
 check_command_status
 
 # 删除相关镜像
 echo "删除相关镜像..."
-sudo docker images --format '{{.ID}}\t{{.Repository}}' | grep -E 'docker-w3bot|W3Bot' | awk '{print $1}' | xargs -r docker rmi
+sudo docker images --format '{{.ID}}\t{{.Repository}}' | grep -E 'docker-w3bot|W3Bot' | awk '{print $1}' | xargs -r sudo docker rmi
 check_command_status
 
 
 # 删除相关卷
 echo "删除相关卷..."
-sudo docker volume ls -q --filter name=W3Bot | xargs -r docker volume rm
+sudo docker volume ls -q --filter name=W3Bot | xargs -r sudo docker volume rm
 check_command_status
 
 # 清理构建缓存
