@@ -1,11 +1,9 @@
 name: 构建镜像并推送到 Docker Hub
 on: push
-
 jobs:
   build-docker:
     name: 构建到 Docker Image
     runs-on: ubuntu-latest
-
     steps:
       - name: 读取仓库内容
         uses: actions/checkout@v4
@@ -16,8 +14,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: 构建镜像并推送到 Docker Hub
         uses: docker/build-push-action@v5
         with:
+          context: ./Docker
+          file: ./Docker/Dockerfile
           push: true
           tags: caoyang2002/w3bot:latest
