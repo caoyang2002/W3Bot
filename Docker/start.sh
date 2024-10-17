@@ -74,7 +74,7 @@ sudo docker builder prune -af
 check_command_status
 
 # 重新构建镜像，禁用缓存
-echo "重新构建镜像，禁用缓存..."
+echo "构建镜像，禁用缓存..."
 sudo docker build --no-cache -t caoyang2002/w3bot:latest .
 check_command_status
 
@@ -85,11 +85,6 @@ check_command_status
 
 echo "再次检查 Docker 镜像状态"
 sudo docker images
-check_command_status
-
-# 构建新的镜像
-echo "构建 caoyang2002/w3bot:latest 镜像..."
-sudo docker build -t caoyang2002/w3bot:latest .
 check_command_status
 
 echo "已构建镜像: "

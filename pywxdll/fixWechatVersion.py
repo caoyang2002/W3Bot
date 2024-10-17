@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.expanduser('~/.local/lib/python3.9/site-packages'))
 from pymem import Pymem
 
 ADDRS = [0x3A70FD4, 0x3A878DC, 0x3AA0508, 0x3AC85F0, 0x3ACF3D8, 0x3AD1908]
