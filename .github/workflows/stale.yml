@@ -1,31 +1,23 @@
-# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/actions/stale
-name: Mark stale issues and pull requests
-
-on:
-  schedule:
-  - cron: '0 12 * * *'
+name: 构建镜像并推送到 Docker Hub
+on: push
 
 jobs:
-  stale:
-
+  build-docker:
+    name: 构建到 Docker Image
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
 
     steps:
-    - uses: actions/stale@v5
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        days-before-stale: 30
-        days-before-close: 7
-        stale-issue-message: 'This issue has been labeled `Stale` as it had remained inactive for a period of 30 days.'
-        stale-pr-message: 'This pull request has been labeled `Stale` as it had remained inactive for a period of 30 days.'
-        stale-issue-label: 'Stale'
-        stale-pr-label: 'Stale'
-        close-issue-message: 'This issue has been closed as it had remained inactive for a period of 7 days.'
-        close-pr-message: 'This pull request has been closed as it had remained inactive for a period of 7 days.'
+      - name: 读取仓库内容
+        uses: actions/checkout@v4
+
+      - name: 登陆到 Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{DOCKERHUB_TOKEN}}
+
+      - name: 构建镜像并推送到 Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: caoyang2002/w3bot:latest
