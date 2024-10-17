@@ -11,6 +11,7 @@ python3 sqlite.py chatroomdata.db "SELECT USER_WXID, USERNAME FROM CHATROOMDATA 
 ```
 
 查看最近的10条消息：
+
 ```bash
 python sqlite_query.py chatroomdata.db "SELECT USERNAME, MESSAGE_CONTENT, MESSAGE_TIMESTAMP FROM CHATROOMDATA ORDER BY MESSAGE_TIMESTAMP DESC LIMIT 10"
 ```
