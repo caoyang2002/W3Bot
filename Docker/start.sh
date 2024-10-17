@@ -9,6 +9,30 @@ function check_command_status {
     fi
 }
 
+
+parse_args() {
+    CONTAINER_MODE="foreground"
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --background|-b)
+                CONTAINER_MODE="background"
+                shift
+                ;;
+            --no-run|-n)
+                CONTAINER_MODE="no-run"
+                shift
+                ;;
+            *)
+                echo "未知选项: $1"
+                exit 1
+                ;;
+        esac
+    done
+}
+
+# 在脚本开始时调用这个函数
+parse_args "$@"
+
 echo "检查当前 Docker 容器状态"
 sudo docker ps -a
 check_command_status
@@ -45,7 +69,19 @@ sudo docker images
 check_command_status
 
 echo "启动镜像"
-sudo docker-compose up -d  # 添加 -d 参数使容器在后台运行
+case $CONTAINER_MODE in
+    background)
+        echo "在后台启动容器..."
+        sudo docker-compose up -d
+        ;;
+    foreground)
+        echo "在前台启动容器..."
+        sudo docker-compose up
+        ;;
+    no-run)
+        echo "不启动容器。"
+        ;;
+esac
 check_command_status
 
 echo "执行完毕"
