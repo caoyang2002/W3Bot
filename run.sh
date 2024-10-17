@@ -7,4 +7,4 @@
 #!/bin/bash
 
 pip install -r requirements.txt
-python start.py
+python3 start.py
