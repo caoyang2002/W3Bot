@@ -35,7 +35,7 @@ RUN python3 --version
 RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # 设置环境变量
-ENV PYTHONPATH="/home/app/.local/lib/python3.9/site-packages:${PYTHONPATH}"
+# ENV PYTHONPATH="/home/app/.local/lib/python3.9/site-packages:${PYTHONPATH}"
 
 # 原有的 Dockerfile 内容
 RUN sudo rm -rf /payloads
