@@ -3,6 +3,7 @@
 查看数据库
 ```bash
 python3 ./help/sqlite.py chatroomdata.db "SELECT * FROM USERS LIMIT 5"
+python3 ./help/sqlite.py chatroomdata.db "SELECT * FROM MESSAGES LIMIT 5"
 ```
 
 查看特定群组的用户

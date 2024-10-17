@@ -1,5 +1,4 @@
-keywords: [ "成员分析","谁是机器人"]
+keywords: ["我的数据", "我的信息"]
 plugin_name: "chatroom"
 
 plugin_setting: "This is my setting!" # 插件设置，在my_plugin.py被读取
-

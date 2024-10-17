@@ -15,3 +15,6 @@ pymem~=1.13.1
 beautifulsoup4~=4.12.3
 html2text~=2024.2.26
 soupsieve~=2.6
+matplotlib~=3.9.2
+seaborn~=0.13.2
+scikit-learn~=1.5.2

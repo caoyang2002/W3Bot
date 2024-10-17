@@ -15,7 +15,7 @@ class ChatroomDatabase:
         if not os.path.exists(self.db_path):
             logger.warning("检测到聊天室数据库不存在，正在创建数据库")
             self._create_database()
-        
+
         self.database = sqlite3.connect(self.db_path, check_same_thread=False)
         self.database.execute("PRAGMA foreign_keys = ON")
         self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="chatroomdb")
@@ -25,7 +25,7 @@ class ChatroomDatabase:
         conn.text_factory = str
         conn.execute("PRAGMA encoding = 'UTF-8';")
         c = conn.cursor()
-        
+
         c.execute("""
             CREATE TABLE USERS (
                 USER_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +37,7 @@ class ChatroomDatabase:
                 BOT_CONFIDENCE REAL
             )
         """)
-        
+
         c.execute("""
             CREATE TABLE MESSAGES (
                 MESSAGE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,12 +50,13 @@ class ChatroomDatabase:
                 FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
             )
         """)
-        
+
         conn.commit()
         c.close()
         conn.close()
         logger.warning("已创建聊天室数据库")
 
+    # 安全执行
     def _execute_in_queue(self, method, *args, **kwargs):
         future = self.executor.submit(method, *args, **kwargs)
         try:
@@ -71,7 +72,7 @@ class ChatroomDatabase:
         cursor = self.database.cursor()
         try:
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
+
             group_wxid = str(group_wxid) if group_wxid is not None else ""
             user_wxid = str(user_wxid) if user_wxid is not None else ""
             username = str(username) if username is not None else ""
@@ -104,6 +105,7 @@ class ChatroomDatabase:
         finally:
             cursor.close()
 
+    # 获取用户数据
     def get_user_data(self, group_wxid,user_wxid):
         return self._execute_in_queue(self._get_user_data, user_wxid)
 
@@ -120,6 +122,8 @@ class ChatroomDatabase:
             return None
         finally:
             cursor.close()
+
+
 
     def set_whitelist(self, user_wxid, status):
         return self._execute_in_queue(self._set_whitelist, user_wxid, status)
@@ -222,6 +226,25 @@ class ChatroomDatabase:
             return 0
         finally:
             cursor.close()
+
+# 通过用户 wxid 获取用户发送的消息
+    def get_messages_by_user_wxid(self,user_wxid):
+        return self._execute_in_queue(self._get_messages_by_user_wxid, user_wxid)
+    def _get_messages_by_user_wxid(self,user_wxid):
+        cursor = self.database.cursor()
+        try:
+            cursor.execute("SELECT * FROM MESSAGES WHERE USER_ID = ?", (user_wxid,))
+            messages = cursor.fetchall()
+            return messages
+        except sqlite3.Error as e:
+            logger.error(f"获取用户消息时发生SQL错误: {e}")
+            return 0
+        finally:
+            cursor.close()
+
+
+
+    # 检查群组是否存在
 
     def check_group_exists(self, group_wxid):
         return self._execute_in_queue(self._check_group_exists, group_wxid)
