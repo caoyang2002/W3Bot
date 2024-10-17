@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# 默认（不加参数）：在前台运行容器
+# ./start.sh
+# 在后台运行容器：
+# ./start.sh --background
+# 或
+# ./start.sh -b
+# 不运行容器：
+# ./start.sh --no-run
+# 或
+# ./start.sh -n
+
 set -e  # 启用错误检查，如果任何命令失败脚本将立即退出
 
 function check_command_status {
