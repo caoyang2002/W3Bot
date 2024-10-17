@@ -9,10 +9,10 @@ cd /home/app/W3Bot || exit
 
 # 使用官方 PyPI 库安装 Python 包
 echo "Installing Python packages from official PyPI repository..."
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 # 使用 wine 和官方 PyPI 库安装 Python 包
 echo "Installing Python packages using wine from official PyPI repository..."
-wine pip install -r requirements.txt
+wine pip3 install -r requirements.txt
 
 echo "Package installation completed."
