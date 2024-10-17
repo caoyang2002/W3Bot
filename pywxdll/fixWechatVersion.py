@@ -1,6 +1,13 @@
 import sys
 import os
-sys.path.append(os.path.expanduser('~/.local/lib/python3.9/site-packages'))
+print(f"Python version: {sys.version}")
+print(f"Python executable: {sys.executable}")
+print(f"Python path: {sys.path}")
+print(f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'Not set')}")
+print(f"Current working directory: {os.getcwd()}")
+
+sys.path.append(os.path.expanduser('/home/app/~/.local/lib/python3.9/site-packages'))
+
 from pymem import Pymem
 
 ADDRS = [0x3A70FD4, 0x3A878DC, 0x3AA0508, 0x3AC85F0, 0x3ACF3D8, 0x3AD1908]

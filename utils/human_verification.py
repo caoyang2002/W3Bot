@@ -14,7 +14,7 @@ class HumanVerification:
     def __init__(self, db_path="chatroomdata.db"):
         self.db_path = db_path
         # 设置中文字体
-        custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
+        # custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
         plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 

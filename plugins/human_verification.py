@@ -14,71 +14,9 @@ import yaml
 from loguru import logger
 from utils.plugin_interface import PluginInterface
 from utils.chatroom_database import ChatroomDatabase
+import os
 
 class human_verification(PluginInterface):
-    # def __init__(self, db_path="chatroomdata.db"):
-    #     config_path = 'plugins/chatroom.yml'
-    #     with open(config_path, 'r', encoding='utf-8') as f:
-    #         config = yaml.safe_load(f.read())
-    #     self.plugin_setting = config['plugin_setting']
-
-    #     main_config_path = 'main_config.yml'
-    #     with open(main_config_path, 'r', encoding='utf-8') as f:
-    #         main_config = yaml.safe_load(f.read())
-
-    #     self.bot_version = main_config["bot_version"]
-    #     self.ip = main_config["ip"]  # 机器人ip
-    #     self.port = main_config["port"]  # 机器人端口
-    #     self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
-    #     self.out_message = ""
-
-    #     # 初始化数据库连接
-    #     self.db = ChatroomDatabase()
-
-    #     self.db_path = db_path
-    #     # 设置中文字体
-    #     # custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
-    #     # plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
-    #     # plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-
-    #     # 加载自定义字体文件
-    #     custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
-    #     # 设置matplotlib配置，使用自定义字体
-    #     plt.rcParams['font.sans-serif'] = [custom_font.get_name()]  # 使用自定义字体的名称
-    #     plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-
-    # def analyze_user(self, user_wxid):
-    #     """
-    #     分析指定用户的行为，判断是人类还是AI
-    #     :param user_wxid: 用户的微信ID
-    #     :return: 分析结果文本
-    #     """
-    #     conn = sqlite3.connect(self.db_path)
-    #     cursor = conn.cursor()
-
-    #     # 获取用户数据
-    #     cursor.execute("SELECT * FROM USERS WHERE USER_WXID = ?", (user_wxid,))
-    #     user_data = cursor.fetchone()
-
-    #     if not user_data:
-    #         return "数据库中未找到该用户。"
-
-    #     user_id = user_data[0]
-
-    #     # 获取用户消息
-    #     cursor.execute("SELECT * FROM MESSAGES WHERE USER_ID = ?", (user_id,))
-    #     messages = cursor.fetchall()
-
-    #     # 执行分析
-    #     analysis_result = self._analyze_messages(messages)
-
-    #     # 生成并保存可视化图表
-    #     self._generate_visualization(analysis_result, user_wxid)
-
-    #     conn.close()
-
-    #     return analysis_result
-
     def __init__(self):
         config_path = 'plugins/human_verification.yml'
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -99,15 +37,16 @@ class human_verification(PluginInterface):
         self.db = ChatroomDatabase()
 
         # 加载自定义字体文件
-        custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
+        # custom_font = FontProperties(fname='../assets/SourceHanSansHWSC-Regular.otf')
         # 设置matplotlib配置，使用自定义字体
-        plt.rcParams['font.sans-serif'] = [custom_font.get_name()]
+        plt.rcParams['font.sans-serif'] =  ['WenQuanYi Micro Hei']
         plt.rcParams['axes.unicode_minus'] = False
 
-    def analyze_user(self, user_wxid,group_wxid):
+    def analyze_user(self, user_wxid,group_wxid,recv):
         """
         分析指定用户的行为，判断是人类还是AI
         :param user_wxid: 用户的微信ID
+        :param recv: 接收到的消息
         :return: 分析结果文本
         """
         # 获取用户数据
@@ -122,21 +61,22 @@ class human_verification(PluginInterface):
         messages = self.db.get_messages_by_user_wxid(user_id)
 
         # 执行分析
-        analysis_result = self._analyze_messages(messages)
+        analysis_result = self._analyze_messages(messages,recv)
 
         # 生成并保存可视化图表
         self._generate_visualization(analysis_result, user_wxid)
 
         return analysis_result
 
-    def _analyze_messages(self, messages):
+    def _analyze_messages(self, messages,recv):
+        user_name = recv['displayFullContent'].split(':')[0]
         """
         分析用户消息
         :param messages: 用户的消息列表
         :return: 分析结果文本
         """
         if not messages:
-            return "未找到该用户的消息。"
+            return f"未找到该用户的消息。: {user_name}"
 
         total_messages = len(messages)
         message_contents = [msg[4] for msg in messages]  # msg[4] 是 MESSAGE_CONTENT
@@ -182,6 +122,7 @@ class human_verification(PluginInterface):
 
         analysis = f"""
 分析结果：
+目标: {user_name}
 总消息数: {total_messages}
 平均消息长度: {avg_message_length:.2f} 字符
 消息间平均时间: {avg_time_between_messages:.2f} 秒
@@ -298,7 +239,18 @@ class human_verification(PluginInterface):
 
     async def run(self, recv):
         group_wxid = recv['from'] # gropu wxid
-        user_wxid = recv['sender'] # wxid
-        out_message = self.analyze_user(group_wxid,user_wxid)
+        user_wxid = ''
+        if recv['fromType'] == 'friend':
+            user_wxid = recv['sender'] # wxid
+        elif recv['fromType'] == 'chatroom':
+            user_wxid = recv['sender'] # wxid
+            logger.info("[收到用户消息] ",user_wxid)
+        out_message = self.analyze_user(user_wxid,group_wxid,recv)
+
         logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
-        self.bot.send_text_msg(recv["from"], out_message)  # 发送
+        self.bot.send_at_msg(recv["from"], out_message, [user_wxid])
+        # self.bot.send_text_msg(recv["from"], out_message)  # 发送
+        # 发送图片
+
+        image_path = os.path.abspath('test_human.png')
+        self.bot.send_image_msg(recv["from"],image_path)
