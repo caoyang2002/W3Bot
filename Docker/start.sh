@@ -9,7 +9,7 @@ sudo docker images
 # 检查是否有 docker-w3bot 容器
 if [ "$(sudo docker ps -aq -f name=docker-w3bot)" ]; then
   echo "Removing existing docker-w3bot container..."
-  docker rm -f docker-w3bot
+  sudo docker rm -f docker-w3bot
 fi
 
 # 检查是否有 W3Bot 容器
