@@ -17,6 +17,19 @@
 
 3. 知识库问答
 
+
+# 自动运行
+
+```bash
+pip install -r requirements.txt
+python start.py
+
+# of
+
+run.sh
+```
+
+
 # docker 自部署
 
 ```bash
