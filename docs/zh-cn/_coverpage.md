@@ -1,6 +1,6 @@
 <img alt="W3Bot 微信机器人 logo" width="240" src="https://github.com/caoyang2002/W3Bot/raw/main/docs/images/w3bot.png">
 
-# W3Bot <small>v0.0.7</small>
+# W3Bot <small>beta</small>
 
 > 可运行于 Linux 和 Windows 的基于 Hook 的微信机器人🤖️！
 
