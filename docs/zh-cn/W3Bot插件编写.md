@@ -4,10 +4,6 @@
 
 本篇适用于`W3Bot v0.0.6`。
 
-## 插件模板
-
-[🔗插件模版仓库](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)
-
 ## 编写你的第一个W3Bot插件
 
 一个W3Bot插件由2个文件组成：
@@ -54,7 +50,7 @@ class my_plugin(PluginInterface):
             plugin_setting=self.plugin_setting)  # 组建消息
         logger.info('[发送信息]{out_message}| [发送到] {wxid}'.format(out_message=out_message, wxid=recv['wxid']))
         self.bot.send_txt_msg(recv['wxid'],
-                              out_message)  # 发送消息，更多微信机器人api函数请看 https://github.com/HenryXiaoYang/pywxdll 中的文档
+                              out_message)  # 发送消息，更多微信机器人api函数请看 https://github.com/Simons/pywxdll 中的文档
 ```
 
 由于W3Bot加载插件时，是用设置中的类名实例化插件的，所以我们将这个文件保存为`hello_world.py`
@@ -165,7 +161,7 @@ plugin_name: "hello_world" # 插件名
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 /管理插件 加载 hello_world
 
@@ -181,7 +177,7 @@ plugin_name: "hello_world" # 插件名
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 /hello
 
@@ -194,6 +190,6 @@ world!
 
 这只是一个简单的插件，你可以在这个基础上添加更多功能。
 
-更多微信机器人api函数请看[🔗文档](https://henryxiaoyang.github.io/pywxdll)。
+更多微信机器人api函数请看[🔗文档](https://Simons.github.io/pywxdll)。
 
-更多机器人插件例子可在[🔗这里](https://github.com/HenryXiaoYang/W3Bot/tree/main/plugins)看到。
+更多机器人插件例子可在[🔗这里](https://github.com/Simons/W3Bot/tree/main/plugins)看到。
