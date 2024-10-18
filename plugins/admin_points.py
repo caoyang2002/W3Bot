@@ -52,7 +52,7 @@ class admin_points(PluginInterface):
                 )  # 修改积分
                 self.send_result(recv, change_wxid)
             else:
-                out_message = "-----XYBot-----\n⚠️未知的操作！"
+                out_message = "\n⚠️未知的操作！"
                 logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                 self.bot.send_text_msg(recv["from"], out_message)
 
@@ -64,8 +64,8 @@ class admin_points(PluginInterface):
     def send_result(self, recv, change_wxid):
         total_points = self.db.get_points(change_wxid)  # 获取修改后积分
         if len(recv['content']) == 4:
-            out_message = f'-----XYBot-----\n😊成功给{change_wxid}{recv["content"][2]}了{recv["content"][3]}点积分！他现在有{total_points}点积分！'
+            out_message = f'\n😊成功给{change_wxid}{recv["content"][2]}了{recv["content"][3]}点积分！他现在有{total_points}点积分！'
         else:
-            out_message = f'-----XYBot-----\n😊成功将{change_wxid}的积分设置为{total_points}！'
+            out_message = f'\n😊成功将{change_wxid}的积分设置为{total_points}！'
         logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
         self.bot.send_text_msg(recv["from"], out_message)  # 发送

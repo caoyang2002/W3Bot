@@ -1,4 +1,4 @@
-# # W3Bot Windows部署
+# W3Bot Windows部署
 
 这一页写了在Windows上部署W3Bot的方法。
 

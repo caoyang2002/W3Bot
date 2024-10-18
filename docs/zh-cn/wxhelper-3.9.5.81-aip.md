@@ -1,48 +1,67 @@
-#  3.9.5.81 版本，http 接口文档，文档仅供参考。
+# wxhelper API 文档
+
+> 3.9.5.81 版本，http 接口文档，文档仅供参考。
 
 ## 简单说明：
- 所有接口只支持post方法。
- 全部使用json格式。
+
+ 所有接口只支持 `post` 方法。
+
+ 全部使用 `json` 格式。
+
  格式： http://host:port/api/xxxx
+
  host: 绑定的host
+
  port: 监听的端口
+
  xxxx: 对应的功能路径
- 返回结构的json格式：
+
+ 返回结构的 json 格式：
+
  ``` javascript
   {
     "code": 1,
     "data": {},
     "msg": "success"
 }
-```
+ ```
+
 code： 错误码
+
 msg：  成功/错误信息
+
 data： 接口返回的数据
 
 
-### 0.检查微信登录**
-##### 接口功能
+### 1. 检查微信登录
+
+#### 接口功能
+
 > 检查微信是否登录
 
-##### 接口地址
-> [/api/checkLogin](/api/checkLogin)
+#### 接口地址
 
-##### HTTP请求方式
+> `/api/checkLogin`
+
+#### HTTP请求方式
+
 > POST  JSON
 
-##### 请求参数
+#### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-##### 返回字段
+#### 返回字段
+
 |返回字段|字段类型|说明                              |
-|---|---|---|
+|:--|:--|:--|
 |code|int|返回状态,1 成功, 0失败|
 |result|string|成功提示|
 |data|string|响应内容|
 
-##### 接口示例
+#### 接口示例
 入参：
 ``` javascript
 ```
@@ -55,39 +74,45 @@ data： 接口返回的数据
 }
 ```
 
-### 1.获取登录用户信息**
-##### 接口功能
+### 2.获取登录用户信息
+
+#### 接口功能
+
 > 获取登录用户信息
 
-##### 接口地址
-> [/api/userInfo](/api/userInfo)
+#### 接口地址
 
-##### HTTP请求方式
+> `/api/userInfo`
+
+#### HTTP请求方式
+
 > POST  JSON
 
-##### 请求参数
+#### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-##### 返回字段
+#### 返回字段
+
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1 成功, 0失败|
 |result|string|成功提示|
 |data|object|响应内容|
-|&#8194;&#8194;account|string|账号|
-|&#8194;&#8194;headImage|string|头像|
-|&#8194;&#8194;city|string|城市|
-|&#8194;&#8194;country|string|国家|
-|&#8194;&#8194;currentDataPath|string|当前数据目录,登录的账号目录|
-|&#8194;&#8194;dataSavePath|string|微信保存目录|
-|&#8194;&#8194;mobile|string|手机|
-|&#8194;&#8194;name|string|昵称|
-|&#8194;&#8194;province|string|省|
-|&#8194;&#8194;wxid|string|wxid|
-|&#8194;&#8194;signature|string|个人签名|
-|&#8194;&#8194;dbKey|string|数据库的SQLCipher的加密key，可以使用该key配合decrypt.py解密数据库
+|account|string|账号|
+|headImage|string|头像|
+|city|string|城市|
+|country|string|国家|
+|currentDataPath|string|当前数据目录,登录的账号目录|
+|dataSavePath|string|微信保存目录|
+|mobile|string|手机|
+|name|string|昵称|
+|province|string|省|
+|wxid|string|wxid|
+|signature|string|个人签名|
+|dbKey|string|数据库的SQLCipher的加密key，可以使用该key配合decrypt.py解密数据库
 
 ##### 接口示例
 入参：
@@ -249,29 +274,34 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 
 
 #### 返回字段
+
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, 非0失败|
 |data|object|好友信息|
-|&#8194;&#8194;customAccount|string|自定义账号|
-|&#8194;&#8194;encryptName|string|昵称|
-|&#8194;&#8194;nickname|string|昵称|
-|&#8194;&#8194;pinyin|string|简拼|
-|&#8194;&#8194;pinyinAll|string|全拼|
-|&#8194;&#8194;reserved1|number|未知|
-|&#8194;&#8194;reserved2|number|未知|
-|&#8194;&#8194;type|number|未知|
-|&#8194;&#8194;verifyFlag|number|未知|
-|&#8194;&#8194;wxid|string|wxid|
+|customAccount|string|自定义账号|
+|encryptName|string|昵称|
+|nickname|string|昵称|
+|pinyin|string|简拼|
+|pinyinAll|string|全拼|
+|reserved1|number|未知|
+|reserved2|number|未知|
+|type|number|未知|
+|verifyFlag|number|未知|
+|wxid|string|wxid|
 |msg|string|成功提示|
 
 
 #### 接口示例
+
 入参：
+
 ``` javascript
 
 ```
+
 响应：
+
 ``` javascript
 {
     "code": 1,
@@ -290,45 +320,54 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
         }
     ].
     "msg": "success"
-
 ```
 
-### 6.获取数据库信息**
+### 6.获取数据库信息
+
 #### 接口功能
+
 > 获取数据库信息和句柄
 
 #### 接口地址
-> [/api/getDBInfo](/api/getDBInfo)
+
+> `/api/getDBInfo`
 
 #### HTTP请求方式
+
 > POST  JSON
 
 #### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
 #### 返回字段
-|返回字段|字段类型|说明                              |
+
+|返回字段|字段类型|说明|
 |---|---|---|
 |code|int|返回状态,0成功, 非0失败|
 |msg|string|返回信息|
 |data|array|好友信息|
-|&#8194;&#8194;databaseName|string|数据库名称|
-|&#8194;&#8194;handle|number|句柄|
-|&#8194;&#8194;tables|array|表信息|
-|&#8194;&#8194;&#8194;&#8194;name|string|表名|
-|&#8194;&#8194;&#8194;&#8194;rootpage|string|rootpage|
-|&#8194;&#8194;&#8194;&#8194;sql|string|ddl语句|
-|&#8194;&#8194;&#8194;&#8194;tableName|string|表名|
+|databaseName|string|数据库名称|
+|handle|number|句柄|
+|tables|array|表信息|
+|name|string|表名|
+|rootpage|string|rootpage|
+|sql|string|ddl语句|
+|tableName|string|表名|
 
 
 #### 接口示例
+
 入参：
+
 ``` javascript
 
 ```
+
 响应：
+
 ``` javascript
 {
     "code": 1,
@@ -351,12 +390,15 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-### 7.查询数据库**
+### 7.查询数据库
+
 #### 接口功能
+
 > 查询数据库
 
 #### 接口地址
-> [/api/execSql](/api/execSql)
+
+> `/api/execSql`
 
 #### HTTP请求方式
 > POST  JSON
@@ -511,10 +553,10 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |code|int|返回状态,1成功, -1失败|
 |msg|string|成功提示|
 |data|object|群详细内容|
-|&#8194;&#8194;chatRoomId|string|群id|
-|&#8194;&#8194;notice|string|公告通知|
-|&#8194;&#8194;admin|string|群管理|
-|&#8194;&#8194;xml|string|xml信息|
+|chatRoomId|string|群id|
+|notice|string|公告通知|
+|admin|string|群管理|
+|xml|string|xml信息|
 
 ###### 接口示例
 
@@ -681,11 +723,11 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |code|int|返回状态,1成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
-|&#8194;&#8194;chatRoomId|string|群id|
-|&#8194;&#8194;members|string|成员id|
-|&#8194;&#8194;memberNickname|string|成员昵称|
-|&#8194;&#8194;admin|string|群管理|
-|&#8194;&#8194;adminNickname|string|管理昵称|
+|chatRoomId|string|群id|
+|members|string|成员id|
+|memberNickname|string|成员昵称|
+|admin|string|群管理|
+|adminNickname|string|管理昵称|
 
 ###### 接口示例
 
@@ -1309,11 +1351,11 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
-|&#8194;&#8194;account|string|账号|
-|&#8194;&#8194;headImage|string|头像|
-|&#8194;&#8194;nickname|string|昵称|
-|&#8194;&#8194;v3|string|v3|
-|&#8194;&#8194;wxid|string|wxid|
+|account|string|账号|
+|headImage|string|头像|
+|nickname|string|昵称|
+|v3|string|v3|
+|wxid|string|wxid|
 
 ###### 接口示例
 

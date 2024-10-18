@@ -8,40 +8,40 @@
 
 这是你需要知道的 `W3Bot` v0.0.7 的项目结构
 
-```
+```bash
 .
-├── Docker
+├── Docker # docker 配置
 │   ├── root
 │   ...
-├── docs
+├── docs # 文档
 │   ├── zh-cn
 │   ...
-├── plans
+├── plans  # 计划任务
 │   ├── antiautolog.py
 │   └── cache_clear.py
-├── plugins
+├── plugins # 插件
 │   ├── admin_points.py
 │   ├── admin_points.yml
 ...
 │   ├── weather.py
 │   └── weather.yml
-├── pywxdll
+├── pywxdll # 注入工具
 │   ├── Injector_Docker.exe
 │   ...
 ├── resources
 │   └── gomoku_board_original.png
-├── utils
+├── utils # 工具
 │   ├── database.py
 │   ...
 ├── LICENSE
 ├── README.md
-├── main_config.yml
-├── requirements.txt
-├── sensitive_words.yml
-└── start.py
+├── main_config.yml # 主配置文件
+├── requirements.txt # Python 的依赖文件
+├── sensitive_words.yml # 敏感字
+└── start.py # 启动文件
 ```
 
-如果你部署时按照了 `W3Bot Linux部署` 的步骤，那么你的W3Bot的文件已被持久化到 `/var/lib/docker/volumes/W3Bot`
+如果你部署时按照了 `W3Bot Linux部署` 的步骤，那么你的 W3Bot 的文件已被持久化到 `/var/lib/docker/volumes/W3Bot`
 ，也就是 `W3Bot` 卷。
 
 如果你是在 Windows 上部署的，那么文件都在 `W3Bot` 文件夹下。
