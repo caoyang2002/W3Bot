@@ -1,25 +1,25 @@
-# XYBot插件编写
+# W3Bot插件编写
 
-这一页讲述了如何编写一个XYBot插件
+这一页讲述了如何编写一个W3Bot插件
 
-本篇适用于`XYBot v0.0.6`。
+本篇适用于`W3Bot v0.0.6`。
 
 ## 插件模板
 
-[🔗插件模版仓库](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)
+[🔗插件模版仓库](https://github.com/HenryXiaoYang/W3Bot-Plugin-Framework)
 
-## 编写你的第一个XYBot插件
+## 编写你的第一个W3Bot插件
 
-一个XYBot插件由2个文件组成：
+一个W3Bot插件由2个文件组成：
 
 - 一个`.py`结尾的Python脚本文件
 - 一个`.yml`结尾的配置文件
 
-我们将编写一个名为`hello_world`的插件。当用户输入`/hello`，XYBot会回复`world!`。
+我们将编写一个名为`hello_world`的插件。当用户输入`/hello`，W3Bot会回复`world!`。
 
 ### Python脚本文件
 
-这是从`XYBot-Plugin-Framework`仓库中的`plugins/my_plugin.py`文件中复制的插件脚本模板：
+这是从`W3Bot-Plugin-Framework`仓库中的`plugins/my_plugin.py`文件中复制的插件脚本模板：
 
 ```python
 # my_plugin.py
@@ -57,7 +57,7 @@ class my_plugin(PluginInterface):
                               out_message)  # 发送消息，更多微信机器人api函数请看 https://github.com/HenryXiaoYang/pywxdll 中的文档
 ```
 
-由于XYBot加载插件时，是用设置中的类名实例化插件的，所以我们将这个文件保存为`hello_world.py`
+由于W3Bot加载插件时，是用设置中的类名实例化插件的，所以我们将这个文件保存为`hello_world.py`
 ，并在这里第9行的类名需要改成`hello_world`。
 
 对于这个简单的插件，我们不需要从设置中读取任何设置，所以我们可以删除第11-16行用于读取插件设置的代码。我们还是得保留第18-25行的代码，因为我们需要读取主设置中机器人ip与端口，并实例化`pywxdll`
@@ -124,7 +124,7 @@ async def run(self, recv):  # 当用户指令与插件设置中关键词相同�
 
 ### 配置文件
 
-这是从`XYBot-Plugin-Framework`仓库中的`plugins/my_plugin.yml`文件中复制的一个插件设置模板：
+这是从`W3Bot-Plugin-Framework`仓库中的`plugins/my_plugin.yml`文件中复制的一个插件设置模板：
 
 ```yaml
 # my_plugin.yml
@@ -137,13 +137,13 @@ plugin_setting: "This is my setting!" # 插件设置，在my_plugin.py被读取
 养成好习惯，为了后面维护方便，我们将这个文件保存为`hello_world.yml`。
 
 首先我们把第2行的`my_plugin`改成`hello_world`，因为我们的插件名是`hello_world`，*
-*XYBot加载插件时是从这里获得到类名的，所以设置中的`plugin_name`必须与Python脚本文件中的类名保持一致！**
+*W3Bot加载插件时是从这里获得到类名的，所以设置中的`plugin_name`必须与Python脚本文件中的类名保持一致！**
 
 ?> 这样写加载插件的原因是考虑到一个脚本文件可以有多个设置文件
 
 对于这个插件，我们不需要`plugin_setting`，所以我们可以删除第4行。
 
-将第一行的`keywords`改为`[ "hello" ]`。这样用户在微信输入`/hello`时，XYBot就会运行Python脚本中的`run`函数。
+将第一行的`keywords`改为`[ "hello" ]`。这样用户在微信输入`/hello`时，W3Bot就会运行Python脚本中的`run`函数。
 
 最后的配置文件是：
 
@@ -153,15 +153,15 @@ keywords: [ "hello" ]
 plugin_name: "hello_world" # 插件名
 ```
 
-### 将插件添加到XYBot
+### 将插件添加到W3Bot
 
 将`hello_world.py`与`hello_world.yml`文件放到`plugins`目录下。
 
 ### 热加载插件
 
-!> 这里微信账号需要是XYBot管理员，没有的话只能重启XYBot了
+!> 这里微信账号需要是W3Bot管理员，没有的话只能重启W3Bot了
 
-在微信向XYBot发送`/管理插件 加载 hello_world`，XYBot就会加载`hello_world`插件。
+在微信向W3Bot发送`/管理插件 加载 hello_world`，W3Bot就会加载`hello_world`插件。
 
 <!-- chat:start -->
 
@@ -169,15 +169,15 @@ plugin_name: "hello_world" # 插件名
 
 /管理插件 加载 hello_world
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 加载插件hello_world成功！✅
 <!-- chat:end -->
 
 ### 测试插件
 
-现在，当你在微信中输入`/hello`，XYBot会回复`world!`。
+现在，当你在微信中输入`/hello`，W3Bot会回复`world!`。
 
 <!-- chat:start -->
 
@@ -185,7 +185,7 @@ plugin_name: "hello_world" # 插件名
 
 /hello
 
-#### **XYBot**
+#### **W3Bot**
 
 world!
 <!-- chat:end -->
@@ -196,4 +196,4 @@ world!
 
 更多微信机器人api函数请看[🔗文档](https://henryxiaoyang.github.io/pywxdll)。
 
-更多机器人插件例子可在[🔗这里](https://github.com/HenryXiaoYang/XYBot/tree/main/plugins)看到。
+更多机器人插件例子可在[🔗这里](https://github.com/HenryXiaoYang/W3Bot/tree/main/plugins)看到。

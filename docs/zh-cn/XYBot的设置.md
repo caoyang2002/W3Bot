@@ -1,12 +1,12 @@
-# XYBot的设置
+# W3Bot的设置
 
-这一页写了如何设置XYBot。
+这一页写了如何设置W3Bot。
 
-本篇适用于`XYBot v0.0.7`。
+本篇适用于`W3Bot v0.0.7`。
 
 ## 前言
 
-这是你需要知道的`XYBot` v0.0.7的项目结构
+这是你需要知道的`W3Bot` v0.0.7的项目结构
 
 ```
 .
@@ -78,26 +78,26 @@
 └── start.py
 ```
 
-如果你部署时按照了`XYBot Linux部署`的步骤，那么你的XYBot的文件已被持久化到`/var/lib/docker/volumes/XYBot`
-，也就是`XYBot`卷。
+如果你部署时按照了`W3Bot Linux部署`的步骤，那么你的W3Bot的文件已被持久化到`/var/lib/docker/volumes/W3Bot`
+，也就是`W3Bot`卷。
 
-如果你是在Windows上部署的，那么文件都在`XYBot`文件夹下。
+如果你是在Windows上部署的，那么文件都在`W3Bot`文件夹下。
 
-在项目根目录下，有一个`main_config.yml`文件，这个文件是XYBot的主配置文件。
+在项目根目录下，有一个`main_config.yml`文件，这个文件是W3Bot的主配置文件。
 
-在`plugins`目录下，有很多插件，这些插件是XYBot的一个一个功能；如签到，随机图片都是单独一个插件。一个插件分别有一份Python脚本文件，与一份`yaml`配置文件。一般Python脚本文件与配置文件的文件名(不包括文件名后缀)一致。
+在`plugins`目录下，有很多插件，这些插件是W3Bot的一个一个功能；如签到，随机图片都是单独一个插件。一个插件分别有一份Python脚本文件，与一份`yaml`配置文件。一般Python脚本文件与配置文件的文件名(不包括文件名后缀)一致。
 
 以`gpt`插件为例，`gpt.py`是`gpt`插件的Python脚本文件，`gpt.yml`是`gpt`插件的配置文件。
 
 ## 配置主设置
 
-这是`XYBot v0.0.7`的主设置：
+这是`W3Bot v0.0.7`的主设置：
 
 ```yaml
 #Version 0.0.7
 bot_version: "v0.0.7"
 
-# XYBot主设置
+# W3Bot主设置
 
 #如果不知道自己在干什么请别动这两行
 ip: 127.0.0.1

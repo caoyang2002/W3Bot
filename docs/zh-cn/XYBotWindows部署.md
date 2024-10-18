@@ -1,12 +1,12 @@
-# # XYBot Windows部署
+# # W3Bot Windows部署
 
-这一页写了在Windows上部署XYBot的方法。
+这一页写了在Windows上部署W3Bot的方法。
 
-本篇部署教程适用于`XYBot v0.0.7`。
+本篇部署教程适用于`W3Bot v0.0.7`。
 
 ## 前言
 
-相比于在Linux上部署`XYBot`，在Windows上部署`XYBot`简单很多。
+相比于在Linux上部署`W3Bot`，在Windows上部署`W3Bot`简单很多。
 
 配置要求：
 
@@ -41,7 +41,7 @@
 
 正常安装微信即可。
 
-### 4. 从Github克隆XYBot项目
+### 4. 从Github克隆W3Bot项目
 
 按win + r，输入cmd，然后回车打开cmd。
 
@@ -51,18 +51,18 @@
 cd Desktop
 ```
 
-然后`git clone`将`XYBot`从Github克隆下来
+然后`git clone`将`W3Bot`从Github克隆下来
 
 ```commandline
-git clone https://github.com/HenryXiaoYang/XYBot.git
+git clone https://github.com/HenryXiaoYang/W3Bot.git
 ```
 
-### 5. 下载XYBot所需要的依赖
+### 5. 下载W3Bot所需要的依赖
 
-切换到`XYBot`的目录
+切换到`W3Bot`的目录
 
 ```commandline
-cd XYBot
+cd W3Bot
 ```
 
 然后用`pip`安装依赖
@@ -77,9 +77,9 @@ pip install -r requirements.txt
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-### 6. 运行XYBot
+### 6. 运行W3Bot
 
-在命令行运行`XYBot`。
+在命令行运行`W3Bot`。
 
 ```commandline
 python start.py
@@ -87,17 +87,17 @@ python start.py
 
 !> 如果遇到下图的错误，请检查`pywxdll/StartWxAndInject_Windows.exe`这个文件是否被安全软件误删（如Windows安全就会把这个文件误删）。
 
-![StartWxAndInject_Windows.exe Deleted By Safety Software](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/windows_deployment/Deleted_By_Safe_Soft_StartWxAndInject.png?raw=true)
+![StartWxAndInject_Windows.exe Deleted By Safety Software](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/windows_deployment/Deleted_By_Safe_Soft_StartWxAndInject.png?raw=true)
 
 ### 7. 登陆微信
 
 微信应自动启动，扫描二维码登陆账号。
 
-### 8. 测试XYBot
+### 8. 测试W3Bot
 
-注入XYBot后，XYBot应该会自动启动。
+注入W3Bot后，W3Bot应该会自动启动。
 
-在微信中向XYBot私聊`菜单`，如果返回菜单则部署成功。
+在微信中向W3Bot私聊`菜单`，如果返回菜单则部署成功。
 
 <!-- chat:start -->
 
@@ -105,9 +105,9 @@ python start.py
 
 菜单
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot菜单------
+-----W3Bot菜单------
 
 实用功能⚙️
 
@@ -152,7 +152,6 @@ python start.py
 例如：菜单 1.1
 <!-- chat:end -->
 
-可以开始用XYBot了！
+可以开始用W3Bot了！
 
 如果失败，可以看看命令行日志。解决不了的话可以开`issue`询问。
-

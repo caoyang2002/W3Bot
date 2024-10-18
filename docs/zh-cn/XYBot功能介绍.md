@@ -1,8 +1,8 @@
-# XYBot功能介绍
+# W3Bot功能介绍
 
-这一页介绍了所有官方XYBot微信机器人用户可使用的功能、命令。
+这一页介绍了所有官方W3Bot微信机器人用户可使用的功能、命令。
 
-本介绍对应`v0.0.7`版本的XYBot。
+本介绍对应`v0.0.7`版本的W3Bot。
 
 功能分为了4类：
 
@@ -19,7 +19,7 @@
 
 ### 1.0 菜单
 
-一个微信机器人怎么能没有菜单？XYBot的菜单功能可以让你更方便地查看所有功能。
+一个微信机器人怎么能没有菜单？W3Bot的菜单功能可以让你更方便地查看所有功能。
 
 <!-- chat:start -->
 
@@ -27,9 +27,9 @@
 
 菜单
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot菜单------
+-----W3Bot菜单------
 实用功能⚙️
 1.1 获取天气
 1.2 获取新闻
@@ -61,9 +61,9 @@
 
 菜单 1.2
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot菜单------
+-----W3Bot菜单------
 1.2: 获取最新头条新闻📰
 指令: 新闻
 
@@ -71,7 +71,7 @@
 
 ### 1.1 获取天气
 
-XYBot可以帮你查询全球任意城市的天气情况。
+W3Bot可以帮你查询全球任意城市的天气情况。
 
 <!-- chat:start -->
 
@@ -79,9 +79,9 @@ XYBot可以帮你查询全球任意城市的天气情况。
 
 天气 北京
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 北京 实时天气☁️
 更新时间：2024-07-16T20:42+08:00⏰
 
@@ -104,7 +104,7 @@ XYBot可以帮你查询全球任意城市的天气情况。
 
 ### 1.2 获取新闻
 
-XYBot可以帮你获取最新的头条新闻。
+W3Bot可以帮你获取最新的头条新闻。
 
 <!-- chat:start -->
 
@@ -112,9 +112,9 @@ XYBot可以帮你获取最新的头条新闻。
 
 获取新闻
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot新闻-----
+-----W3Bot新闻-----
 
 📰 xxxx“xx”，xxxxxxxxx，xxxxxxxxx
 ℹ️xxxx-xx-xx xx:xx发布于xxxx新闻官方账号 xxxxxxxxxxxxxxxxxxxxxxx......
@@ -134,7 +134,7 @@ XYBot可以帮你获取最新的头条新闻。
 
 ### 1.3 ChatGPT
 
-XYBot可以调用ChatGPT，让你和机器人聊天。
+W3Bot可以调用ChatGPT，让你和机器人聊天。
 
 ?> 在设置中开启私聊ChatGPT后，可以在机器人私信直接问问题，不需要指令，还支持上下文关联！🎉
 
@@ -144,16 +144,16 @@ XYBot可以调用ChatGPT，让你和机器人聊天。
 
 gpt3 用简短的语言介绍一下Github
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 已收到指令，处理中，请勿重复发送指令！👍
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 因为你在白名单内，所以没扣除积分！👍
 ChatGPT回答：
 Github是一个基于云端的代码托管平台，它允许开发者存储、管理和共享代码。它提供了一个集中的位置，使团队成员可以协同开发项目，并追踪每个人的贡献。Github还提供了版本控制功能，允许开发者轻松地管理代码的变化和修复bug。此外，Github还是一个社交平台，开发者可以在上面发现其他人的项目，参与讨论和分享经验。总的来说，Github是一个强大的工具，为开发者提供了一个优秀的协作和学习平台。
@@ -167,7 +167,7 @@ Github是一个基于云端的代码托管平台，它允许开发者存储、�
 
 清除对话
 
-#### **XYBot(好友私聊)**
+#### **W3Bot(好友私聊)**
 
 对话记录已清除！✅
 
@@ -175,7 +175,7 @@ Github是一个基于云端的代码托管平台，它允许开发者存储、�
 
 后面用英文回答我
 
-#### **XYBot(好友私聊)**
+#### **W3Bot(好友私聊)**
 
 Sure, please go ahead and ask your question in English.
 
@@ -183,14 +183,14 @@ Sure, please go ahead and ask your question in English.
 
 1除以3等于几
 
-#### **XYBot(好友私聊)**
+#### **W3Bot(好友私聊)**
 
 1 divided by 3 equals 0.3333 (repeating).
 <!-- chat:end -->
 
 ### 1.4 Hypixel玩家查询
 
-XYBot可以帮你查询在我的世界服务器Hypixel中玩家的信息，数据等等。
+W3Bot可以帮你查询在我的世界服务器Hypixel中玩家的信息，数据等等。
 
 <!-- chat:start -->
 
@@ -198,14 +198,14 @@ XYBot可以帮你查询在我的世界服务器Hypixel中玩家的信息，数�
 
 hypixel Technoblade
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 查询玩家 Technoblade 中，请稍候！🙂
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 🎮玩家：
 [PIG+++] Technoblade [NERD]
 
@@ -237,14 +237,14 @@ Status: Offline
 
 hypixel bw Technoblade
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 查询玩家 Technoblade 中，请稍候！🙂
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 🎮玩家：
 [PIG+++] Technoblade [NERD]
 
@@ -281,7 +281,7 @@ W/L：3.82
 
 ### 2.1 随机图图
 
-XYBot可以帮你随机获取一张二次元图片。
+W3Bot可以帮你随机获取一张二次元图片。
 
 !> Wiki中图片都是固定的，不随机
 
@@ -291,14 +291,14 @@ XYBot可以帮你随机获取一张二次元图片。
 
 随机图图
 
-#### **XYBot**
+#### **W3Bot**
 
 ![Random Picture](https://gitcode.net/qq_44112897/images/-/raw/master/comic/11.jpg)
 <!-- chat:end -->
 
 ### 2.2 随机链接
 
-XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图。
+W3Bot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图。
 
 <!-- chat:start -->
 
@@ -306,9 +306,9 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 随机链接
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 ❓❓❓
 ❓: https://gitcode.net/qq_44112897/images/-/raw/master/comic/11.jpg
 ❓: https://gitcode.net/qq_44112897/images/-/raw/master/comic/12.jpg
@@ -317,7 +317,7 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 ### 2.3 五子棋
 
-想要在群里和朋友玩五子棋？XYBot可以帮你创建并管理一场五子棋游戏。
+想要在群里和朋友玩五子棋？W3Bot可以帮你创建并管理一场五子棋游戏。
 
 !> 本功能仅可在群聊中使用
 
@@ -327,10 +327,10 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 五子棋 邀请 @JoshuaZ
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 🎉您收到了一份来自 HenryXiaoYang 的五子棋比赛邀请！
 
 ⚙️请在60秒内发送下面的指令来接受邀请：
@@ -340,10 +340,10 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 五子棋 接受 ABC123
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 🎉五子棋游戏 ABC123 开始！
 
 ⚫️黑方：HenryXiaoYang
@@ -358,18 +358,18 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 ⚙️例如: 五子棋 下棋 C5
 
-#### **XYBot**
+#### **W3Bot**
 
-![Gomoku Board 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/function_introduction/gomoku_board_1.png?raw=true)
+![Gomoku Board 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_1.png?raw=true)
 
 #### **HenryXiaoYang**
 
 五子棋 下棋 i8
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 ⚫HenryXiaoYang 把棋子落在了 I8！
 轮到 ⚪JoshuaZ 下子了！
 ⏰限时：60秒
@@ -379,18 +379,18 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 ⚙️例如: 五子棋 下棋 C5
 
-#### **XYBot**
+#### **W3Bot**
 
-![Gomoku Board 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/function_introduction/gomoku_board_2.png?raw=true)
+![Gomoku Board 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_2.png?raw=true)
 
 #### **JoshuaZ**
 
 五子棋 下棋 I7
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 ⚪JoshuaZ 把棋子落在了 I7！
 轮到 ⚫HenryXiaoYang 下子了！
 ⏰限时：60秒
@@ -400,9 +400,9 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 ⚙️例如: 五子棋 下棋 C5
 
-#### **XYBot**
+#### **W3Bot**
 
-![Gomoku Board 3](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/function_introduction/gomoku_board_3.png?raw=true)
+![Gomoku Board 3](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_3.png?raw=true)
 
 #### **Omitted**
 
@@ -412,24 +412,24 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 五子棋 下棋 F9
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 🎉五子棋游戏 ABC123 结束！🥳
 
 ⚫️黑方：HenryXiaoYang 获胜！🏆
 
-#### **XYBot**
+#### **W3Bot**
 
-![Gomoku Board 4](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/function_introduction/gomoku_board_4.png?raw=true)
+![Gomoku Board 4](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_4.png?raw=true)
 <!-- chat:end -->
 
 ## 积分功能💰
 
 ### 3.1 签到
 
-在微信群中加入XYBot后，群成员可以每天签到领取积分。积分可以用来使用ChatGPT、抽奖等、发积分红包等等。
+在微信群中加入W3Bot后，群成员可以每天签到领取积分。积分可以用来使用ChatGPT、抽奖等、发积分红包等等。
 
 !> 默认每天签到可以领取到随机3-20积分，范围可在签到设置中修改。
 
@@ -439,20 +439,20 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 签到
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 签到成功！你领到了20个积分！✅
 
 #### **JoshuaZ**
 
 签到
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 签到成功！你领到了3个积分！✅
 <!-- chat:end -->
 
@@ -466,16 +466,16 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 查询积分
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 你有67点积分！👍
 <!-- chat:end -->
 
 ### 3.3 积分榜
 
-想要看看谁的积分最多？使用XYBot可以查看积分榜。
+想要看看谁的积分最多？使用W3Bot可以查看积分榜。
 
 <!-- chat:start -->
 
@@ -483,9 +483,9 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 积分榜
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot积分排行榜-----
+-----W3Bot积分排行榜-----
 
 1. xxxxxxx 7956分 👍
 2. xxxx 5773分 👍
@@ -522,7 +522,7 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 ### 3.4 积分转送
 
-一个积分体系怎么能没有交易系统？XYBot的积分转送功能可以让你把你的积分转给其他人。
+一个积分体系怎么能没有交易系统？W3Bot的积分转送功能可以让你把你的积分转给其他人。
 
 <!-- chat:start -->
 
@@ -530,26 +530,26 @@ XYBot可以帮你随机获取一个链接，可以说是更隐蔽的随机图图
 
 转送积分 20 @JoshuaZ
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
------XYBot-----
+-----W3Bot-----
 转帐成功✅! 你现在有66点积分 JoshuaZ现在有26点积分
 
 #### **JoshuaZ**
 
 查询积分
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 你有26点积分！👍
 <!-- chat:end -->
 
 ### 3.5 积分抽奖
 
-XYBot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分。
+W3Bot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分。
 
 ?> 抽奖的奖品和概率可以在抽奖设置中修改。
 
@@ -559,10 +559,10 @@ XYBot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 抽奖 小
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
-----XYBot抽奖----
+----W3Bot抽奖----
 🥳恭喜你在 1次 小抽奖 中抽到了：
 
 🟩
@@ -578,10 +578,10 @@ XYBot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 抽奖 中 5
 
-#### **XYBot**
+#### **W3Bot**
 
 @HenryXiaoYang
-----XYBot抽奖----
+----W3Bot抽奖----
 🥳恭喜你在 5次 中抽奖 中抽到了：
 
 🟪🟩🟪🟩🟦
@@ -596,7 +596,7 @@ XYBot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 ### 3.6 积分红包
 
-想发红包但没钱？XYBot的积分红包功能可以让你用积分发红包给群里的其他人。
+想发红包但没钱？W3Bot的积分红包功能可以让你用积分发红包给群里的其他人。
 
 ?> 红包的最高金额和最多数量可以在红包设置中修改。
 
@@ -606,9 +606,9 @@ XYBot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 发红包 15 2
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 HenryXiaoYang 发送了一个红包！
 
 🧧红包金额：15点积分
@@ -618,28 +618,28 @@ HenryXiaoYang 发送了一个红包！
 
 快输入指令来抢红包！抢红包 口令
 
-#### **XYBot**
+#### **W3Bot**
 
-![Red Packet Code](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/function_introduction/red_packet_1.jpg?raw=true)
+![Red Packet Code](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/red_packet_1.jpg?raw=true)
 
 #### **JoshuaZ**
 
 抢红包 9bvx2
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 ❌口令错误或无效！
 
 #### **JoshuaZ**
 
 抢红包 qbvx2
 
-#### **XYBot**
+#### **W3Bot**
 
 @JoshuaZ
------XYBot-----
+-----W3Bot-----
 🧧恭喜 JoshuaZ 抢到了 4 点积分！
 <!-- chat:end -->
 
@@ -660,22 +660,22 @@ HenryXiaoYang 发送了一个红包！
 
 机器人状态
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 Bot Running😊
 Bot version: v0.0.6
-Github: https://github.com/HenryXiaoYang/XYBot
+Github: https://github.com/HenryXiaoYang/W3Bot
 
 #### **JoshuaZ**
 
 机器人状态
 
-#### **XYBot**
+#### **W3Bot**
 
 Bot Running😊
 Bot version: v0.0.6
-Github: https://github.com/HenryXiaoYang/XYBot
+Github: https://github.com/HenryXiaoYang/W3Bot
 <!-- chat:end -->
 
 ### 获取机器人通讯录
@@ -690,7 +690,7 @@ Github: https://github.com/HenryXiaoYang/XYBot
 
 获取机器人通讯录
 
-#### **XYBot**
+#### **W3Bot**
 
 (一个Excel表格)
 
@@ -708,27 +708,27 @@ Github: https://github.com/HenryXiaoYang/XYBot
 
 管理积分 wxid_0123456789abcde 加 10
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 😊成功给wxid_0123456789abcde加了10点积分！他现在有15点积分！
 
 #### **HenryXiaoYang**
 
 管理积分 @JoshuaZ 减 10
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 😊成功给wxid_0123456789abcde减了10点积分！他现在有5点积分！
 
 #### **HenryXiaoYang**
 
 管理积分 wxid_0123456789abcde 10
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 😊成功将wxid_0123456789abcde的积分设置为10！
 <!-- chat:end -->
 
@@ -744,18 +744,18 @@ Github: https://github.com/HenryXiaoYang/XYBot
 
 管理白名单 wxid_0123456789abcde 加入
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 成功修改wxid_0123456789abcde的白名单！😊
 
 #### **HenryXiaoYang**
 
 管理白名单 @JoshuaZ 删除
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 成功修改wxid_0123456789abcde的白名单！😊
 <!-- chat:end -->
 
@@ -771,9 +771,9 @@ Github: https://github.com/HenryXiaoYang/XYBot
 
 管理插件 列表
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 已加载插件列表：
 admin_signin_reset
 points_trade
@@ -810,27 +810,27 @@ gomoku
 
 管理插件 卸载 lucky_draw
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 卸载插件lucky_draw成功！✅
 
 #### **HenryXiaoYang**
 
 管理插件 加载 lucky_draw
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 加载插件lucky_draw成功！✅
 
 #### **HenryXiaoYang**
 
 管理插件 重载 lucky_draw
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 重载插件lucky_draw成功！✅
 <!-- chat:end -->
 
@@ -846,10 +846,8 @@ gomoku
 
 重置签到冷却
 
-#### **XYBot**
+#### **W3Bot**
 
------XYBot-----
+-----W3Bot-----
 😊成功重置签到状态！
 <!-- chat:end -->
-
-
