@@ -1,7 +1,7 @@
 # W3Bot 微信机器人
 
 <p align="center">
-    <img alt="W3Bot微信机器人logo" width="240" src="https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/logo/W3Bot_logo.png?raw=true">
+    <img alt="W3Bot 微信机器人 logo" width="240" src="https://github.com/caoyang2002/W3Bot/raw/main/docs/images/w3bot.png">
 </p>
 
 W3Bot是一个可运行于Linux和Windows的基于Hook的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀

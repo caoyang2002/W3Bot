@@ -6,7 +6,7 @@
 
 ## 前言
 
-这是你需要知道的`W3Bot` v0.0.7的项目结构
+这是你需要知道的 `W3Bot` v0.0.7 的项目结构
 
 ```
 .
@@ -22,44 +22,7 @@
 ├── plugins
 │   ├── admin_points.py
 │   ├── admin_points.yml
-│   ├── admin_signin_reset.py
-│   ├── admin_signin_reset.yml
-│   ├── admin_whitelist.py
-│   ├── admin_whitelist.yml
-│   ├── bot_status.py
-│   ├── bot_status.yml
-│   ├── get_contact_list.py
-│   ├── get_contact_list.yml
-│   ├── gomoku.py
-│   ├── gomoku.yml
-│   ├── gpt.py
-│   ├── gpt.yml
-│   ├── gpt4.py
-│   ├── gpt4.yml
-│   ├── hypixel_info.py
-│   ├── hypixel_info.yml
-│   ├── lucky_draw.py
-│   ├── lucky_draw.yml
-│   ├── manage_plugins.py
-│   ├── manage_plugins.yml
-│   ├── menu.py
-│   ├── menu.yml
-│   ├── news.py
-│   ├── news.yml
-│   ├── points_leaderboard.py
-│   ├── points_leaderboard.yml
-│   ├── points_trade.py
-│   ├── points_trade.yml
-│   ├── query_points.py
-│   ├── query_points.yml
-│   ├── random_picture.py
-│   ├── random_picture.yml
-│   ├── random_picture_link.py
-│   ├── random_picture_link.yml
-│   ├── red_packet.py
-│   ├── red_packet.yml
-│   ├── sign_in.py
-│   ├── sign_in.yml
+...
 │   ├── weather.py
 │   └── weather.yml
 ├── pywxdll
@@ -78,16 +41,16 @@
 └── start.py
 ```
 
-如果你部署时按照了`W3Bot Linux部署`的步骤，那么你的W3Bot的文件已被持久化到`/var/lib/docker/volumes/W3Bot`
-，也就是`W3Bot`卷。
+如果你部署时按照了 `W3Bot Linux部署` 的步骤，那么你的W3Bot的文件已被持久化到 `/var/lib/docker/volumes/W3Bot`
+，也就是 `W3Bot` 卷。
 
-如果你是在Windows上部署的，那么文件都在`W3Bot`文件夹下。
+如果你是在 Windows 上部署的，那么文件都在 `W3Bot` 文件夹下。
 
-在项目根目录下，有一个`main_config.yml`文件，这个文件是W3Bot的主配置文件。
+在项目根目录下，有一个 `main_config.yml` 文件，这个文件是 W3Bot 的主配置文件。
 
-在`plugins`目录下，有很多插件，这些插件是W3Bot的一个一个功能；如签到，随机图片都是单独一个插件。一个插件分别有一份Python脚本文件，与一份`yaml`配置文件。一般Python脚本文件与配置文件的文件名(不包括文件名后缀)一致。
+在 `plugins` 目录下，有很多插件，这些插件是 W3Bot 的一个一个功能；如签到，随机图片都是单独一个插件。一个插件分别有一份 `Python` 脚本文件，与一份 `yaml` 配置文件。一般 `Python` 脚本文件与配置文件的文件名(不包括文件名后缀)一致。
 
-以`gpt`插件为例，`gpt.py`是`gpt`插件的Python脚本文件，`gpt.yml`是`gpt`插件的配置文件。
+以 `gpt` 插件为例，`gpt.py` 是 `gpt` 插件的 `Python` 脚本文件，`gpt.yml` 是 `gpt` 插件的配置文件。
 
 ## 配置主设置
 
