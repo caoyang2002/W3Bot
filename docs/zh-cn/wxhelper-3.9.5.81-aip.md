@@ -1,22 +1,22 @@
 # wxhelper API 文档
 
+[toc]
+
 > 3.9.5.81 版本，http 接口文档，文档仅供参考。
 
-## 简单说明：
+所有接口只支持 `post` 方法。
 
- 所有接口只支持 `post` 方法。
+全部使用 `json` 格式。
 
- 全部使用 `json` 格式。
+格式： http://host:port/api/xxxx
 
- 格式： http://host:port/api/xxxx
+host: 绑定的host
 
- host: 绑定的host
+port: 监听的端口
 
- port: 监听的端口
+xxxx: 对应的功能路径
 
- xxxx: 对应的功能路径
-
- 返回结构的 json 格式：
+返回结构的 json 格式：
 
  ``` javascript
   {
@@ -33,27 +33,27 @@ msg：  成功/错误信息
 data： 接口返回的数据
 
 
-### 1. 检查微信登录
+## 1. 检查微信登录
 
-#### 接口功能
+### 接口功能
 
 > 检查微信是否登录
 
-#### 接口地址
+### 接口地址
 
 > `/api/checkLogin`
 
-#### HTTP请求方式
+### HTTP请求方式
 
 > POST  JSON
 
-#### 请求参数
+### 请求参数
 
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-#### 返回字段
+### 返回字段
 
 |返回字段|字段类型|说明                              |
 |:--|:--|:--|
@@ -61,7 +61,7 @@ data： 接口返回的数据
 |result|string|成功提示|
 |data|string|响应内容|
 
-#### 接口示例
+### 接口示例
 入参：
 ``` javascript
 ```
@@ -74,27 +74,27 @@ data： 接口返回的数据
 }
 ```
 
-### 2.获取登录用户信息
+## 2.获取登录用户信息
 
-#### 接口功能
+### 接口功能
 
 > 获取登录用户信息
 
-#### 接口地址
+### 接口地址
 
 > `/api/userInfo`
 
-#### HTTP请求方式
+### HTTP请求方式
 
 > POST  JSON
 
-#### 请求参数
+### 请求参数
 
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-#### 返回字段
+### 返回字段
 
 |返回字段|字段类型|说明                              |
 |---|---|---|
@@ -114,7 +114,7 @@ data： 接口返回的数据
 |signature|string|个人签名|
 |dbKey|string|数据库的SQLCipher的加密key，可以使用该key配合decrypt.py解密数据库
 
-##### 接口示例
+### 接口示例
 入参：
 ``` javascript
 ```
@@ -142,23 +142,29 @@ data： 接口返回的数据
 
 
 
-### 2.发送文本消息**
-##### 接口功能
+## 2.发送文本消息
+
+### 接口功能
+
 > 发送文本消息
 
-##### 接口地址
+### 接口地址
+
 > [/api/sendTextMsg](/api/sendTextMsg)
 
-##### HTTP请求方式
+### HTTP请求方式
+
 > POST  JSON
 
-##### 请求参数
+### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid |true |string| 接收人wxid |
 |msg|true |string|消息文本内容|
 
-##### 返回字段
+### 返回字段
+
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,不为0成功, 0失败|
@@ -166,7 +172,7 @@ data： 接口返回的数据
 |data|object|null|
 
 
-##### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -180,19 +186,23 @@ data： 接口返回的数据
 {"code":345686720,"msg":"success","data":null}
 ```
 
-### 3.hook消息**
-##### 接口功能
+## 3.hook消息
+
+### 接口功能
+
 > hook接收文本消息，图片消息，群消息.该接口将hook的消息通过tcp回传给本地的端口。
-enableHttp=1时，使用url，timeout参数配置服务端的接收地址。请求为post，Content-Type 为json。
-enableHttp=0时，使用ip，port的tcp服务回传消息。
+> enableHttp=1时，使用url，timeout参数配置服务端的接收地址。请求为post，Content-Type 为json。
+> enableHttp=0时，使用ip，port的tcp服务回传消息。
 
-##### 接口地址
-> [/api/hookSyncMsg](/api/hookSyncMsg)
+### 接口地址
 
-##### HTTP请求方式
+> `/api/hookSyncMsg`
+
+### HTTP请求方式
+
 > POST  JSON
 
-##### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |port |true |string| 本地服务端端口，用来接收消息内容 |
@@ -201,7 +211,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |timeout |true |string| 超时时间，单位ms|
 |enableHttp |true |number| 0/1 ：1.启用http 0.不启用http|
 
-##### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, 非0失败|
@@ -209,7 +219,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |msg|string|成功提示|
 
 
-##### 接口示例
+### 接口示例
 入参：
 ``` javascript
 {
@@ -225,22 +235,22 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 {"code":0,"msg":"success","data":null}
 ```
 
-### 4.取消hook消息**
-##### 接口功能
+## 4.取消hook消息**
+### 接口功能
 > 取消hook消息
 
-##### 接口地址
+### 接口地址
 > [/api/unhookSyncMsg](/api/unhookSyncMsg)
 
-##### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-##### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-##### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, 非0失败|
@@ -248,7 +258,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |msg|string|成功提示|
 
 
-##### 接口示例
+### 接口示例
 入参：
 ``` javascript
 
@@ -258,22 +268,26 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 {"code":0,"msg":"success","data":null}
 ```
 
-### 5.好友列表**
-#### 接口功能
+## 5.好友列表
+
+### 接口功能
+
 > 好友列表
 
-#### 接口地址
-> [/api/getContactList](/api/getContactList)
+### 接口地址
 
-#### HTTP请求方式
+> `/api/getContactList`
+
+### HTTP请求方式
 > POST  JSON
 
-#### 请求参数
+### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-#### 返回字段
+### 返回字段
 
 |返回字段|字段类型|说明                              |
 |---|---|---|
@@ -292,7 +306,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |msg|string|成功提示|
 
 
-#### 接口示例
+### 接口示例
 
 入参：
 
@@ -322,27 +336,27 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
     "msg": "success"
 ```
 
-### 6.获取数据库信息
+## 6.获取数据库信息
 
-#### 接口功能
+### 接口功能
 
 > 获取数据库信息和句柄
 
-#### 接口地址
+### 接口地址
 
 > `/api/getDBInfo`
 
-#### HTTP请求方式
+### HTTP请求方式
 
 > POST  JSON
 
-#### 请求参数
+### 请求参数
 
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-#### 返回字段
+### 返回字段
 
 |返回字段|字段类型|说明|
 |---|---|---|
@@ -358,7 +372,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |tableName|string|表名|
 
 
-#### 接口示例
+### 接口示例
 
 入参：
 
@@ -390,26 +404,29 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-### 7.查询数据库
+## 7.查询数据库
 
-#### 接口功能
+### 接口功能
 
 > 查询数据库
 
-#### 接口地址
+### 接口地址
 
 > `/api/execSql`
 
-#### HTTP请求方式
+### HTTP 请求方式
+
 > POST  JSON
 
-#### 请求参数
+### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 |dbHandle |true |number|  |
 |sql |true |string| 执行的sql |
 
-#### 返回字段
+### 返回字段
+
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, 非0失败|
@@ -418,7 +435,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 
 
 
-###### 接口示例
+### 接口示例
 入参：
 ``` javascript
 {
@@ -426,7 +443,9 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
     "sql":"select * from MSG where localId =301;"
 }
 ```
+
 响应：
+
 ``` javascript
 {
     "code": 1,
@@ -493,30 +512,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 8.发送文件消息**
-###### 接口功能
+## 8.发送文件消息
+
+### 接口功能
 > 发送文件消息
 
-###### 接口地址
+### 接口地址
 > [/api/sendFileMsg](/api/sendFileMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid |true |string| 接收人wxid |
 |filePath|true |string|文件绝对路径|
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,不为0成功, 0失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -531,23 +551,29 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 9.获取群详情**
-###### 接口功能
+## 9.获取群详情
+
+### 接口功能
+
 > 获取群详情
 
-###### 接口地址
-> [/api/getChatRoomDetailInfo](/api/getChatRoomDetailInfo)
+### 接口地址
 
-###### HTTP请求方式
+> /api/getChatRoomDetailInfo
+
+### HTTP请求方式
+
 > POST  JSON
 
-###### 请求参数
+### 请求参数
+
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId |true |string| 群id |
 
 
-###### 返回字段
+### 返回字段
+
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -558,7 +584,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |admin|string|群管理|
 |xml|string|xml信息|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -577,23 +603,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 10.添加群成员**
-###### 接口功能
+## 10. 添加群成员
+### 接口功能
 > 获取群详情
 
-###### 接口地址
+### 接口地址
 > [/api/addMemberToChatRoom](/api/addMemberToChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId |true |string| 群id |
 |memberIds |true |string| 成员id，多个用,分隔 |
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功,负数失败|
@@ -601,7 +627,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -616,17 +642,17 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 11.修改群昵称**
-###### 接口功能
+## 11.修改群昵称**
+### 接口功能
 > 修改群昵称
 
-###### 接口地址
+### 接口地址
 > [/api/modifyNickname](/api/modifyNickname)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId |true |string| 群id |
@@ -634,7 +660,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |nickName |true |string| 昵称 |
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -642,7 +668,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -658,17 +684,17 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 {"code":1,"msg":"success","data":null}
 ```
 
-#### 12.删除群成员**
-###### 接口功能
+## 12.删除群成员**
+### 接口功能
 > 删除群成员
 
-###### 接口地址
+### 接口地址
 > [/api/delMemberFromChatRoom](/api/delMemberFromChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId |true |string| 群id |
@@ -676,7 +702,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -684,7 +710,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -700,24 +726,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 13.获取群成员**
-###### 接口功能
+## 13.获取群成员**
+### 接口功能
 > 获取群成员
 
-###### 接口地址
+### 接口地址
 > [/api/getMemberFromChatRoom](/api/getMemberFromChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId |true |string| 群id |
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -729,7 +755,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |admin|string|群管理|
 |adminNickname|string|管理昵称|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -753,24 +779,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 14.置顶群消息**
-###### 接口功能
+## 14.置顶群消息**
+### 接口功能
 > 置顶群消息，需要群主权限
 
-###### 接口地址
+### 接口地址
 > [/api/topMsg](/api/topMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId |true |string| 消息id |
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -778,7 +804,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -798,24 +824,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 15.移除置顶群消息**
-###### 接口功能
+## 15.移除置顶群消息**
+### 接口功能
 > 移除置顶群消息，需要群主权限
 
-###### 接口地址
+### 接口地址
 > [/api/removeTopMsg](/api/removeTopMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId |true |string| 消息id |
 |chatRoomId |true |string| 群id |
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -823,7 +849,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -843,24 +869,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 16.邀请入群**
-###### 接口功能
+## 16.邀请入群**
+### 接口功能
 > 邀请入群，（40人以上的群需要使用邀请入群）
 
-###### 接口地址
+### 接口地址
 > [/api/InviteMemberToChatRoom](/api/InviteMemberToChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |memberIds |true |string| wxid，用,分隔 |
 |chatRoomId |true |string| 群id |
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -868,7 +894,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -889,23 +915,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 17.hook日志**
-###### 接口功能
+## 17.hook日志**
+### 接口功能
 > hook微信日志，输出在wechat安装目录的logs目录下
 
-###### 接口地址
+### 接口地址
 > [/api/hookLog](/api/hookLog)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, -1失败|
@@ -913,7 +939,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -930,23 +956,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 18.取消hook日志**
-###### 接口功能
+## 18.取消hook日志**
+### 接口功能
 > 取消hook日志
 
-###### 接口地址
+### 接口地址
 > [/api/unhookLog](/api/unhookLog)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, -1失败|
@@ -954,7 +980,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -970,23 +996,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 19.建群**
-###### 接口功能
+## 19.建群**
+### 接口功能
 > 建群（不建议使用，容易被封，测试期间被封了，无法保证效果）
 
-###### 接口地址
+### 接口地址
 > [/api/createChatRoom](/api/createChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |memberIds|string|群成员id，以,分割|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, -1失败|
@@ -994,7 +1020,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1010,23 +1036,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 20.退群**
-###### 接口功能
+## 20.退群**
+### 接口功能
 > 退群
 
-###### 接口地址
+### 接口地址
 > [/api/quitChatRoom](/api/quitChatRoom)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |chatRoomId|string|群id|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
@@ -1034,7 +1060,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1052,24 +1078,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 21.转发消息**
-###### 接口功能
+## 21.转发消息**
+### 接口功能
 > 转发消息
 
-###### 接口地址
+### 接口地址
 > [/api/forwardMsg](/api/forwardMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|接收人id|
 |msgId|string|消息id|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -1077,7 +1103,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1096,8 +1122,8 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 22.朋友圈首页**
-###### 接口功能
+## 22.朋友圈首页**
+### 接口功能
 > 朋友圈首页,前置条件需先调用hook消息接口成功,具体内容会在hook消息里返回，格式如下：
 ``` javascript
 {
@@ -1113,18 +1139,18 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-###### 接口地址
+### 接口地址
 > [/api/getSNSFirstPage](/api/getSNSFirstPage)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -1132,7 +1158,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1148,24 +1174,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 23.朋友圈下一页**
-###### 接口功能
+## 23.朋友圈下一页**
+### 接口功能
 > 朋友圈下一页
 
-###### 接口地址
+### 接口地址
 > [/api/getSNSNextPage](/api/getSNSNextPage)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |snsId|number|snsId|
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -1173,7 +1199,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1193,24 +1219,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 24.收藏消息**
-###### 接口功能
+## 24.收藏消息**
+### 接口功能
 > 收藏消息
 
-###### 接口地址
+### 接口地址
 > [/api/addFavFromMsg](/api/addFavFromMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId|number|消息id|
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -1218,7 +1244,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1237,24 +1263,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 24.收藏图片**
-###### 接口功能
+## 24.收藏图片**
+### 接口功能
 > 收藏图片
 
-###### 接口地址
+### 接口地址
 > [/api/addFavFromImage](/api/addFavFromImage)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|wxid|
 |imagePath|string|图片地址|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,1成功, -1失败|
@@ -1262,7 +1288,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1282,24 +1308,24 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 25.发送@消息**
-###### 接口功能
+## 25.发送@消息**
+### 接口功能
 > 发送@消息
 
-###### 接口地址
+### 接口地址
 > [/api/sendAtText](/api/sendAtText)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxids|string|wxid字符串，多个用,分隔，发送所有人传值"notify@all"|
 |chatRoomId|string|群id|
 |msg|string|消息内容|
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
@@ -1307,7 +1333,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |data|object|null|
 
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1329,23 +1355,23 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 26.获取群成员信息**
-###### 接口功能
+## 26.获取群成员信息**
+### 接口功能
 > 获取群成员基础信息
 
-###### 接口地址
+### 接口地址
 > [/api/getContactProfile](/api/getContactProfile)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|wxid|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
@@ -1357,7 +1383,7 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |v3|string|v3|
 |wxid|string|wxid|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1382,17 +1408,17 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 27.发送公众号消息**
-###### 接口功能
+## 27.发送公众号消息**
+### 接口功能
 > 自定义发送公众号消息
 
-###### 接口地址
+### 接口地址
 > [/api/forwardPublicMsg](/api/forwardPublicMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |appName|string|公众号id，消息内容里的appname|
@@ -1403,14 +1429,14 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 |digest|string|摘要，消息内容里的digest|
 |wxid|string|wxid|
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1435,30 +1461,30 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 28.转发公众号消息**
-###### 接口功能
+## 28.转发公众号消息**
+### 接口功能
 > 转发公众号消息
 
-###### 接口地址
+### 接口地址
 > [/api/forwardPublicMsgByMsgId](/api/forwardPublicMsgByMsgId)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId|number|msgId|
 |wxid|string|wxid|
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1478,30 +1504,30 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 29.下载附件**
-###### 接口功能
+## 29.下载附件**
+### 接口功能
 > 下载附件，保存在微信文件目录下  wxid_xxx/wxhelper 目录下
 
-###### 接口地址
+### 接口地址
 > [/api/downloadAttach](/api/downloadAttach)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId|number|msgId|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1521,31 +1547,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 30.解码图片**
-###### 接口功能
+## 30.解码图片**
+### 接口功能
 > 解码图片
 
-###### 接口地址
+### 接口地址
 > [/api/decodeImage](/api/decodeImage)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |filePath|string|待解码图片地址|
 |storeDir|string|解码后图片的存储目录|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1565,31 +1591,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 31.获取语音**
-###### 接口功能
+## 31.获取语音**
+### 接口功能
 > 获取语音，SILK v3格式,可自行转换mp3格式
 
-###### 接口地址
+### 接口地址
 > [/api/getVoiceByMsgId](/api/getVoiceByMsgId)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |msgId|number|消息id|
 |storeDir|string|语音的存储目录|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1609,31 +1635,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 32.发送图片**
-###### 接口功能
+## 32.发送图片**
+### 接口功能
 > 发送图片
 
-###### 接口地址
+### 接口地址
 > [/api/sendImagesMsg](/api/sendImagesMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|wxid|
 |imagePath|string|图片路径|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1653,31 +1679,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 }
 ```
 
-#### 33.发送自定义表情**
-###### 接口功能
+## 33.发送自定义表情**
+### 接口功能
 > 发送自定义表情
 
-###### 接口地址
+### 接口地址
 > [/api/sendCustomEmotion](/api/sendCustomEmotion)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|wxid|
 |filePath|string|表情路径，可以直接查询CustomEmotion表的MD5字段,路径规则见下面示例|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1698,17 +1724,17 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 34.发送小程序**
-###### 接口功能
+## 34.发送小程序**
+### 接口功能
 > 发送小程序（待完善，不稳定）,相关参数可以参考示例的滴滴小程序的内容自行组装。
 
-###### 接口地址
+### 接口地址
 > [/api/sendApplet](/api/sendApplet)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|接收人wxid|
@@ -1721,14 +1747,14 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1755,31 +1781,31 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 35.拍一拍**
-###### 接口功能
+## 35.拍一拍**
+### 接口功能
 > 拍一拍
 
-###### 接口地址
+### 接口地址
 > [/api/sendPatMsg](/api/sendPatMsg)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |wxid|string|被拍人id|
 |receiver|string|接收人id，可以是自己wxid，私聊好友wxid，群id|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,大于0成功, -1失败|
 |msg|string|成功提示|
 |data|object|null|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
@@ -1801,30 +1827,30 @@ enableHttp=0时，使用ip，port的tcp服务回传消息。
 ```
 
 
-#### 36.OCR**
-###### 接口功能
+## 36.OCR**
+### 接口功能
 > OCR识别文字，非0时再调用一次，一般需要调用2次
 
-###### 接口地址
+### 接口地址
 > [/api/ocr](/api/ocr)
 
-###### HTTP请求方式
+### HTTP请求方式
 > POST  JSON
 
-###### 请求参数
+### 请求参数
 |参数|必选|类型|说明|
 |---|---|---|---|
 |imagePath|string|图片全路径|
 
 
-###### 返回字段
+### 返回字段
 |返回字段|字段类型|说明                              |
 |---|---|---|
 |code|int|返回状态,0成功, 非0时再调用一次|
 |msg|string|成功提示|
 |data|object|识别得结果|
 
-###### 接口示例
+### 接口示例
 
 入参：
 ``` javascript
