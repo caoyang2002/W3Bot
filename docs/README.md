@@ -19,7 +19,7 @@ W3Bot 详细的部署教程可以在项目的Wiki中找到。📚 同时，W3Bot
 
 <p align="center">
     <a href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-red.svg" alt="GPLv3 License"></a>
-    <a href="https://github.com/HenryXiaoYang/W3Bot"><img src="https://img.shields.io/badge/Version-0.0.7-orange.svg" alt="Version"></a>
+    <a href="https://github.com/caoyang2002/W3Bot"><img src="https://img.shields.io/badge/Version-0.0.7-orange.svg" alt="Version"></a>
     <a href="https://yangres.com"><img src="https://img.shields.io/badge/Blog-@HenryXiaoYang-yellow.svg" alt="Blog"></a>
 </p>
 
@@ -88,19 +88,19 @@ https://github.com/lich0821 感谢这个项目的作者写的微信版本号修�
       <source
         media="(prefers-color-scheme: dark)"
         srcset="
-          https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date&theme=dark
+          https://api.star-history.com/svg?repos=caoyang2002/W3Bot&type=Date&theme=dark
         "
       />
       <source
         media="(prefers-color-scheme: light)"
         srcset="
-          https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date
+          https://api.star-history.com/svg?repos=caoyang2002/W3Bot&type=Date
         "
       />
       <img
         alt="W3Bot Star History"
         width="600"
-        src="https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date"
+        src="https://api.star-history.com/svg?repos=caoyang2002/W3Bot&type=Date"
       />
     </picture>
 </p>

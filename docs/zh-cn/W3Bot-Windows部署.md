@@ -54,7 +54,7 @@ cd Desktop
 然后`git clone`将`W3Bot`从Github克隆下来
 
 ```commandline
-git clone https://github.com/HenryXiaoYang/W3Bot.git
+git clone https://github.com/caoyang2002/W3Bot.git
 ```
 
 ### 5. 下载W3Bot所需要的依赖
