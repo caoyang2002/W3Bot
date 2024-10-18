@@ -118,7 +118,8 @@ class human_verification(PluginInterface):
         normalized_score = 1 / (1 + np.exp(-weighted_sum))
 
         classification = "AI" if normalized_score > 0.5 else "人类"
-        confidence = abs(normalized_score - 0.5) * 2  # 将0.5-1的范围映射到0-1
+        # confidence = abs(normalized_score - 0.5) * 2  # 将0.5-1的范围映射到0-1
+        confidence = max(normalized_score, 1 - normalized_score)
 
         analysis = f"""
 分析结果：

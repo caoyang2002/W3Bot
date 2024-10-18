@@ -1,4 +1,6 @@
-keywords: [ "机器人状态","bottest" ]
+keywords: ["机器人状态", "bottest"]
 plugin_name: "bot_status"
 
 status_message: "Bot Running😊"
+github: "https://github.com/caoyang2002/W3Bot"
+docker: "https://hub.docker.com/r/caoyang2002/w3bot"

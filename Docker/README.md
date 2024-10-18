@@ -426,5 +426,7 @@ sudo docker-compose down
 
 
 # 编辑文件
- sudo docker exec -it W3Bot /bin/bash
+sudo docker exec -it W3Bot /bin/bash
 ```
+
+wine python -m pip install pymem
