@@ -23,7 +23,7 @@
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 菜单
 
@@ -57,7 +57,7 @@
 例如:
 菜单 1.1
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 菜单 1.2
 
@@ -75,7 +75,7 @@ W3Bot可以帮你查询全球任意城市的天气情况。
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 天气 北京
 
@@ -108,7 +108,7 @@ W3Bot可以帮你获取最新的头条新闻。
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 获取新闻
 
@@ -140,19 +140,19 @@ W3Bot可以调用ChatGPT，让你和机器人聊天。
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 gpt3 用简短的语言介绍一下Github
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
 已收到指令，处理中，请勿重复发送指令！👍
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
 因为你在白名单内，所以没扣除积分！👍
 ChatGPT回答：
@@ -163,7 +163,7 @@ Github是一个基于云端的代码托管平台，它允许开发者存储、�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 清除对话
 
@@ -171,7 +171,7 @@ Github是一个基于云端的代码托管平台，它允许开发者存储、�
 
 对话记录已清除！✅
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 后面用英文回答我
 
@@ -179,7 +179,7 @@ Github是一个基于云端的代码托管平台，它允许开发者存储、�
 
 Sure, please go ahead and ask your question in English.
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 1除以3等于几
 
@@ -194,7 +194,7 @@ W3Bot可以帮你查询在我的世界服务器Hypixel中玩家的信息，数�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 hypixel Technoblade
 
@@ -233,7 +233,7 @@ Joined: 2015/06/30 21:27:41
 ℹ️当前状态：
 Status: Offline
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 hypixel bw Technoblade
 
@@ -287,7 +287,7 @@ W3Bot 可以帮你随机获取一张二次元图片。
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 随机图图
 
@@ -302,7 +302,7 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 随机链接
 
@@ -323,31 +323,31 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
-五子棋 邀请 @JoshuaZ
+五子棋 邀请 @Reggie
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
-🎉您收到了一份来自 HenryXiaoYang 的五子棋比赛邀请！
+🎉您收到了一份来自 Simons 的五子棋比赛邀请！
 
 ⚙️请在60秒内发送下面的指令来接受邀请：
 五子棋 接受 ABC123
 
-#### **JoshuaZ**
+#### **Reggie**
 
 五子棋 接受 ABC123
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
 🎉五子棋游戏 ABC123 开始！
 
-⚫️黑方：HenryXiaoYang
-⚪️白方：JoshuaZ
+⚫️黑方：Simons
+⚪️白方：Reggie
 
 ⚫️黑方先手！
 
@@ -360,18 +360,18 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 #### **W3Bot**
 
-![Gomoku Board 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_1.png?raw=true)
+![Gomoku Board 1](https://github.com/Simons/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_1.png?raw=true)
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 五子棋 下棋 i8
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
-⚫HenryXiaoYang 把棋子落在了 I8！
-轮到 ⚪JoshuaZ 下子了！
+⚫Simons 把棋子落在了 I8！
+轮到 ⚪Reggie 下子了！
 ⏰限时：60秒
 
 ⚙️请发送下面指令落子:
@@ -381,18 +381,18 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 #### **W3Bot**
 
-![Gomoku Board 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_2.png?raw=true)
+![Gomoku Board 2](https://github.com/Simons/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_2.png?raw=true)
 
-#### **JoshuaZ**
+#### **Reggie**
 
 五子棋 下棋 I7
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
-⚪JoshuaZ 把棋子落在了 I7！
-轮到 ⚫HenryXiaoYang 下子了！
+⚪Reggie 把棋子落在了 I7！
+轮到 ⚫Simons 下子了！
 ⏰限时：60秒
 
 ⚙️请发送下面指令落子:
@@ -402,27 +402,27 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 #### **W3Bot**
 
-![Gomoku Board 3](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_3.png?raw=true)
+![Gomoku Board 3](https://github.com/Simons/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_3.png?raw=true)
 
 #### **Omitted**
 
 此处省略一些聊天
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 五子棋 下棋 F9
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
 🎉五子棋游戏 ABC123 结束！🥳
 
-⚫️黑方：HenryXiaoYang 获胜！🏆
+⚫️黑方：Simons 获胜！🏆
 
 #### **W3Bot**
 
-![Gomoku Board 4](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_4.png?raw=true)
+![Gomoku Board 4](https://github.com/Simons/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/gomoku_board_4.png?raw=true)
 <!-- chat:end -->
 
 ## 积分功能💰
@@ -435,23 +435,23 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 签到
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
 签到成功！你领到了20个积分！✅
 
-#### **JoshuaZ**
+#### **Reggie**
 
 签到
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
 签到成功！你领到了3个积分！✅
 <!-- chat:end -->
@@ -462,13 +462,13 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 查询积分
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
 你有67点积分！👍
 <!-- chat:end -->
@@ -479,7 +479,7 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 积分榜
 
@@ -526,23 +526,23 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
-转送积分 20 @JoshuaZ
+转送积分 20 @Reggie
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 -----W3Bot-----
-转帐成功✅! 你现在有66点积分 JoshuaZ现在有26点积分
+转帐成功✅! 你现在有66点积分 Reggie现在有26点积分
 
-#### **JoshuaZ**
+#### **Reggie**
 
 查询积分
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
 你有26点积分！👍
 <!-- chat:end -->
@@ -555,13 +555,13 @@ W3Bot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 抽奖 小
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 ----W3Bot抽奖----
 🥳恭喜你在 1次 小抽奖 中抽到了：
 
@@ -574,13 +574,13 @@ W3Bot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 概率请自行查询菜单⚙️
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 抽奖 中 5
 
 #### **W3Bot**
 
-@HenryXiaoYang
+@Simons
 ----W3Bot抽奖----
 🥳恭喜你在 5次 中抽奖 中抽到了：
 
@@ -602,14 +602,14 @@ W3Bot的积分抽奖功能可以让你用积分参与抽奖，赢取更多积分
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 发红包 15 2
 
 #### **W3Bot**
 
 -----W3Bot-----
-HenryXiaoYang 发送了一个红包！
+Simons 发送了一个红包！
 
 🧧红包金额：15点积分
 🧧红包数量：2个
@@ -620,27 +620,27 @@ HenryXiaoYang 发送了一个红包！
 
 #### **W3Bot**
 
-![Red Packet Code](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/red_packet_1.jpg?raw=true)
+![Red Packet Code](https://github.com/Simons/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/function_introduction/red_packet_1.jpg?raw=true)
 
-#### **JoshuaZ**
+#### **Reggie**
 
 抢红包 9bvx2
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
 ❌口令错误或无效！
 
-#### **JoshuaZ**
+#### **Reggie**
 
 抢红包 qbvx2
 
 #### **W3Bot**
 
-@JoshuaZ
+@Reggie
 -----W3Bot-----
-🧧恭喜 JoshuaZ 抢到了 4 点积分！
+🧧恭喜 Reggie 抢到了 4 点积分！
 <!-- chat:end -->
 
 ## 管理员功能🔧
@@ -656,7 +656,7 @@ HenryXiaoYang 发送了一个红包！
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 机器人状态
 
@@ -667,7 +667,7 @@ Bot Running😊
 Bot version: v0.0.6
 Github: https://github.com/caoyang2002/W3Bot
 
-#### **JoshuaZ**
+#### **Reggie**
 
 机器人状态
 
@@ -686,7 +686,7 @@ Github: https://github.com/caoyang2002/W3Bot
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 获取机器人通讯录
 
@@ -704,7 +704,7 @@ Github: https://github.com/caoyang2002/W3Bot
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理积分 wxid_0123456789abcde 加 10
 
@@ -713,16 +713,16 @@ Github: https://github.com/caoyang2002/W3Bot
 -----W3Bot-----
 😊成功给wxid_0123456789abcde加了10点积分！他现在有15点积分！
 
-#### **HenryXiaoYang**
+#### **Simons**
 
-管理积分 @JoshuaZ 减 10
+管理积分 @Reggie 减 10
 
 #### **W3Bot**
 
 -----W3Bot-----
 😊成功给wxid_0123456789abcde减了10点积分！他现在有5点积分！
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理积分 wxid_0123456789abcde 10
 
@@ -740,7 +740,7 @@ Github: https://github.com/caoyang2002/W3Bot
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理白名单 wxid_0123456789abcde 加入
 
@@ -749,9 +749,9 @@ Github: https://github.com/caoyang2002/W3Bot
 -----W3Bot-----
 成功修改wxid_0123456789abcde的白名单！😊
 
-#### **HenryXiaoYang**
+#### **Simons**
 
-管理白名单 @JoshuaZ 删除
+管理白名单 @Reggie 删除
 
 #### **W3Bot**
 
@@ -767,7 +767,7 @@ Github: https://github.com/caoyang2002/W3Bot
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理插件 列表
 
@@ -806,7 +806,7 @@ gomoku
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理插件 卸载 lucky_draw
 
@@ -815,7 +815,7 @@ gomoku
 -----W3Bot-----
 卸载插件lucky_draw成功！✅
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理插件 加载 lucky_draw
 
@@ -824,7 +824,7 @@ gomoku
 -----W3Bot-----
 加载插件lucky_draw成功！✅
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 管理插件 重载 lucky_draw
 
@@ -842,7 +842,7 @@ gomoku
 
 <!-- chat:start -->
 
-#### **HenryXiaoYang**
+#### **Simons**
 
 重置签到冷却
 
