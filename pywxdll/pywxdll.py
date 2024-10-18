@@ -205,6 +205,7 @@ class Pywxdll:
 
     def send_file_msg(self, wxid: str, file_path: str) -> bool:
         """
+        发送文件
         Send a file message to the wxid.
         :param wxid: WeChat account identifier
         :param file_path: The path of the file

@@ -1,7 +1,7 @@
 #  Copyright (c) 2024. Henry Yang
 #
 #  This program is licensed under the GNU General Public License v3.0.
-
+# 每日信息
 from datetime import datetime
 
 import pytz

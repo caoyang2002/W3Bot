@@ -1,3 +1,4 @@
+# 防止微信自动退出
 import random
 
 import schedule

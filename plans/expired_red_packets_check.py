@@ -1,3 +1,4 @@
+# 检查红包
 import schedule
 import yaml
 
