@@ -49,20 +49,20 @@ class points_trade(PluginInterface):
             else:
                 self.log_and_send_error_message(roomid, trader_wxid, error_message)  # 记录日志和发送错误信息
         else:
-            out_message = "-----XYBot-----\n转帐失败❌\n指令格式错误/在私聊转帐积分(仅可在群聊中转帐积分)❌"
+            out_message = "\n转帐失败❌\n指令格式错误/在私聊转帐积分(仅可在群聊中转帐积分)❌"
             logger.info(f'[发送@信息]{out_message}| [@]{recv["sender"]}| [发送到] {recv["from"]}')
             self.bot.send_at_msg(recv["from"], out_message, [recv["sender"]])
 
     def get_error_message(self, target_wxid, trader_wxid, points_num: str):  # 获取错误信息
         if not target_wxid:
-            return "\n-----XYBot-----\n转帐失败❌\n转帐人不存在(仅可转账群内成员)或⚠️转帐目标昵称重复⚠️"
+            return "\n\n转帐失败❌\n转帐人不存在(仅可转账群内成员)或⚠️转帐目标昵称重复⚠️"
         elif not points_num.isdigit():
-            return "\n-----XYBot-----\n转帐失败❌\n转帐积分无效(必须为正整数!)"
+            return "\n\n转帐失败❌\n转帐积分无效(必须为正整数!)"
         points_num = int(points_num)
         if not self.min_points <= points_num <= self.max_points:
-            return f"\n-----XYBot-----\n转帐失败❌\n转帐积分无效(最大{self.max_points} 最小{self.min_points})"
+            return f"\n\n转帐失败❌\n转帐积分无效(最大{self.max_points} 最小{self.min_points})"
         elif self.db.get_points(trader_wxid) < points_num:
-            return f"\n-----XYBot-----\n积分不足！❌\n需要{points_num}点！"
+            return f"\n\n积分不足！❌\n需要{points_num}点！"
 
     # 记录日志和发送成功信息
     def log_and_send_success_message(self, roomid, trader_wxid, target_wxid, points_num):
@@ -73,7 +73,7 @@ class points_trade(PluginInterface):
             f"[积分转帐]转帐人:{trader_wxid} {trader_nick}|目标:{target_wxid} {target_nick}|群:{roomid}|积分数:{points_num}"
         )
         trader_points, target_points = self.db.get_points(trader_wxid), self.db.get_points(target_wxid)
-        out_message = f"\n-----XYBot-----\n转帐成功✅! 你现在有{trader_points}点积分 {target_nick}现在有{target_points}点积分"
+        out_message = f"\n\n转帐成功✅! 你现在有{trader_points}点积分 {target_nick}现在有{target_points}点积分"
         logger.info(f'[发送@信息]{out_message}| [@]{[trader_wxid, target_wxid]}| [发送到] {roomid}')
         self.bot.send_at_msg(roomid, out_message, [trader_wxid, target_wxid])
 

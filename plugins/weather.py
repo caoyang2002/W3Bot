@@ -60,10 +60,10 @@ class weather(PluginInterface):
                 self.send_friend_or_group(recv, out_message)
 
             elif geoapi_json['code'] == '404':
-                error = '-----XYBot-----\n⚠️城市不存在！'
+                error = '\n⚠️城市不存在！'
                 self.send_friend_or_group(recv, error)
             else:
-                error = f'-----XYBot-----\n⚠️请求失败！\n{geoapi_json}'
+                error = f'\n⚠️请求失败！\n{geoapi_json}'
                 self.send_friend_or_group(recv, error)
 
 
@@ -91,7 +91,7 @@ class weather(PluginInterface):
         now_visibility = now_weather_api_json['now']['vis']
         now_uvindex = weather_forecast_api_json['daily'][0]['uvIndex']
 
-        message = f'-----XYBot-----\n{city_name} 实时天气☁️\n更新时间：{update_time}⏰\n\n🌡️当前温度：{now_temperature}℃\n🌡️体感温度：{now_feelslike}℃\n☁️天气：{now_weather}\n☀️紫外线指数：{now_uvindex}\n🌬️风向：{now_wind_direction}\n🌬️风力：{now_wind_scale}级\n💦湿度：{now_humidity}%\n🌧️降水量：{now_precip}mm/h\n👀能见度：{now_visibility}km\n\n☁️未来3天 {city_name} 天气：\n'
+        message = f'\n{city_name} 实时天气☁️\n更新时间：{update_time}⏰\n\n🌡️当前温度：{now_temperature}℃\n🌡️体感温度：{now_feelslike}℃\n☁️天气：{now_weather}\n☀️紫外线指数：{now_uvindex}\n🌬️风向：{now_wind_direction}\n🌬️风力：{now_wind_scale}级\n💦湿度：{now_humidity}%\n🌧️降水量：{now_precip}mm/h\n👀能见度：{now_visibility}km\n\n☁️未来3天 {city_name} 天气：\n'
         for day in weather_forecast_api_json['daily'][1:4]:
             date = '.'.join([i.lstrip('0') for i in day['fxDate'].split('-')[1:]])
             weather = day['textDay']

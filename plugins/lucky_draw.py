@@ -50,12 +50,12 @@ class lucky_draw(PluginInterface):
             if (
                     draw_name not in self.lucky_draw_probability.keys()
             ):  # 判断抽奖是否有效，积分是否够
-                error = "-----XYBot-----\n❌抽奖种类未知或者无效"
+                error = "\n❌抽奖种类未知或者无效"
             elif (
                     draw_name in self.lucky_draw_probability.keys()
                     and target_points < self.lucky_draw_probability[draw_name]["cost"]
             ):
-                error = "-----XYBot-----\n❌积分不足！"
+                error = "\n❌积分不足！"
 
         elif len(command) == 3 and command[2].isdigit():
             draw_name = command[1]
@@ -64,15 +64,15 @@ class lucky_draw(PluginInterface):
             if (
                     draw_name not in self.lucky_draw_probability.keys()
             ):  # 判断抽奖是否有效，积分是否够，连抽要乘次数
-                error = "-----XYBot-----\n❌抽奖种类未知或者无效"
+                error = "\n❌抽奖种类未知或者无效"
             elif (
                     draw_name in self.lucky_draw_probability.keys()
                     and target_points
                     < self.lucky_draw_probability[draw_name]["cost"] * draw_count
             ):
-                error = "-----XYBot-----\n❌积分不足！"
+                error = "\n❌积分不足！"
         else:  # 指令格式错误
-            error = "-----XYBot-----\n❌命令格式错误！请查看菜单获取正确命令格式"
+            error = "\n❌命令格式错误！请查看菜单获取正确命令格式"
 
         if not error:
 

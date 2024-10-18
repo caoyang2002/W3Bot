@@ -24,11 +24,11 @@ class admin_points(PluginInterface):
 
         error = ''
         if admin_wxid not in self.admin_list:
-            error = "-----XYBot-----\n❌配？"
+            error = "\n❌配？"
         elif len(recv["content"]) < 3 or len(recv["content"]) > 4:
-            error = "-----XYBot-----\n⚠️指令格式错误！"
+            error = "\n⚠️指令格式错误！"
         elif recv["content"][2] not in ["加", "减"] and len(recv["content"]) == 4:
-            error = "-----XYBot-----\n⚠️未知的积分操作！"
+            error = "\n⚠️未知的积分操作！"
 
         if not error:
             if recv['content'][1].startswith('@'):  # 判断是@还是wxid

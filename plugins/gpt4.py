@@ -49,32 +49,32 @@ class gpt4(PluginInterface):
                 or self.db.get_whitelist(user_wxid) == 1
                 or user_wxid in self.admins
         ):  # 积分足够或在白名单或在管理员
-            error_message = f"-----XYBot-----\n积分不足,需要{self.gpt_point_price}点⚠️"
+            error_message = f"\n积分不足,需要{self.gpt_point_price}点⚠️"
         elif len(recv["content"]) < 2:  # 指令格式正确
-            error_message = "-----XYBot-----\n参数错误!❌"
+            error_message = "\n参数错误!❌"
         elif not self.senstitive_word_check(gpt_request_message):  # 敏感词检查
-            error_message = "-----XYBot-----\n内容包含敏感词!⚠️"
+            error_message = "\n内容包含敏感词!⚠️"
 
         if not error_message:
-            out_message = "-----XYBot-----\n已收到指令，处理中，请勿重复发送指令！👍"  # 发送已收到信息，防止用户反复发送命令
+            out_message = "\n已收到指令，处理中，请勿重复发送指令！👍"  # 发送已收到信息，防止用户反复发送命令
             self.send_friend_or_group(recv, out_message)
 
             if self.db.get_whitelist(user_wxid) == 1 or user_wxid in self.admins:  # 如果用户在白名单内/是管理员
                 chatgpt_answer = await self.chatgpt(gpt_request_message)
                 if chatgpt_answer[0]:
-                    out_message = f"-----XYBot-----\n因为你在白名单内，所以没扣除积分！👍\nChatGPT回答：\n{chatgpt_answer[1]}\n\n⚙️ChatGPT版本：{self.gpt_version}"
+                    out_message = f"\n因为你在白名单内，所以没扣除积分！👍\nChatGPT回答：\n{chatgpt_answer[1]}\n\n⚙️ChatGPT版本：{self.gpt_version}"
                 else:
-                    out_message = f"-----XYBot-----\n出现错误！⚠️{chatgpt_answer}"
+                    out_message = f"\n出现错误！⚠️{chatgpt_answer}"
                 self.send_friend_or_group(recv, out_message)
 
             elif self.db.get_points(user_wxid) >= self.gpt_point_price:
                 self.db.add_points(user_wxid, self.gpt_point_price * -1)  # 减掉积分
                 chatgpt_answer = await self.chatgpt(gpt_request_message)  # 从chatgpt api 获取回答
                 if chatgpt_answer[0]:
-                    out_message = f"-----XYBot-----\n已扣除{self.gpt_point_price}点积分，还剩{self.db.get_points(user_wxid)}点积分👍\nChatGPT回答：\n{chatgpt_answer[1]}\n\n⚙️ChatGPT版本：{self.gpt_version}"  # 创建信息
+                    out_message = f"\n已扣除{self.gpt_point_price}点积分，还剩{self.db.get_points(user_wxid)}点积分👍\nChatGPT回答：\n{chatgpt_answer[1]}\n\n⚙️ChatGPT版本：{self.gpt_version}"  # 创建信息
                 else:
                     self.db.add_points(user_wxid, self.gpt_point_price)  # 补回积分
-                    out_message = f"-----XYBot-----\n出现错误，已补回积分！⚠️{chatgpt_answer}"
+                    out_message = f"\n出现错误，已补回积分！⚠️{chatgpt_answer}"
                 self.send_friend_or_group(recv, out_message)
         else:
             self.send_friend_or_group(recv, error_message)

@@ -71,6 +71,6 @@ class get_contact_list(PluginInterface):
             self.bot.send_file_msg(recv["from"], os.path.abspath(excel_path))  # 发送文件
 
         else:  # 用户不是管理员
-            out_message = "-----XYBot-----\n❌你配用这个指令吗？"
+            out_message = "\n❌你配用这个指令吗？"
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)

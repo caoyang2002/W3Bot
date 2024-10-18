@@ -59,7 +59,7 @@ class random_picture(PluginInterface):
             )  # 发送图片
 
         except Exception as error:
-            out_message = f"-----XYBot-----\n出现错误❌！{error}"
+            out_message = f"\n出现错误❌！{error}"
             logger.error(error)
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)  # 发送

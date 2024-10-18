@@ -53,14 +53,14 @@ class sign_in(PluginInterface):
             lucky_star = "⭐️" * lucky_num
             lucky_star_message = f"你的运势：{lucky_star}\n{self.lucky_star_message.get(lucky_num)}"
 
-            out_message = f"\n-----XYBot-----\n签到成功！你领到了{signin_points}个积分！✅\n\n{lucky_star_message}"  # 创建发送信息
+            out_message = f"\n\n签到成功！你领到了{signin_points}个积分！✅\n\n{lucky_star_message}"  # 创建发送信息
             logger.info(f"[发送@信息]{out_message}| [发送到] {recv['from']}")
             self.bot.send_at_msg(recv["from"], out_message, [sign_wxid])
 
         else:  # 今天已签到，不加积分
             next_sign_in_date = datetime.strptime(signstat, "%Y%m%d") + timedelta(days=1)
             next_sign_in_date_formatted = next_sign_in_date.strftime("%Y年%m月%d日")
-            out_message = f"\n-----XYBot-----\n❌你今天已经签到过了，每日凌晨刷新签到哦！下一次签到日期：{next_sign_in_date_formatted}"  # 创建信息
+            out_message = f"\n\n❌你今天已经签到过了，每日凌晨刷新签到哦！下一次签到日期：{next_sign_in_date_formatted}"  # 创建信息
             logger.info(f"[发送@信息]{out_message}| [发送到] {recv['from']}")
             self.bot.send_at_msg(recv["from"], out_message, [sign_wxid])
 

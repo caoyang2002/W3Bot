@@ -29,6 +29,6 @@ class bot_status(PluginInterface):
 
     async def run(self, recv):
 
-        out_message = f"-----XYBot-----\n{self.status_message}\nBot version: {self.bot_version}\nRepo: {self.github}\n Docker: {self.docker}"
+        out_message = f"\n{self.status_message}\nBot version: {self.bot_version}\nRepo: {self.github}\n Docker: {self.docker}"
         logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
         self.bot.send_text_msg(recv["from"], out_message)  # 发送

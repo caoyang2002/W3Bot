@@ -54,31 +54,31 @@ class dalle3(PluginInterface):
 
         error = ""
         if len(recv["content"]) < 2:  # 指令格式正确
-            error = "-----XYBot-----\n参数错误！🙅正确格式为：AI绘图 描述"
+            error = "\n参数错误！🙅正确格式为：AI绘图 描述"
         # 检查积分是否足够，管理员与白名单不需要检查
         elif user_wxid not in self.admins and self.db.get_whitelist(user_wxid) == 0 and self.db.get_points(
                 user_wxid) < self.price:
-            error = f"-----XYBot-----\n积分不足！😭需要 {self.price} 点积分！"
+            error = f"\n积分不足！😭需要 {self.price} 点积分！"
         elif not self.senstitive_word_check(user_request_prompt):  # 敏感词检查
-            error = "-----XYBot-----\n内容包含敏感词!⚠️"
+            error = "\n内容包含敏感词!⚠️"
         elif not user_request_prompt:
-            error = "-----XYBot-----\n请输入描述！🤔"
+            error = "\n请输入描述！🤔"
 
         if error:  # 如果没满足生成图片的条件，向用户发送为什么
             self.send_friend_or_group(recv, error)
             return
 
-        self.send_friend_or_group(recv, "-----XYBot-----\n正在生成图片，请稍等...🤔")
+        self.send_friend_or_group(recv, "\n正在生成图片，请稍等...🤔")
 
         image_path = await self.dalle3(user_request_prompt)
 
         if isinstance(image_path, Exception):  # 如果出现错误，向用户发送错误信息
-            self.send_friend_or_group(recv, f"-----XYBot-----\n出现错误，未扣除积分！⚠️\n{image_path}")
+            self.send_friend_or_group(recv, f"\n出现错误，未扣除积分！⚠️\n{image_path}")
             return
 
         if user_wxid not in self.admins and self.db.get_whitelist(user_wxid) == 0:  # 如果用户不是管理员或者白名单，扣积分
             self.db.add_points(user_wxid, -self.price)
-            self.send_friend_or_group(recv, f"-----XYBot-----\n🎉图片生成完毕，已扣除 {self.price} 点积分！🙏")
+            self.send_friend_or_group(recv, f"\n🎉图片生成完毕，已扣除 {self.price} 点积分！🙏")
 
         self.bot.send_image_msg(recv["from"], image_path)
         logger.info(f'[发送图片]{image_path}| [发送到] {recv["from"]}')

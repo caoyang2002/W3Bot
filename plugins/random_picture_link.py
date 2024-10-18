@@ -25,7 +25,7 @@ class random_picture_link(PluginInterface):
 
     async def run(self, recv):
         try:
-            out_message = "-----XYBot-----\n❓❓❓\n"
+            out_message = "\n❓❓❓\n"
 
             conn_ssl = aiohttp.TCPConnector(verify_ssl=False)
             for _ in range(self.link_count):
@@ -40,7 +40,7 @@ class random_picture_link(PluginInterface):
 
 
         except Exception as error:
-            out_message = f"-----XYBot-----\n出现错误❌！{error}"
+            out_message = f"\n出现错误❌！{error}"
             logger.error(error)
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)

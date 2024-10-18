@@ -32,7 +32,7 @@ class hypixel_info(PluginInterface):
 
         # 指令格式错误判断
         if len(recv["content"]) == 1 or len(recv["content"]) > 3:
-            out_message = "-----XYBot-----\n格式错误❌"
+            out_message = "\n格式错误❌"
 
             self.send_friend_or_group(recv, out_message)
 
@@ -44,7 +44,7 @@ class hypixel_info(PluginInterface):
                 await asyncio.create_task(self.send_bedwar_info(recv, headers))
 
             else:
-                out_message = "-----XYBot-----\n不存在的游戏！❌"
+                out_message = "\n不存在的游戏！❌"
                 self.send_friend_or_group(recv, out_message)
 
     @staticmethod
@@ -142,7 +142,7 @@ class hypixel_info(PluginInterface):
         request_ign = recv["content"][1]  # 请求的玩家ign (游戏内名字 in game name)
 
         self.send_friend_or_group(
-            recv, f"-----XYBot-----\n查询玩家 {request_ign} 中，请稍候！🙂"
+            recv, f"\n查询玩家 {request_ign} 中，请稍候！🙂"
         )
 
         conn_ssl = aiohttp.TCPConnector(verify_ssl=False)
@@ -164,7 +164,7 @@ class hypixel_info(PluginInterface):
             status = self.get_status(soup)
 
             # 组建消息
-            out_message = f"-----XYBot-----\n🎮玩家：\n{in_game_name}\n\n--------\n\n⚙️基础信息：\n"
+            out_message = f"\n🎮玩家：\n{in_game_name}\n\n--------\n\n⚙️基础信息：\n"
             for key, value in basic_stats.items():
                 out_message = out_message + key + value + "\n"
             out_message += "\n--------\n\n🏹公会信息：\n"
@@ -178,14 +178,14 @@ class hypixel_info(PluginInterface):
             self.send_friend_or_group(recv, out_message)
 
         else:  # 玩家不存在
-            out_message = f"-----XYBot-----\n玩家 {request_ign} 不存在！❌"
+            out_message = f"\n玩家 {request_ign} 不存在！❌"
             self.send_friend_or_group(recv, out_message)
 
     async def send_bedwar_info(self, recv, headers):  # 获取玩家bedwar信息
         request_ign = recv["content"][2]  # 请求的玩家ign (游戏内名字 in game name)
 
         self.send_friend_or_group(
-            recv, f"-----XYBot-----\n查询玩家 {request_ign} 中，请稍候！🙂"
+            recv, f"\n查询玩家 {request_ign} 中，请稍候！🙂"
         )  # 发送查询确认，让用户等待
 
         conn_ssl = aiohttp.TCPConnector(verify_ssl=False)
@@ -204,7 +204,7 @@ class hypixel_info(PluginInterface):
             bedwar_stat = self.get_bedwar_stat(soup)  # 从爬虫获取玩家bedwar信息
 
             # 组建信息
-            out_message = f"-----XYBot-----\n🎮玩家：\n{in_game_name}\n\n--------\n\n🛏️起床战争信息：\n"
+            out_message = f"\n🎮玩家：\n{in_game_name}\n\n--------\n\n🛏️起床战争信息：\n"
             table_header = [
                 "⚔️模式：",
                 "击杀：",
@@ -226,5 +226,5 @@ class hypixel_info(PluginInterface):
             # 发送
             self.send_friend_or_group(recv, out_message)
         else:  # 玩家不存在
-            out_message = f"-----XYBot-----\n玩家 {request_ign} 不存在！❌"
+            out_message = f"\n玩家 {request_ign} 不存在！❌"
             self.send_friend_or_group(recv, out_message)

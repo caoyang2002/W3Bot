@@ -48,13 +48,13 @@ class manage_plugins(PluginInterface):
                 self.list_plugins(recv)
 
             else:  # 操作不存在，则响应错误
-                out_message = "-----XYBot-----\n⚠️该操作不存在！"
+                out_message = "\n⚠️该操作不存在！"
                 logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                 self.bot.send_text_msg(recv["from"], out_message)
 
 
         else:  # 操作人不在白名单内
-            out_message = "-----XYBot-----\n❌你配用这个指令吗？"
+            out_message = "\n❌你配用这个指令吗？"
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)
 
@@ -63,26 +63,26 @@ class manage_plugins(PluginInterface):
             action_plugin = recv["content"][2]  # 获取插件名
 
             if action_plugin == 'manage_plugins':
-                out_message = "-----XYBot-----\n❌不能加载该插件！"
+                out_message = "\n❌不能加载该插件！"
                 logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                 self.bot.send_text_msg(recv["from"], out_message)
             elif action_plugin == '*':
                 if plugin_manager.load_plugins():
-                    out_message = "-----XYBot-----\n加载所有插件成功！✅"
+                    out_message = "\n加载所有插件成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
             else:
                 if plugin_manager.load_plugin(action_plugin):  # 判断是否成功并发送响应
-                    out_message = f"-----XYBot-----\n加载插件{action_plugin}成功！✅"
+                    out_message = f"\n加载插件{action_plugin}成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
 
                 else:
-                    out_message = f"-----XYBot-----\n加载插件{action_plugin}失败！❌"
+                    out_message = f"\n加载插件{action_plugin}失败！❌"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
         except Exception as error:
-            out_message = f"-----XYBot-----\n加载插件失败！❌\n{error}"
+            out_message = f"\n加载插件失败！❌\n{error}"
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)
 
@@ -91,28 +91,28 @@ class manage_plugins(PluginInterface):
             action_plugin = recv["content"][2]  # 获取插件名
 
             if action_plugin == 'manage_plugins':
-                out_message = "-----XYBot-----\n❌不能卸载该插件！"
+                out_message = "\n❌不能卸载该插件！"
                 logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                 self.bot.send_text_msg(recv["from"], out_message)
             elif action_plugin == '*':
                 if plugin_manager.unload_plugins():
-                    out_message = "-----XYBot-----\n卸载所有插件成功！✅"
+                    out_message = "\n卸载所有插件成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
             else:
                 if plugin_manager.unload_plugin(
                         action_plugin
                 ):  # 判断是否成功并发送响应
-                    out_message = f"-----XYBot-----\n卸载插件{action_plugin}成功！✅"
+                    out_message = f"\n卸载插件{action_plugin}成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
 
                 else:
-                    out_message = f"-----XYBot-----\n卸载插件{action_plugin}失败！❌"
+                    out_message = f"\n卸载插件{action_plugin}失败！❌"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
         except Exception as error:
-            out_message = f"-----XYBot-----\n卸载插件失败！❌\n{error}"
+            out_message = f"\n卸载插件失败！❌\n{error}"
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)
 
@@ -121,33 +121,33 @@ class manage_plugins(PluginInterface):
             action_plugin = recv["content"][2]  # 获取插件名
 
             if action_plugin == 'manage_plugins':
-                out_message = "-----XYBot-----\n❌不能重载该插件！"
+                out_message = "\n❌不能重载该插件！"
                 logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                 self.bot.send_text_msg(recv["from"], out_message)
             elif action_plugin == '*':
                 if plugin_manager.reload_plugins():
-                    out_message = "-----XYBot-----\n重载所有插件成功！✅"
+                    out_message = "\n重载所有插件成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
             else:
                 if plugin_manager.reload_plugin(
                         action_plugin
                 ):  # 判断是否成功并发送响应
-                    out_message = f"-----XYBot-----\n重载插件{action_plugin}成功！✅"
+                    out_message = f"\n重载插件{action_plugin}成功！✅"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
 
                 else:
-                    out_message = f"-----XYBot-----\n重载插件{action_plugin}失败！❌"
+                    out_message = f"\n重载插件{action_plugin}失败！❌"
                     logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
                     self.bot.send_text_msg(recv["from"], out_message)
         except Exception as error:
-            out_message = f"-----XYBot-----\n重载插件失败！❌\n{error}"
+            out_message = f"\n重载插件失败！❌\n{error}"
             logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
             self.bot.send_text_msg(recv["from"], out_message)
 
     def list_plugins(self, recv):
-        out_message = "-----XYBot-----\n已加载插件列表："
+        out_message = "\n已加载插件列表："
         for plugin in plugin_manager.plugins.keys():
             out_message += f"\n{plugin}"
         logger.info(f'[发送信息]{out_message}| [发送到] {recv["from"]}')
