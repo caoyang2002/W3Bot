@@ -55,10 +55,12 @@ class Pywxdll:
         except:
             return False
 
+
+
     def windows_start_wechat_inject_and_fix_ver(self):
         """
-        This function is to start WeChat and inject the wxhelper dll on Windows environment
-        :return:
+        在 Windows 环境中启动微信,注入 wxhelper dll 并修复版本问题。
+        return: 操作成功返回 True,失败返回 False。
         """
 
         if not self._is_admin():
@@ -89,8 +91,8 @@ class Pywxdll:
 
     def fix_wechat_version(self) -> bool:
         """
-        This function is to fix the WeChat version
-        :return: True if success, Flase if failed.
+        修复微信版本
+        return: 成功返回 True , 失败返回 Flase
         """
         if platform.system() == 'Windows':
             command = f"python {self.wechat_version_fix_path}"
@@ -114,6 +116,7 @@ class Pywxdll:
 
     def is_logged_in(self) -> bool:
         """
+        检查微信是否登陆
         Check if the WeChat is logged in or not.
         :return: A boolean, True if logged in, False if not logged in.
         """
@@ -131,9 +134,20 @@ class Pywxdll:
 
     def get_logged_in_account_info(self) -> dict:
         """
-        Get information of the account logged into.
-        :return: A dictionary, including: wxid(string) account(string) headImage(string) city(string) country(string) \
-        currentDataPath(string) dataSavePath(string) mobile(string) name(string) province(string) signature(string)
+        获取当前登录账户的详细信息。
+        返回:
+        dict: 包含以下键值对的字典：
+            - wxid (str): 微信ID
+            - account (str): 账户名
+            - headImage (str): 头像图片路径或URL
+            - city (str): 城市
+            - country (str): 国家
+            - currentDataPath (str): 当前数据路径
+            - dataSavePath (str): 数据保存路径
+            - mobile (str): 手机号码
+            - name (str): 用户名
+            - province (str): 省份
+            - signature (str): 个性签名
         """
         json_response = self.raw_get_logged_in_account_info()
         data = json_response.get('data')
@@ -147,10 +161,15 @@ class Pywxdll:
 
     def send_text_msg(self, wxid: str, msg: str) -> bool:
         """
-        Send a text message to the wxid.
-        :param wxid: WeChat account identifier
-        :param msg: The message needed to send
-        :return: Boolean. True if success, False if failed.
+        发送文本消息到指定的微信 ID。
+
+        此函数通过 HTTP POST 请求发送文本消息到指定的微信用户或群组。
+
+        参数:
+        wxid (str): 接收消息的目标微信ID。可以是个人用户 ID 或群组 ID。
+        msg (str): 要发送的文本消息内容。
+
+        返回: Boolean. True if success, False if failed.
         """
         json_response = self.raw_send_text_msg(wxid, msg)
         if json_response.get('code') == 0 or json_response.get('code') == -1:
@@ -166,6 +185,7 @@ class Pywxdll:
 
     def send_image_msg(self, wxid: str, image_path: str) -> bool:
         """
+        发送图片消息
         Send a picture message to the wxid.
         :param wxid: WeChat account identifier
         :param image_path: The path of the image
@@ -245,6 +265,7 @@ class Pywxdll:
 
     def get_contact_list(self) -> list:
         """
+        获取通讯录
         Get the contact list
         :return: A list of contact information
         """
@@ -260,6 +281,7 @@ class Pywxdll:
 
     def get_db_info(self) -> dict:
         """
+        获取数据库信息
         Gets database information and handles
         :return: Information of database. Including database name(string), handle(int), tables(list), name(string), \
         rootpage(string), sql(string), table name(string).
@@ -276,6 +298,7 @@ class Pywxdll:
 
     def exec_sql(self, db_handle: int, sql: str) -> list:
         """
+        查询数据库
         Execute the sql command in WeChat database
         :param db_handle: The handle of the database
         :param sql: The sql command
@@ -293,6 +316,7 @@ class Pywxdll:
 
     def get_chatroom_detail_info(self, chatroom_id: str) -> dict:
         """
+        获取群详细信息
         Get chatroom details
         :param chatroom_id: Chatroom identifier.
         :return: A dictionary, including: chatRoomId(string) chatRoomName(string) notice(string) admin(int) \
@@ -310,6 +334,7 @@ class Pywxdll:
 
     def add_member_to_chatroom(self, chatroom_id: str, wxids: list) -> bool:
         """
+        添加成员到群
         Add members to chatroom
         :param chatroom_id: Chatroom identifier
         :param wxids: The list of wxid you want to add
@@ -329,6 +354,7 @@ class Pywxdll:
 
     def modify_nickname(self, chatroom_id: str, wxid: str, nickname: str) -> bool:
         """
+        修改群昵称
         Modify the nickname in chatroom
         :param chatroom_id: Chatroom identifier
         :param wxid: The wxid you want to modify
@@ -349,6 +375,7 @@ class Pywxdll:
 
     def del_member_from_chatroom(self, chatroom_id: str, wxids: list) -> bool:
         """
+        删除群成员
         Delete members from chatroom
         :param chatroom_id: Chatroom identifier
         :param wxids: The list of wxid you want to delete
@@ -368,6 +395,7 @@ class Pywxdll:
 
     def get_member_from_chatroom(self, chatroom_id: str) -> dict:
         """
+        获取群成员
         Get members from chatroom
         :param chatroom_id: Chatroom identifier
         :return: A dictionary, including: admin(string) adminNickname(string) chatRoomId(string) \
@@ -387,6 +415,7 @@ class Pywxdll:
 
     def top_msg(self, msg_id: str):
         """
+        管理员：指定群信息
         Top a message in chatroom. Chatroom admin is needed
         :param msg_id: The message identifier
         :return: Boolean. True if success, False if failed.
@@ -405,6 +434,7 @@ class Pywxdll:
 
     def remove_top_msg(self, msg_id: str, chatroom_id: str):
         """
+        管理员：取消置顶群信息
         Remove a top message in chatroom. Chatroom admin is needed
         :param msg_id: The message identifier
         :param chatroom_id: Chatroom identifier
@@ -424,6 +454,7 @@ class Pywxdll:
 
     def invite_member_to_chatroom(self, chatroom_id: str, wxids: list):
         """
+        邀请入群
         Invite to join the chatroom, (Chatrooms of more than 40 people need to use this invitation to join the group)
         :param chatroom_id: Chatroom identifier
         :param wxids: The list of wxid you want to invite
@@ -443,6 +474,7 @@ class Pywxdll:
 
     def hook_log(self) -> bool:
         """
+
         hook WeChat logs. The output is in the logs directory of the WeChat installation directory
         :return: Boolean. True if success, False if failed.
         """
@@ -477,6 +509,7 @@ class Pywxdll:
 
     def create_chatroom(self, wxids: list) -> bool:
         """
+        创建群聊
         Create a chatroom. USE WITH CAUTIOUS, HIGH CHANCE OF GETTING BANNED.
         :param wxids: The list of wxid you want to create chatroom
         :return: A dictionary, including: chatRoomId(string) chatRoomName(string) notice(string) admin(int) \
@@ -496,6 +529,7 @@ class Pywxdll:
 
     def quit_chatroom(self, chatroom_id: str) -> bool:
         """
+        退出群聊
         Quit the chatroom
         :param chatroom_id: Chatroom identifier
         :return: Boolean. True if success, False if failed.
@@ -514,6 +548,7 @@ class Pywxdll:
 
     def forward_msg(self, wxid: str, msg_id: str) -> bool:
         """
+        转发信息
         Forward the message to the wxid
         :param wxid: WeChat account identifier
         :param msg_id: The message identifier
@@ -533,6 +568,7 @@ class Pywxdll:
 
     def get_sns_first_page(self):
         """
+        获取朋友圈首页
         Get the first page of SNS. The SNS information will be sent to the message tcp server. The format is:
         {"data":[{"content": "","createTime': 1691125287,"senderId': "", "snsId': 123,"xml':""}]}
         :return: A dictionary, including: SNS information(list)
@@ -551,6 +587,7 @@ class Pywxdll:
 
     def get_sns_next_page(self, sns_id: int):
         """
+        获取朋友圈下一页
         Get the next page of SNS. The SNS information will be sent to the message tcp server. The format is:
         {"data":[{"content": "","createTime': 1691125287,"senderId': "", "snsId': 123,"xml':""}]}
         :param sns_id: The sns identifier
@@ -570,6 +607,7 @@ class Pywxdll:
 
     def add_fav_from_msg(self, msg_id: str) -> bool:
         """
+        收藏消息
         Add the message to favorite
         :param msg_id: The message identifier
         :return: Boolean. True if success, False if failed.
@@ -594,6 +632,7 @@ class Pywxdll:
 
     def send_at_msg(self, chatroom_id: str, msg: str, wxids: list) -> bool:
         """
+        发送 at 消息
         Send an @ message to the chatroom. To @all, add "notify@all" in the wxids list.
         :param chatroom_id: Chatroom identifier
         :param msg: The message you want to send
@@ -614,6 +653,7 @@ class Pywxdll:
 
     def get_contact_profile(self, wxid: str) -> dict:
         """
+        获取群成员信息
         Get the contact profile
         :param wxid: WeChat account identifier
         :return: A dictionary, including: wxid(string) account(string) headImage(string) nickname(string) v3(string)
@@ -632,6 +672,7 @@ class Pywxdll:
     def send_public_msg(self, wxid: str, app_name: str, user_name: str, title: str, url: str, thumb_url: str,
                         digest: str) -> bool:
         """
+        发送公众号信息
         Send a public message
         :param wxid: WeChat account identifier
         :param app_name: The app name
@@ -656,6 +697,7 @@ class Pywxdll:
 
     def forward_public_msg_by_msg_id(self, wxid: str, msg_id: str) -> bool:
         """
+        转发公众号信息
         Forward a public message by message id to a wxid
         :param wxid: WeChat account identifier
         :param msg_id: The message identifier of public message
@@ -675,6 +717,7 @@ class Pywxdll:
 
     def download_attach(self, msg_id: str) -> bool:
         """
+        下载附件
         Download the attachment of the message. Saved in the wxid_xxx/wxhelper directory in the WeChat file directory.
 
         :param msg_id: The message identifier
@@ -694,6 +737,7 @@ class Pywxdll:
 
     def decode_image(self, file_path: str, store_dir: str) -> bool:
         """
+        解码图片
         Decode the image
         :param file_path: The input path of the image
         :param store_dir: The output store directory
@@ -713,6 +757,7 @@ class Pywxdll:
 
     def get_voice_by_msg_id(self, msg_id: str, store_dir: str) -> bool:
         """
+        获取语音信息
         Get the voice by message id
         :param msg_id: The message identifier
         :param store_dir: The store directory
@@ -732,6 +777,7 @@ class Pywxdll:
 
     def send_custom_emotion(self, wxid: str, file_path: str) -> bool:
         """
+        发送自定义表情
         Send a custom emotion
         :param wxid: WeChat account identifier
         :param file_path: The path of the emotion. You can query MD5 fields in the CustomEmotion table. \
@@ -757,6 +803,7 @@ class Pywxdll:
                         main_img: str,
                         index_page: str) -> bool:
         """
+        发送小程序
         Send an applet message. THIS FUNCTION IS NOT STABLE.
         :param wxid: WeChat account identifier
         :param waid_concat: The information of wxid adding to invoke information. This param can be counterfeited.
@@ -784,6 +831,7 @@ class Pywxdll:
 
     def send_pat_msg(self, wxid: str, patter: str) -> bool:
         """
+        拍一拍
         Send a pat message
         :param wxid: WeChat account identifier
         :param patter: The receiver wxid. Can be their own wxid, private chat friends wxid, chatroom id
@@ -803,6 +851,7 @@ class Pywxdll:
 
     def ocr(self, image_path: str) -> dict:
         """
+        文字识别
         ocr the image
         :param image_path: The path of the image
         :return: A dictionary, including: code(int) data(string). The data is the result of the ocr.
