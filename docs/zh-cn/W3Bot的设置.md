@@ -54,7 +54,7 @@
 
 ## 配置主设置
 
-这是`W3Bot v0.0.7`的主设置：
+这是 `W3Bot v0.0.7` 的主设置：
 
 ```yaml
 #Version 0.0.7
@@ -62,16 +62,16 @@ bot_version: "v0.0.7"
 
 # W3Bot主设置
 
-#如果不知道自己在干什么请别动这两行
+# 如果不知道自己在干什么请别动这两行
 ip: 127.0.0.1
 port: 19088
 tcp_server_port: 19089
 
-admins: [ "" ]
+admins: [ "wxid_abc1234567890" ] # 管理员的 wxid（以 "wxid_" 开头）
 
 max_worker: 25
 
-command_prefix: "" #如果需要前缀，则必须为一个字符。如果不需要前缀可设置为空，即 ""。
+command_prefix: "" # 如果需要前缀，则必须为一个字符。如果不需要前缀可设置为空，即 ""。
 
 excluded_plugins: [ "" ]
 

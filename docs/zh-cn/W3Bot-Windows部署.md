@@ -35,7 +35,7 @@
 
 看不懂英文的话网上也有很多中文教程
 
-### 3. 下载并安装PC版微信v3.9.5.81
+### 3. 下载并安装 PC 版微信v3.9.5.81
 
 下载地址：[🔗链接](https://github.com/tom-snow/wechat-windows-versions/releases?q=3.9.5.81)
 

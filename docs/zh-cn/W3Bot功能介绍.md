@@ -317,7 +317,7 @@ W3Bot 可以帮你随机获取一个链接，可以说是更隐蔽的随机图�
 
 ### 2.3 五子棋
 
-想要在群里和朋友玩五子棋？W3Bot可以帮你创建并管理一场五子棋游戏。
+想要在群里和朋友玩五子棋？W3Bot 可以帮你创建并管理一场五子棋游戏。
 
 !> 本功能仅可在群聊中使用
 
@@ -665,7 +665,7 @@ HenryXiaoYang 发送了一个红包！
 -----W3Bot-----
 Bot Running😊
 Bot version: v0.0.6
-Github: https://github.com/HenryXiaoYang/W3Bot
+Github: https://github.com/caoyang2002/W3Bot
 
 #### **JoshuaZ**
 
@@ -675,7 +675,7 @@ Github: https://github.com/HenryXiaoYang/W3Bot
 
 Bot Running😊
 Bot version: v0.0.6
-Github: https://github.com/HenryXiaoYang/W3Bot
+Github: https://github.com/caoyang2002/W3Bot
 <!-- chat:end -->
 
 ### 获取机器人通讯录

@@ -6,7 +6,7 @@
 
 ## 插件模板
 
-[🔗插件模版仓库](https://github.com/HenryXiaoYang/W3Bot-Plugin-Framework)
+[🔗插件模版仓库](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)
 
 ## 编写你的第一个W3Bot插件
 

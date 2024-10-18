@@ -1,12 +1,12 @@
-# W3Bot Linux部署
+# W3Bot Linux 部署
 
-这一页写了在Linux上部署W3Bot的方法。
+这一页写了在 Linux 上部署 W3Bot 的方法。
 
-本篇部署教程适用于`W3Bot v0.0.7`。
+本篇部署教程适用于 `W3Bot v0.0.7`。
 
 ## 前言
 
-在Linux上部署`W3Bot`需要用到`Docker`，`Docker`容器中运用了`wine`，它对环境要求**极高**。
+在Linux上部署 `W3Bot` 需要用到 `Docker`，`Docker` 容器中运用了 `wine`，它对环境要求**极高**。
 
 [已知可以部署的发行版：](https://github.com/ChisBread/wechat-service/issues/1#issuecomment-1252083579)
 
@@ -20,11 +20,11 @@
 
 - `CentOS`
 
-欢迎各位开`issue`或者`pull request`来反馈！
+欢迎各位开 `issue` 或者 `pull request` 来反馈！
 
 [CentOS部署失败](https://github.com/ChisBread/wechat-service/issues/1)
 
-由于运行PC版微信将消耗很多资源，请确认服务器配置。
+由于运行 PC 版微信将消耗很多资源，请确认服务器配置。
 
 服务器配置要求：
 
@@ -32,7 +32,7 @@
 
 ## 部署
 
-### 1. 安装Docker
+### 1. 安装 Docker
 
 装好了可跳过
 
@@ -40,23 +40,24 @@
 
 https://docs.docker.com/get-docker/
 
-### 2. 安装Docker Compose
+### 2. 安装 Docker Compose
 
 一样，已装好可跳过
 
 https://docs.docker.com/compose/install/
 
-### 3. 拉取Docker镜像
+### 3. 拉取 Docker 镜像
 
-这一步以及后面遇到权限问题请在前面加个`sudo`。
+这一步以及后面遇到权限问题请在前面加个 `sudo`。
 
 ```bash
-docker pull henryxiaoyang/W3Bot:latest
+docker pull caoyang2002/W3Bot:latest
 ```
 
 ### 4. 启动容器
 
 指令：
+
 ```bash
 docker run -d \
   --name W3Bot \
@@ -66,7 +67,7 @@ docker run -d \
   --add-host dldir1.qq.com:127.0.0.1 \
   -v W3Bot:/home/app/W3Bot/ \
   -v W3Bot-wechatfiles:/home/app/WeChat\ Files/ \
-  -t henryxiaoyang/W3Bot:latest
+  -t caoyang2002/W3Bot:latest
 ```
 
 Docker-compose:
@@ -78,7 +79,7 @@ version: "3.3"
 
 services:
     W3Bot:
-        image: "henryxiaoyang/W3Bot:latest"
+        image: "caoyang2002/W3Bot:latest"
         restart: unless-stopped
         container_name: "W3Bot"
         environment:
@@ -99,23 +100,23 @@ volumes:
 
 ### 5. 登陆微信
 
-在浏览器中打开`http://<你的ip地址>:4000/vnc.html`访问VNC。
+在浏览器中打开 `http://<你的ip地址>:4000/vnc.html` 访问 VNC。
 
 ![VNC WeChat Login](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/windows_deployment/vnc_wechat_login.png?raw=true)
 
-扫描微信二维码并登录，登陆后W3Bot将自动启动。
+扫描微信二维码并登录，登陆后 W3Bot 将自动启动。
 
 !>如果遇到微信崩溃，可尝试重启容器重新按步骤登陆。
 
-### 6. 配置W3Bot设置
+### 6. 配置 W3Bot 设置
 
-如果使用的步骤4的启动指令，W3Bot的文件已被持久化到`/var/lib/docker/volumes/W3Bot`，也就是`W3Bot`卷。
+如果使用的步骤4的启动指令，W3Bot的文件已被持久化到 `/var/lib/docker/volumes/W3Bot`，也就是 `W3Bot` 卷。
 
 ```bash
 cd /var/lib/docker/volumes/W3Bot/_data
 ```
 
-在这个目录下可以看到`main_config.yml`，修改这个文件即可。
+在这个目录下可以看到 `main_config.yml`，修改这个文件即可。
 
 ### 7. 重启容器
 

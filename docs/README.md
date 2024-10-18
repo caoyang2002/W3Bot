@@ -4,18 +4,18 @@
     <img alt="W3Bot 微信机器人 logo" width="240" src="https://github.com/caoyang2002/W3Bot/raw/main/docs/images/w3bot.png">
 </p>
 
-W3Bot是一个可运行于Linux和Windows的基于Hook的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
+W3Bot 是一个可运行于 Linux 和 Windows 的基于 Hook 的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
 
-W3Bot提供了多种功能，包括获取天气🌤️、获取新闻📰、ChatGPT聊天🗣️、Hypixel玩家查询🎮、随机图片📷、随机链接🔗、随机群成员👥、五子棋♟️、签到✅、查询积分📊、积分榜🏆、积分转送💰、积分抽奖🎁、积分红包🧧等。🎉
+W3Bot 提供了多种功能，包括获取天气🌤️、获取新闻📰、ChatGPT聊天🗣️、Hypixel 玩家查询🎮、随机图片📷、随机链接🔗、随机群成员👥、五子棋♟️、签到✅、查询积分📊、积分榜🏆、积分转送💰、积分抽奖🎁、积分红包🧧等。🎉
 
-W3Bot拥有独立的经济系统，其中基础货币称为”积分“。💰
+W3Bot 拥有独立的经济系统，其中基础货币称为”积分“。💰
 
-W3Bot还提供了管理员功能，包括修改积分💰、修改白名单📝、重置签到状态🔄、获取机器人通讯录📚、热加载/卸载/重载插件🔄等。🔒
+W3Bot 还提供了管理员功能，包括修改积分💰、修改白名单📝、重置签到状态🔄、获取机器人通讯录📚、热加载/卸载/重载插件🔄等。🔒
 
-W3Bot详细的部署教程可以在项目的Wiki中找到。📚 同时，W3Bot还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
+W3Bot 详细的部署教程可以在项目的Wiki中找到。📚 同时，W3Bot 还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
 
-✅高度可自定义！
-✅支持自我编写插件！
+✅ 高度可自定义！
+✅ 支持自我编写插件！
 
 <p align="center">
     <a href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-red.svg" alt="GPLv3 License"></a>
@@ -50,13 +50,6 @@ W3Bot详细的部署教程可以在项目的Wiki中找到。📚 同时，W3Bot�
 - 热加载/卸载/重载插件🔄
 - 查看已加载插件ℹ️
 
-## W3Bot交流群
-
-<p align="center">
-    <img alt="W3Bot二维码" width="360" src="https://file.yangres.com/W3Bot-wechatgroup.jpeg">
-</p>
-
-[**🔗图片会被缓存，点我查看最新二维码**](https://file.yangres.com/W3Bot-wechatgroup.jpeg)
 
 ## FAQ❓❓❓
 
