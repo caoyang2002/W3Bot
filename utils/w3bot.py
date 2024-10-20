@@ -17,7 +17,7 @@ from utils.chatroom_database import ChatroomDatabase
 from utils.tools import MessageHandle
 
 @singleton
-class XYBot:
+class W3Bot:
     def __init__(self):
         with open("./main_config.yml", "r", encoding="utf-8") as f:  # 读取设置
             main_config = yaml.safe_load(f.read())
@@ -156,7 +156,7 @@ class XYBot:
         out_message = url
         logger.info(f'[发送信息]{out_message}| [发送到] {recv["fromUser"]}')
         self.bot.send_text_msg(recv["fromUser"], out_message)
-        
+
 
     def ignorance_check(self, recv) -> bool:
         if self.ignorance_mode == 'none':  # 如果不设置屏蔽，则直接返回通过

@@ -185,11 +185,11 @@ docker-compose down
 
 对于你之前分享的 Docker Compose 配置，运行 `docker-compose up` 后的情况应该是：
 
-1. 创建了一个名为 "XYBot" 的容器，运行 `henryxiaoyang/w3bot:latest` 镜像。
+1. 创建了一个名为 "W3Bot" 的容器，运行 `henryxiaoyang/w3bot:latest` 镜像。
 
 2. 容器的 8080 端口被映射到主机的 4000 端口。
 
-3. 创建了两个命名卷：`XYBot` 和 `XYBot-wechatfiles`，并挂载到了容器的指定路径。
+3. 创建了两个命名卷：`W3Bot` 和 `W3Bot-wechatfiles`，并挂载到了容器的指定路径。
 
 4. 容器内的环境变量 `WC_AUTO_RESTART` 被设置为 "yes"。
 
@@ -209,10 +209,10 @@ docker-compose down
 如果你想进入正在运行的容器进行交互，可以使用：
 
 ```
-docker exec -it XYBot /bin/bash
+docker exec -it W3Bot /bin/bash
 ```
 
-这会在名为 "XYBot" 的容器中打开一个 bash shell。
+这会在名为 "W3Bot" 的容器中打开一个 bash shell。
 
 如果你需要对运行中的容器进行任何修改或有任何其他问题，我很乐意提供进一步的帮助。
 

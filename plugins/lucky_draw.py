@@ -160,7 +160,7 @@ class lucky_draw(PluginInterface):
             if len(win_name) > name_max_len:
                 name_max_len = len(win_name)
 
-        begin_message = f"----XYBot抽奖----\n🥳恭喜你在 {draw_count}次 {draw_name}抽奖 中抽到了：\n\n"
+        begin_message = f"----W3Bot抽奖----\n🥳恭喜你在 {draw_count}次 {draw_name}抽奖 中抽到了：\n\n"
         lines = []
         for _ in range(name_max_len + 2):
             lines.append("")

@@ -43,7 +43,7 @@ class news(PluginInterface):
             for title, link, time in important_news:
                 important_news_string += f"📰{title}\n🔗{link}\n🕒{time}\n\n"
 
-            compose_message = f"----📰XYBot新闻📰----\n‼️‼️最新要闻‼️‼️\n{focus_news_string}\n⭐️⭐️要闻⭐️⭐️\n{important_news_string}"
+            compose_message = f"----📰W3Bot新闻📰----\n‼️‼️最新要闻‼️‼️\n{focus_news_string}\n⭐️⭐️要闻⭐️⭐️\n{important_news_string}"
 
             self.bot.send_text_msg(recv["from"], compose_message)
             logger.info(f'[发送信息]{compose_message}| [发送到] {recv["from"]}')

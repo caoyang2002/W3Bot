@@ -30,7 +30,7 @@ class points_leaderboard(PluginInterface):
         data = self.db.get_highest_points(
             self.leaderboard_top_number
         )  # 从数据库获取前x名积分数
-        out_message = "-----XYBot积分排行榜-----"  # 创建积分
+        out_message = "-----W3Bot积分排行榜-----"  # 创建积分
         rank = 1
         for i in data:  # 从数据库获取的数据中for循环
             nickname_req = self.bot.get_contact_profile(i[0])

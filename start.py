@@ -129,9 +129,9 @@ async def main():
         while not bot.is_logged_in():
             time.sleep(1)
 
-    logger.success("已确认微信已登陆，开始启动XYBot")
+    logger.success("已确认微信已登陆，开始启动W3Bot")
 
-    handlebot = w3bot.XYBot()
+    handlebot = w3bot.W3Bot()
 
     # ---- 加载插件 加载计划 ---- #
 

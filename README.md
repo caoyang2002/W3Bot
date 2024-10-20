@@ -1,9 +1,9 @@
 # W3Bot 微信机器人
 
-> 本机器人 frok 自 [XYBot](https://github.com/HenryXiaoYang/XYBot)
+> 本机器人 frok 自 [W3Bot](https://github.com/HenryXiaoYang/W3Bot)
 
 <p align="center">
-    <img alt="XYBot微信机器人logo" width="240" src="./docs/images/w3bot.png">
+    <img alt="W3Bot微信机器人logo" width="240" src="./docs/images/w3bot.png">
 </p>
 
 
@@ -85,27 +85,27 @@ docker pull henryxiaoyang/w3bot:latestCopy to clipboardErrorCopied
 
 ```bash
 docker run -d \
-  --name XYBot \
+  --name W3Bot \
   --restart unless-stopped \
   -e WC_AUTO_RESTART=yes \
   -p 4000:8080 \
   --add-host dldir1.qq.com:127.0.0.1 \
-  -v XYBot:/home/app/XYBot/ \
-  -v XYBot-wechatfiles:/home/app/WeChat\ Files/ \
+  -v W3Bot:/home/app/W3Bot/ \
+  -v W3Bot-wechatfiles:/home/app/WeChat\ Files/ \
   -t henryxiaoyang/w3bot:latestCopy to clipboardErrorCopied
 ```
 
 Docker-compose:
 
 ```
-XYBot/Docker/docker-compose.yaml
+W3Bot/Docker/docker-compose.yaml
 version: "3.3"
 
 services:
     w3bot:
         image: "henryxiaoyang/w3bot:latest"
         restart: unless-stopped
-        container_name: "XYBot"
+        container_name: "W3Bot"
         environment:
             WC_AUTO_RESTART: "yes"
         ports:
@@ -113,49 +113,49 @@ services:
         extra_hosts:
             - "dldir1.qq.com:127.0.0.1"
         volumes:
-              - "XYBot:/home/app/XYBot/"
-              - "XYBot-wechatfiles:/home/app/WeChat Files/"
+              - "W3Bot:/home/app/W3Bot/"
+              - "W3Bot-wechatfiles:/home/app/WeChat Files/"
         tty: true
 
 volumes:
-    XYBot:
-    XYBot-wechatfiles:Copy to clipboardErrorCopied
+    W3Bot:
+    W3Bot-wechatfiles:Copy to clipboardErrorCopied
 ```
 
 ### 5. 登陆微信
 
 在浏览器中打开 `http://<你的ip地址>:4000/vnc.html` 访问 VNC。
 
-![VNC WeChat Login](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/wiki/windows_deployment/vnc_wechat_login.png?raw=true)
+![VNC WeChat Login](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/wiki/windows_deployment/vnc_wechat_login.png?raw=true)
 
-扫描微信二维码并登录，登陆后 XYBot 将自动启动。
+扫描微信二维码并登录，登陆后 W3Bot 将自动启动。
 
 ---
 
 # 原文档介绍
 
-XYBot 是一个可运行于 Linux 和 Windows 的基于 Hook 的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
+W3Bot 是一个可运行于 Linux 和 Windows 的基于 Hook 的微信机器人。😊 具有高度可自定义性，支持自我编写插件。🚀
 
-XYBot 提供了多种功能，包括获取天气 🌤️、获取新闻 📰、ChatGPT 聊天 🗣️、Hypixel 玩家查询 🎮、随机图片 📷、随机链接 🔗、随机群成员 👥、五子棋 ♟️、签到 ✅、查询积分 📊、积分榜 🏆、积分转送 💰、积分抽奖 🎁、积分红包 🧧 等。🎉
+W3Bot 提供了多种功能，包括获取天气 🌤️、获取新闻 📰、ChatGPT 聊天 🗣️、Hypixel 玩家查询 🎮、随机图片 📷、随机链接 🔗、随机群成员 👥、五子棋 ♟️、签到 ✅、查询积分 📊、积分榜 🏆、积分转送 💰、积分抽奖 🎁、积分红包 🧧 等。🎉
 
-XYBot 拥有独立的经济系统，其中基础货币称为”积分“。💰
+W3Bot 拥有独立的经济系统，其中基础货币称为”积分“。💰
 
-XYBot 还提供了管理员功能，包括修改积分 💰、修改白名单 📝、重置签到状态 🔄、获取机器人通讯录 📚、热加载/卸载/重载插件 🔄 等。🔒
+W3Bot 还提供了管理员功能，包括修改积分 💰、修改白名单 📝、重置签到状态 🔄、获取机器人通讯录 📚、热加载/卸载/重载插件 🔄 等。🔒
 
-XYBot 详细的部署教程可以在项目的 Wiki 中找到。📚 同时，XYBot 还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
+W3Bot 详细的部署教程可以在项目的 Wiki 中找到。📚 同时，W3Bot 还支持自我编写插件，用户可以根据自己的需求和创造力编写自定义插件，进一步扩展机器人的功能。💡
 
 ✅ 高度可自定义！
 ✅ 支持自我编写插件！
 
 <p align="center">
     <a href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-red.svg" alt="GPLv3 License"></a>
-    <a href="https://github.com/HenryXiaoYang/XYBot"><img src="https://img.shields.io/badge/Version-0.0.7-orange.svg" alt="Version"></a>
+    <a href="https://github.com/HenryXiaoYang/W3Bot"><img src="https://img.shields.io/badge/Version-0.0.7-orange.svg" alt="Version"></a>
     <a href="https://yangres.com"><img src="https://img.shields.io/badge/Blog-@HenryXiaoYang-yellow.svg" alt="Blog"></a>
 </p>
 
 ## 公告
 
-由于需要频繁的更新维护，XYBot 版本号格式将会发生变化，v0.0.7 后面的版本号将会按照以下格式进行更新：
+由于需要频繁的更新维护，W3Bot 版本号格式将会发生变化，v0.0.7 后面的版本号将会按照以下格式进行更新：
 
 v 大版本.功能版本.Bug 修复版本
 
@@ -192,43 +192,43 @@ v 大版本.功能版本.Bug 修复版本
 - 热加载/卸载/重载插件 🔄
 - 查看已加载插件 ℹ️
 
-## XYBot 文档 📄
+## W3Bot 文档 📄
 
 文档中有完整的功能介绍，部署教程，配置教程，插件编写教程。
 
-**[🔗XYBot 文档](https://henryxiaoyang.github.io/XYBot)**
+**[🔗W3Bot 文档](https://henryxiaoyang.github.io/W3Bot)**
 
 ## 功能演示
 
 菜单
-![Menu Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/menu.png?raw=true)
+![Menu Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/menu.png?raw=true)
 
 随机图片
-![Random Picture Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/random_picture.png?raw=true)
+![Random Picture Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/random_picture.png?raw=true)
 
 ChatGPT
-![ChatGPT Example 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gpt3.png?raw=true)
-![ChatGPT Example 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gpt4.png?raw=true)
+![ChatGPT Example 1](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/gpt3.png?raw=true)
+![ChatGPT Example 2](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/gpt4.png?raw=true)
 
 私聊 ChatGPT
-![Private ChatGPT Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/private_gpt.png?raw=true)
+![Private ChatGPT Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/private_gpt.png?raw=true)
 
 天气查询
-![Weather Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/weather.png?raw=true)
+![Weather Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/weather.png?raw=true)
 
 五子棋
-![Gomoku Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/gomoku.png?raw=true)
+![Gomoku Example](https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/gomoku.png?raw=true)
 
 ## 自我编写插件 🧑‍💻
 
 请参考模板插件：
 
-**[🔗 模板插件仓库️](https://github.com/HenryXiaoYang/XYBot-Plugin-Framework)**
+**[🔗 模板插件仓库️](https://github.com/HenryXiaoYang/W3Bot-Plugin-Framework)**
 
-## XYBot 交流群
+## W3Bot 交流群
 
 <p align="center">
-    <img alt="XYBot二维码" width="360" src="https://file.yangres.com/w3bot-wechatgroup.jpeg">
+    <img alt="W3Bot二维码" width="360" src="https://file.yangres.com/w3bot-wechatgroup.jpeg">
 </p>
 
 [**🔗 图片会被缓存，点我查看最新二维码**](https://file.yangres.com/w3bot-wechatgroup.jpeg)
@@ -236,7 +236,7 @@ ChatGPT
 ## 捐赠
 
 <p align="center">
-    <img alt="爱发电二维码" width="360" src="https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/XYBot/v0.0.7/README/aifadian.jpg?raw=true">
+    <img alt="爱发电二维码" width="360" src="https://github.com/HenryXiaoYang/HXY_Readme_Images/blob/main/W3Bot/v0.0.7/README/aifadian.jpg?raw=true">
     <p align="center">你的赞助是我创作的动力！🙏</p>
 </p>
 
@@ -252,7 +252,7 @@ ChatGPT
 
 #### 最长能运行多久？🤔️
 
-XYBot 内置了防微信自动退出登录功能，可以保持长时间运行。
+W3Bot 内置了防微信自动退出登录功能，可以保持长时间运行。
 
 ## 特别感谢
 
@@ -277,19 +277,19 @@ https://github.com/lich0821 感谢这个项目的作者写的微信版本号修�
       <source
         media="(prefers-color-scheme: dark)"
         srcset="
-          https://api.star-history.com/svg?repos=HenryXiaoYang/XYBot&type=Date&theme=dark
+          https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date&theme=dark
         "
       />
       <source
         media="(prefers-color-scheme: light)"
         srcset="
-          https://api.star-history.com/svg?repos=HenryXiaoYang/XYBot&type=Date
+          https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date
         "
       />
       <img
-        alt="XYBot Star History"
+        alt="W3Bot Star History"
         width="600"
-        src="https://api.star-history.com/svg?repos=HenryXiaoYang/XYBot&type=Date"
+        src="https://api.star-history.com/svg?repos=HenryXiaoYang/W3Bot&type=Date"
       />
     </picture>
 </p>
