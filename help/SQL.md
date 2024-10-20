@@ -7,6 +7,7 @@ python3 ./help/sqlite.py chatroomdata.db "SELECT * FROM MESSAGES LIMIT 5"
 ```
 
 查看特定群组的用户
+
 ```bash
 python3 sqlite.py chatroomdata.db "SELECT USER_WXID, USERNAME FROM CHATROOMDATA WHERE GROUP_WXID='58164277337@chatroom'"
 ```

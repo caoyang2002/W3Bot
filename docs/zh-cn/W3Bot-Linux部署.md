@@ -79,7 +79,7 @@ sudo docker-compose up
 
 例如： http://192.168.5.228:4000/vnc.html
 
-### 5. 修改主配置文件
+### 5. 修改容器内的主配置文件
 
 ```bash
 docker exec -it W3Bot /bin/bash
@@ -91,7 +91,7 @@ docker exec -it W3Bot /bin/bash
 cd W3Bot
 ```
 
-编辑配置文件
+编辑主配置文件
 
 ```bash
 vim main_config.yml 
@@ -119,7 +119,7 @@ whitelist: ["wxid_123456"] # 输入你想要添加到白名单的 wxid，不是�
 sudo docker pull caoyang2002/W3Bot:latest
 ```
 
-### 4. 启动容器
+### 2. 启动容器
 
 指令：
 
