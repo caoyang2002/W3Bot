@@ -49,7 +49,7 @@ Docker Compose
 
 ```bash
 git clone https://github.com/caoyang2002/W3Bot.git
-cd docker
+cd Docker
 ```
 
 ### 2. 构建 Docker Image
@@ -75,7 +75,7 @@ sudo docker-compose up
 
 ### 4. 登陆微信
 
-`http://<your ip>:4000/vnc.html`
+`http://<你的设备IP地址>:4000/vnc.html`
 
 例如： http://192.168.5.228:4000/vnc.html
 
@@ -105,7 +105,37 @@ blacklist: ["wxid_123456"]  # 输入你想要添加到黑名单的 wxid，不是
 whitelist: ["wxid_123456"] # 输入你想要添加到白名单的 wxid，不是微信号
 ```
 
+### 6. 其他
 
+停止容器
+
+```bash
+sudo docker-compose down
+```
+
+查看镜像
+
+```bash
+sudo docker images
+```
+
+删除镜像
+
+```bash
+sudo docker rmi <IMAGE ID>
+```
+
+查看卷
+
+```bash
+sudo docker volume ls
+```
+
+删除卷
+
+```bash
+sudo docker volume rm <VOLUME NAME>
+```
 
 
 
