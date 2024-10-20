@@ -1,10 +1,10 @@
-# W3Bot功能介绍
+# W3Bot 功能介绍
 
-这一页介绍了所有官方W3Bot微信机器人用户可使用的功能、命令。
+这一页介绍了所有官方 W3Bot 微信机器人用户可使用的功能、命令。
 
-本介绍对应`v0.0.7`版本的W3Bot。
+本介绍对应 `v0.0.7` 版本的W3Bot。
 
-功能分为了4类：
+功能分为了 4 类：
 
 - 实用功能⚙️
 - 娱乐功能🔥
@@ -13,13 +13,13 @@
 
 ?> 所有功能都可用菜单查询。
 
-大部分管理员功能需要管理员权限，可以在位于项目根目录的主设置`main_config.yml`中设置管理员`wxid`。
+大部分管理员功能需要管理员权限，可以在位于项目根目录的主设置 `main_config.yml` 中设置管理员 `wxid`。
 
 ## 实用功能⚙️
 
 ### 1.0 菜单
 
-一个微信机器人怎么能没有菜单？W3Bot的菜单功能可以让你更方便地查看所有功能。
+一个微信机器人怎么能没有菜单？W3Bot 的菜单功能可以让你更方便地查看所有功能。
 
 <!-- chat:start -->
 
@@ -29,7 +29,6 @@
 
 #### **W3Bot**
 
------W3Bot菜单------
 实用功能⚙️
 1.1 获取天气
 1.2 获取新闻
@@ -63,7 +62,6 @@
 
 #### **W3Bot**
 
------W3Bot菜单------
 1.2: 获取最新头条新闻📰
 指令: 新闻
 
@@ -71,7 +69,7 @@
 
 ### 1.1 获取天气
 
-W3Bot可以帮你查询全球任意城市的天气情况。
+W3Bot 可以帮你查询全球任意城市的天气情况。
 
 <!-- chat:start -->
 
@@ -81,7 +79,6 @@ W3Bot可以帮你查询全球任意城市的天气情况。
 
 #### **W3Bot**
 
------W3Bot-----
 北京 实时天气☁️
 更新时间：2024-07-16T20:42+08:00⏰
 
@@ -104,7 +101,7 @@ W3Bot可以帮你查询全球任意城市的天气情况。
 
 ### 1.2 获取新闻
 
-W3Bot可以帮你获取最新的头条新闻。
+W3Bot 可以帮你获取最新的头条新闻。
 
 <!-- chat:start -->
 
@@ -114,22 +111,17 @@ W3Bot可以帮你获取最新的头条新闻。
 
 #### **W3Bot**
 
------W3Bot新闻-----
+📰 签订6艘、以人民币结算 我国船企再签大订单
+🔗 https://news.china.com/domestic/945/20241019/47407481.html
+🕒央视新闻客户端 2024-10-19
 
-📰 xxxx“xx”，xxxxxxxxx，xxxxxxxxx
-ℹ️xxxx-xx-xx xx:xx发布于xxxx新闻官方账号 xxxxxxxxxxxxxxxxxxxxxxx......
-📺xx新闻 xxxx-xx-xx xx:xx:xx
-🔗https://new.xxx.com/xxxxxxxxxxxxxx
+📰 签订6艘、以人民币结算 我国船企再签大订单
+🔗 https://news.china.com/domestic/945/20241019/47407481.html
+🕒 央视新闻客户端 2024-10-19
 
-📰 xxxxxxxxxxx，xxxxxxxxxxxxxxx
-ℹ️xxxx-xx-xx xx:xx发布于xxxx新闻官方账号 xxxxxxxxxxxxxxxxxxxxxxxxxxxx......
-📺xx新闻 xx-xx-xx xx:xx:xx
-🔗https://new.xxx.com/xxxxxxxxxxxxxx
-
-📰 xxxxxxxxxxxx xxxx：xxxxxxx xxxxxxx
-ℹ️xxxx-xx-xx xx:xx发布于xxxx官方账号 xxxxxxxxxxxxxxxxxxxxxxxxxxxx......
-📺xx晨报 xxxx-xx-xx xx:xx:xx
-🔗https://new.xxx.com/xxxxxxxxxxxxxx
+📰 签订6艘、以人民币结算 我国船企再签大订单
+🔗 https://news.china.com/domestic/945/20241019/47407481.html
+🕒 央视新闻客户端 2024-10-19
 <!-- chat:end -->
 
 ### 1.3 ChatGPT
@@ -147,18 +139,21 @@ gpt3 用简短的语言介绍一下Github
 #### **W3Bot**
 
 @Simons
------W3Bot-----
+
 已收到指令，处理中，请勿重复发送指令！👍
 
 #### **W3Bot**
 
 @Simons
------W3Bot-----
+
 因为你在白名单内，所以没扣除积分！👍
+
 ChatGPT回答：
+
 Github是一个基于云端的代码托管平台，它允许开发者存储、管理和共享代码。它提供了一个集中的位置，使团队成员可以协同开发项目，并追踪每个人的贡献。Github还提供了版本控制功能，允许开发者轻松地管理代码的变化和修复bug。此外，Github还是一个社交平台，开发者可以在上面发现其他人的项目，参与讨论和分享经验。总的来说，Github是一个强大的工具，为开发者提供了一个优秀的协作和学习平台。
 
 ⚙️ChatGPT版本：gpt-3.5-turbo
+
 <!-- chat:end -->
 
 <!-- chat:start -->
@@ -188,9 +183,9 @@ Sure, please go ahead and ask your question in English.
 1 divided by 3 equals 0.3333 (repeating).
 <!-- chat:end -->
 
-### 1.4 Hypixel玩家查询
+### 1.4 Hypixel 玩家查询
 
-W3Bot可以帮你查询在我的世界服务器Hypixel中玩家的信息，数据等等。
+W3Bot 可以帮你查询在我的世界服务器 Hypixel 中玩家的信息，数据等等。
 
 <!-- chat:start -->
 

@@ -167,7 +167,7 @@ plugin_name: "hello_world" # 插件名
 
 #### **W3Bot**
 
------W3Bot-----
+Simons
 加载插件hello_world成功！✅
 <!-- chat:end -->
 

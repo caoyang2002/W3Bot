@@ -1,57 +1,122 @@
 # W3Bot Linux 部署
 
-这一页写了在 Linux 上部署 W3Bot 的方法。
-
-本篇部署教程适用于 `W3Bot v0.0.7`。
+本篇部署教程适用于 `W3Bot pre-beta` 版本。
 
 ## 前言
 
-在Linux上部署 `W3Bot` 需要用到 `Docker`，`Docker` 容器中运用了 `wine`，它对环境要求**极高**。
+在 Linux 上部署 `W3Bot` 需要用到 `Docker`，`Docker` 容器中使用了 `wine` 作为 Linux 运行 Windows 软件的兼容层，它对环境要求**极高**。
 
 [已知可以部署的发行版：](https://github.com/ChisBread/wechat-service/issues/1#issuecomment-1252083579)
 
 - `Ubuntu`
 - `Arch`
 - `Debian`
-- `DSM6.2.3`
-- `DSM7.0`
+- `DSM6.2.3`（群晖 NAS）
+- `DSM7.0`（群晖 NAS）
 
 不可部署的发行版：
 
-- `CentOS`
+- `CentOS` （[CentOS 部署失败](https://github.com/ChisBread/wechat-service/issues/1)）
 
 欢迎各位开 `issue` 或者 `pull request` 来反馈！
 
-[CentOS部署失败](https://github.com/ChisBread/wechat-service/issues/1)
 
 由于运行 PC 版微信将消耗很多资源，请确认服务器配置。
 
+
+
 服务器配置要求：
 
-- 2核2G以上
+- 2 核 2G 以上
 
-## 部署
 
-### 1. 安装 Docker
 
-装好了可跳过
+前置环境（已安装可跳过）
 
-官方教程链接🔗：
+Docker
 
-https://docs.docker.com/get-docker/
+> 官方教程链接🔗： https://docs.docker.com/get-docker/
 
-### 2. 安装 Docker Compose
+Docker Compose
 
-一样，已装好可跳过
+> 官方教程链接🔗： https://docs.docker.com/compose/install/
 
-https://docs.docker.com/compose/install/
 
-### 3. 拉取 Docker 镜像
+
+## 方法一：使用 [GitHub repo](https://github.com/caoyang2002/W3Bot) 编译为 Docker 镜像部署（Ubuntu）
+
+### 1. 下载 `W3Bot.git`
+
+```bash
+git clone https://github.com/caoyang2002/W3Bot.git
+cd docker
+```
+
+### 2. 构建 Docker Image
+
+```bash
+sudo docker build -t caoyang2002/w3bot:latest . 
+# 禁用缓存
+sudo docker build --no-cache -t caoyang2002/w3bot:latest . 
+```
+
+查看构建的镜像
+
+```bash
+sudo docker images
+```
+
+### 3. 启动容器
+
+
+```bash
+sudo docker-compose up
+```
+
+### 4. 登陆微信
+
+`http://<your ip>:4000/vnc.html`
+
+例如： http://192.168.5.228:4000/vnc.html
+
+### 5. 修改主配置文件
+
+```bash
+docker exec -it W3Bot /bin/bash
+```
+
+进入主目录
+
+```bash
+cd W3Bot
+```
+
+编辑配置文件
+
+```bash
+vim main_config.yml 
+# 添加管理员
+admins: [ "wxid_123456" ] # 输入你想要添加的管理员的 wxid，不是微信号
+# 白名单/黑名单设置
+mode: "none" # 可以是 黑名单 blacklist，白名单 whitelist，无 none
+# 添加黑名单
+blacklist: ["wxid_123456"]  # 输入你想要添加到黑名单的 wxid，不是微信号
+# 添加白名单
+whitelist: ["wxid_123456"] # 输入你想要添加到白名单的 wxid，不是微信号
+```
+
+
+
+
+
+## 方法二：使用 Docker 镜像部署
+
+### 1. 拉取 Docker 镜像
 
 这一步以及后面遇到权限问题请在前面加个 `sudo`。
 
 ```bash
-docker pull caoyang2002/W3Bot:latest
+sudo docker pull caoyang2002/W3Bot:latest
 ```
 
 ### 4. 启动容器
@@ -59,7 +124,7 @@ docker pull caoyang2002/W3Bot:latest
 指令：
 
 ```bash
-docker run -d \
+sudo docker run -d \
   --name W3Bot \
   --restart unless-stopped \
   -e WC_AUTO_RESTART=yes \
@@ -69,6 +134,26 @@ docker run -d \
   -v W3Bot-wechatfiles:/home/app/WeChat\ Files/ \
   -t caoyang2002/W3Bot:latest
 ```
+
+docker run: 这是用来运行一个新的 Docker 容器的基本命令。
+
+- `-d`: 这个选项表示在后台运行容器（detached mode）。
+
+- `--name W3Bot`: 为容器指定一个名字，在这里是 "W3Bot"。
+
+- `--restart unless-stopped`: 这个选项设置容器的重启策略。除非容器被明确停止，否则它会在 Docker 守护进程重启时自动重启。
+
+- `-e WC_AUTO_RESTART=yes`: 这是设置一个环境变量 WC_AUTO_RESTART 的值为 "yes"。
+
+- `-p 4000:8080`: 这个选项将容器内的 8080 端口映射到主机的 4000 端口。
+
+- `--add-host dldir1.qq.com:127.0.0.1`: 这会在容器的 /etc/hosts 文件中添加一个条目，将 dldir1.qq.com 解析为 127.0.0.1。
+
+- `-v W3Bot:/home/app/W3Bot/`: 这会创建一个名为 "W3Bot" 的卷，并将其挂载到容器内的 /home/app/W3Bot/ 目录。
+
+- `-v W3Bot-wechatfiles:/home/app/WeChat\ Files/`: 这会创建另一个名为 "W3Bot-wechatfiles" 的卷，并将其挂载到容器内的 /home/app/WeChat Files/ 目录。
+
+- `-t caoyang2002/W3Bot:latest`: 这指定了要使用的 Docker 镜像，在这里是 caoyang2002/W3Bot 的最新版本。
 
 Docker-compose:
 
@@ -250,3 +335,20 @@ docker restart W3Bot
 #### 6. 登陆VNC后重新扫描二维码登陆微信
 
 登陆后，W3Bot会自动启动
+
+
+
+## 持久化
+
+查看卷
+
+```bash
+sudo docker volume ls
+```
+
+删除卷
+
+```bash
+sudo docker volume rm <VOLUME NAME>
+```
+
