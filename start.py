@@ -14,7 +14,7 @@ import yaml
 from loguru import logger
 
 import pywxdll
-import utils.xybot as xybot
+import utils.w3bot as w3bot
 from utils.plans_manager import plan_manager
 from utils.plugin_manager import plugin_manager
 
@@ -131,7 +131,7 @@ async def main():
 
     logger.success("已确认微信已登陆，开始启动XYBot")
 
-    handlebot = xybot.XYBot()
+    handlebot = w3bot.XYBot()
 
     # ---- 加载插件 加载计划 ---- #
 

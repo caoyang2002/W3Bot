@@ -76,7 +76,7 @@ https://docs.docker.com/compose/install/
 这一步以及后面遇到权限问题请在前面加个 `sudo`。
 
 ```bash
-docker pull henryxiaoyang/xybot:latestCopy to clipboardErrorCopied
+docker pull henryxiaoyang/w3bot:latestCopy to clipboardErrorCopied
 ```
 
 ### 4. 启动容器
@@ -92,7 +92,7 @@ docker run -d \
   --add-host dldir1.qq.com:127.0.0.1 \
   -v XYBot:/home/app/XYBot/ \
   -v XYBot-wechatfiles:/home/app/WeChat\ Files/ \
-  -t henryxiaoyang/xybot:latestCopy to clipboardErrorCopied
+  -t henryxiaoyang/w3bot:latestCopy to clipboardErrorCopied
 ```
 
 Docker-compose:
@@ -102,8 +102,8 @@ XYBot/Docker/docker-compose.yaml
 version: "3.3"
 
 services:
-    xybot:
-        image: "henryxiaoyang/xybot:latest"
+    w3bot:
+        image: "henryxiaoyang/w3bot:latest"
         restart: unless-stopped
         container_name: "XYBot"
         environment:
@@ -228,10 +228,10 @@ ChatGPT
 ## XYBot 交流群
 
 <p align="center">
-    <img alt="XYBot二维码" width="360" src="https://file.yangres.com/xybot-wechatgroup.jpeg">
+    <img alt="XYBot二维码" width="360" src="https://file.yangres.com/w3bot-wechatgroup.jpeg">
 </p>
 
-[**🔗 图片会被缓存，点我查看最新二维码**](https://file.yangres.com/xybot-wechatgroup.jpeg)
+[**🔗 图片会被缓存，点我查看最新二维码**](https://file.yangres.com/w3bot-wechatgroup.jpeg)
 
 ## 捐赠
 

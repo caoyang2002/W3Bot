@@ -60,7 +60,7 @@ class red_packet(PluginInterface):
         if recv["fromType"] == 'friend':
             error = "\n❌红包只能在群里发！"
         elif not recv["content"][1].isdigit() or not recv["content"][2].isdigit():
-            error = "\n❌指令格式错误！请查看菜单！"
+            error = "\n❌指令格式错误！\n 积分红包！🧧\n⚙️发红包指令：发红包 积分数 红包数\n⚙️抢红包指令：抢红包 验证码！"
         elif int(recv["content"][1]) > self.max_point or int(recv["content"][1]) < self.min_point:
             error = f"\n⚠️积分无效！最大{self.max_point}，最小{self.min_point}！"
         elif int(recv["content"][2]) > self.max_packet:

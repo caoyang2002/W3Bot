@@ -32,10 +32,10 @@ class get_contact_list(PluginInterface):
 
         if admin_wxid in self.admin_list:  # 判断操作人是否在管理员列表内
             wb = Workbook(write_only=True)
-            xybot_contact_sheet = wb.create_sheet("XYBot通讯录")
+            w3bot_contact_sheet = wb.create_sheet("XYBot通讯录")
 
             heading = ["wxid", "nickname昵称", "type微信定义的类型", "类型", "customAccount自定义微信号"]
-            xybot_contact_sheet.append(heading)
+            w3bot_contact_sheet.append(heading)
 
             contact_list = self.bot.get_contact_list()
 
@@ -62,7 +62,7 @@ class get_contact_list(PluginInterface):
                 else:
                     type = "其他"
 
-                xybot_contact_sheet.append([wxid, nickname, wechat_type, type, custom_account])  # 加入表格
+                w3bot_contact_sheet.append([wxid, nickname, wechat_type, type, custom_account])  # 加入表格
 
             excel_path = f"{self.excel_save_path}/XYBot通讯录_{time.time_ns()}.xlsx"  # 保存路径
             wb.save(excel_path)  # 保存表格

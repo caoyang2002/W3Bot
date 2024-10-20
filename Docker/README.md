@@ -15,7 +15,7 @@ sudo docker build -t caoyang2002/w3bot:latest .
 - `-t caoyang2002/w3bot:latest`:
 
   - `-t` 选项用于给新构建的镜像添加一个标签（tag）。
-  - `henryxiaoyang/xybot` 是镜像名称。
+  - `henryxiaoyang/w3bot` 是镜像名称。
   - `:latest` 是标签，表示这是最新版本。
 
 - `.`:
@@ -57,16 +57,16 @@ docker-compose up
 
 很好的问题。这两个命令虽然都用于运行 Docker 容器，但它们有不同的用途和特点。让我为您详细比较一下：
 
-1. `docker run henryxiaoyang/xybot:latest`
+1. `docker run henryxiaoyang/w3bot:latest`
 
 ```bash
-docker run henryxiaoyang/xybot:latest
+docker run henryxiaoyang/w3bot:latest
 ```
 
 这个命令：
 
 - 用于运行单个容器。
-- 直接从指定的镜像（在这里是 henryxiaoyang/xybot:latest）创建并启动一个新的容器。
+- 直接从指定的镜像（在这里是 henryxiaoyang/w3bot:latest）创建并启动一个新的容器。
 - 适用于简单的应用或快速测试。
 - 不会自动设置网络、卷或其他复杂的配置。
 - 如果需要额外的配置（如端口映射、环境变量等），需要在命令中明确指定。
@@ -112,7 +112,7 @@ docker-compose up
 
 在您的情况下：
 
-- 如果 `henryxiaoyang/xybot:latest` 是一个独立的应用，不需要其他服务配合，可以使用 `docker run`。
+- 如果 `henryxiaoyang/w3bot:latest` 是一个独立的应用，不需要其他服务配合，可以使用 `docker run`。
 - 如果它是一个复杂应用的一部分，或者需要特定的网络、卷、环境变量等配置，最好使用 `docker-compose up`，并在 docker-compose.yml 文件中定义所有需要的配置。
 
 选择哪个命令取决于您的具体需求和应用的复杂度。对于大多数现代应用程序，特别是在开发环境中，`docker-compose up` 通常是更好的选择，因为它提供了更大的灵活性和更简单的配置管理。
@@ -120,7 +120,7 @@ docker-compose up
 # 错误
 
 ```error
-caoyang@acer:~/wxbot$ sudo docker build -t henryxiaoyang/xybot:latest .
+caoyang@acer:~/wxbot$ sudo docker build -t henryxiaoyang/w3bot:latest .
 [sudo] caoyang 的密码：
 对不起，请重试。
 [sudo] caoyang 的密码：
@@ -185,7 +185,7 @@ docker-compose down
 
 对于你之前分享的 Docker Compose 配置，运行 `docker-compose up` 后的情况应该是：
 
-1. 创建了一个名为 "XYBot" 的容器，运行 `henryxiaoyang/xybot:latest` 镜像。
+1. 创建了一个名为 "XYBot" 的容器，运行 `henryxiaoyang/w3bot:latest` 镜像。
 
 2. 容器的 8080 端口被映射到主机的 4000 端口。
 
@@ -321,7 +321,7 @@ sudo docker exec -it W3Bot /bin/bash
 # 重启容器
 
 ```bash
-docker restart wechat-service-xybot
+docker restart wechat-service-w3bot
 ```
 
 根据您提供的 docker-compose.yml 文件，我们可以看到您的服务名称是 "w3bot"，容器名称是 "W3Bot"。要重启这个服务，您有几种方法：
