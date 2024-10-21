@@ -1,28 +1,3 @@
-# version: "3.3"
-
-# services:
-#   w3bot:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-
-#     # image: 'caoyang2002/w3bot:latest'
-#     restart: unless-stopped
-#     container_name: "W3Bot"
-#     environment:
-#       WC_AUTO_RESTART: "yes"
-#     ports:
-#       - "4000:8080"
-#     extra_hosts:
-#       - "dldir1.qq.com:127.0.0.1"
-#     volumes:
-#       - "W3Bot:/home/app/W3Bot/"
-#       - "W3Bot-wechatfiles:/home/app/WeChat Files/"
-#     tty: true
-
-# volumes:
-#   W3Bot:
-#   W3Bot-wechatfiles:
 version: "3.3"
 services:
   w3bot:

@@ -82,7 +82,7 @@ sudo docker-compose up
 ### 5. 修改容器内的主配置文件
 
 ```bash
-docker exec -it W3Bot /bin/bash
+sudo docker exec -it W3Bot /bin/bash
 ```
 
 进入主目录
@@ -244,6 +244,12 @@ docker restart wechat-service-W3Bot
 ### 8. 测试是否部署成功
 
 在微信中向W3Bot私聊`菜单`，如果返回菜单则部署成功。
+
+
+
+
+
+
 
 <!-- chat:start -->
 
