@@ -3,13 +3,20 @@ from loguru import logger
 import pywxdll
 from utils.database import BotDatabase
 from utils.plugin_interface import PluginInterface
+import asyncio
+from aptos_sdk.async_client import FaucetClient, RestClient
+from aptos_sdk.account import Account
+from aptos_sdk.account_address import AccountAddress
 
-class admin_whitelist(PluginInterface):
+class apt_faucet(PluginInterface):
     def __init__(self):
         self.config = self.load_config()
         self.bot = pywxdll.Pywxdll(self.config["ip"], self.config["port"])
-        self.admin_list = self.config["admins"]
-        self.db = BotDatabase()
+        self.faucet_url= self.config["faucet_url"]
+        self.node_url = self.config["node_url"]
+        # self.db = BotDatabase()
+        self.rest_client = RestClient("https://api.testnet.aptoslabs.com/v1")
+        self.faucet_client = FaucetClient("https://faucet.testnet.aptoslabs.com", self.rest_client)
 
     def load_config(self):
         try:
@@ -68,14 +75,15 @@ class admin_whitelist(PluginInterface):
     async def send_help(self, recv):
         help_message = (
             "\n帮助信息:\n"
-            "有白名单者使用 ChatGPT 不扣积分\n\n"
+            "在指定的地址领取 Gas，默认在 testnet 领取 10 个 Gas\n\n"
             "指令: \n"
-            "管理白名单 @ 加入/删除\n"
-            "如: 管理白名单 @W3Bot 加入\n"
-            "管理白名单 @W3Bot 删除\n"
-            "或\n"
-            "管理白名单 wxid_xxx 加入\n"
-            "管理白名单 wxid_xxx 删除"
+            "领取 10 个 gas"
+            "/gas 0x123456789\n"
+            "领取 5 个 gas "
+            "/gas 5 0x123456789"
+            "在 devnet 领取"
+            "/gas dev 5 0x12345678"
+
         )
         await self.send_message(recv, help_message)
 

@@ -16,3 +16,4 @@ captcha~=0.5.0
 openpyxl~=3.1.5
 requests~=2.31.0
 pymem~=1.13.1
+aptos_sdk~=0.9.2
