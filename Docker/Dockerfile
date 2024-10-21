@@ -17,16 +17,16 @@ RUN echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -
 # 更新包列表
 RUN sudo apt-get update
 
-# 从 backports 安装 Python 3.9
-RUN sudo apt-get install -y -t bullseye-backports python3.9 python3.9-venv python3.9-dev
+# 从 backports 安装 Python3
+RUN sudo apt-get install -y -t bullseye-backports python3 python3-venv python3-dev
 
-# 安装 pip for Python 3.9
+# 安装 pip for Python 3
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    sudo python3.9 get-pip.py && \
+    sudo python3 get-pip.py && \
     rm get-pip.py
 
 # 设置 Python 3.9 为默认 Python 版本
-RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3
 
 # 验证 Python 版本
 RUN python3 --version
@@ -35,7 +35,7 @@ RUN python3 --version
 RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # 设置环境变量
-# ENV PYTHONPATH="/home/app/.local/lib/python3.9/site-packages:${PYTHONPATH}"
+# ENV PYTHONPATH="/home/app/.local/lib/python3/site-packages:${PYTHONPATH}"
 
 # 原有的 Dockerfile 内容
 RUN sudo rm -rf /payloads
@@ -49,7 +49,7 @@ RUN bash -c 'nohup /entrypoint.sh 2>&1 &' && sleep 5 && /payloads.sh \
 
 # 安装依赖
 COPY requirements.txt /home/app/W3Bot/
-RUN python3.9 -m pip install --user -r /home/app/W3Bot/requirements.txt
+RUN python3 -m pip install --user -r /home/app/W3Bot/requirements.txt
 
 # settings
 ENTRYPOINT ["/wx-entrypoint.sh"]

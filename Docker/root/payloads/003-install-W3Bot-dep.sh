@@ -24,7 +24,7 @@ echo "Installing Python packages from official PyPI repository..."
 python3.9 -m pip install --user -r requirements.txt -i https://pypi.org/simple
 
 echo "Installing Python packages using wine from official PyPI repository..."
-wine python3.9 -m pip install --user -r requirements.txt -i https://pypi.org/simple
+wine python3 -m pip install --user -r requirements.txt -i https://pypi.org/simple
 wine python -m pip install pymem
 
 echo "Package installation completed."
