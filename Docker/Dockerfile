@@ -55,7 +55,7 @@
 # ENTRYPOINT ["/wx-entrypoint.sh"]
 
 
-
+#
 FROM henryxiaoyang/wechat-box-3.9.5.81:latest
 
 # 清理可能存在的旧源
@@ -74,9 +74,6 @@ RUN sudo apt-get update && sudo apt-get install -y \
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     sudo python3 get-pip.py && \
     rm get-pip.py
-
-# 设置 Python 3 为默认 Python 版本
-RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3 1
 
 # 验证 Python 版本
 RUN python3 --version
