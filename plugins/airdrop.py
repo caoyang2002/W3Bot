@@ -28,7 +28,7 @@ class RedPacketInfo:
     chatroom: str
     sender_nick: str
 
-class aptos_redpacket(PluginInterface):
+class airdrop(PluginInterface):
     def __init__(self):
         # 加载插件配置
         config_path = "plugins/aptos_redpacket.yml"
