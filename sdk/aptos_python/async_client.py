@@ -24,6 +24,7 @@ from .transactions import (
     TransactionPayload,
 )
 from .type_tag import StructTag, TypeTag
+from typing import Union, Optional, List, Dict, Any
 
 U64_MAX = 18446744073709551615
 
@@ -680,7 +681,7 @@ class RestClient:
 
     async def create_bcs_transaction(
         self,
-        sender: Account | AccountAddress,
+       sender: Union[Account, AccountAddress],
         payload: TransactionPayload,
         sequence_number: Optional[int] = None,
     ) -> RawTransaction:
