@@ -1,5 +1,4 @@
 keywords: ["/gas", "/领水", "/faucet"]
 plugin_name: "apt_faucet"
-
-faucet_url: "https://faucet.devnet.aptoslabs.com"
-node_url: "https://api.devnet.aptoslabs.com/v1"
+# faucet_url: "https://faucet.devnet.aptoslabs.com"
+# node_url: "https://api.devnet.aptoslabs.com/v1"

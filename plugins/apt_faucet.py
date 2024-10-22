@@ -145,14 +145,19 @@ class apt_faucet(PluginInterface):
         # 转换为可读格式
         amount_apt = amount / 100_000_000
         balance_apt = balance / 100_000_000
-        
+        formatted_address = f"{address[:6]}...{address[-6:]}" if len(address) > 12 else address
+      
         success_msg = (
             f"\n✅ Gas 领取成功！\n"
-            f"网络: {self.current_network}\n"
-            f"地址: {address}\n"
-            f"领取数量: {amount_apt:.2f} APT\n"
-            f"当前余额: {balance_apt:.2f} APT"
+            f"━━━━━━━━━━━━━━━\n"
+            f"🌐 网络: {self.current_network.upper()}\n"
+            f"📜 地址: {formatted_address}\n"
+            f"💧 领取: {amount_apt:.2f} APT\n"
+            f"💰 余额: {balance_apt:.2f} APT\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"🔍 浏览器: https://explorer.aptoslabs.com/account/{address}?network={self.current_network}"
         )
+
         await self.send_message(recv, success_msg)
 
     async def send_message(self, recv, message, log_level="info"):
@@ -161,23 +166,50 @@ class apt_faucet(PluginInterface):
         self.bot.send_text_msg(recv["from"], message)
 
     async def send_error(self, recv, message):
-        """发送错误消息"""
-        await self.send_message(recv, f"\n❌ 错误：{message}", "error")
+        """
+        发送错误消息
+        :param recv: 接收消息的信息
+        :param message: 错误信息
+        """
+        error_msg = (
+            f"\n❌ 操作失败\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"📛 错误信息：{message}\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"💡 输入 /gas 查看帮助"
+        )
+        await self.send_message(recv, error_msg, "error")
 
     async def send_help(self, recv):
         """发送帮助信息"""
         help_message = (
-            "\n🌊 Aptos 测试网 Gas 领取帮助\n\n"
-            "命令格式:\n"
-            "1. 默认领取 10 APT (testnet):\n"
-            "   /gas 0x123456789\n\n"
-            "2. 指定数量:\n"
-            "   /gas 5 0x123456789\n\n"
-            "3. 指定网络:\n"
-            "   /gas dev 5 0x12345678\n"
-            "   /gas test 5 0x12345678\n\n"
-            "支持的网络:\n"
-            "- testnet (默认)\n"
-            "- devnet (dev)\n"
+            f"\n🌊 Aptos Gas 领取助手\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"📝 命令格式：\n\n"
+            f"1️⃣ 默认领取 10 APT (testnet):\n"
+            f"   /gas 0x<地址>\n\n"
+            f"2️⃣ 指定数量:\n"
+            f"   /gas <数量> 0x<地址>\n\n"
+            f"3️⃣ 指定网络:\n"
+            f"   /gas <网络> <数量> 0x<地址>\n\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"🌐 支持的网络:\n"
+            f"• testnet (test)\n"
+            f"• devnet (dev)\n\n"
+            f"📌 示例:\n"
+            f"/gas test 10 0x123...\n"
+            f"/gas dev 5 0x123...\n"
+            f"━━━━━━━━━━━━━━━"
         )
         await self.send_message(recv, help_message)
+
+    def format_address(self, address: str, length: int = 6) -> str:
+        """
+        格式化地址显示
+        :param address: 完整地址
+        :param length: 保留前后的字符数
+        :return: 格式化后的地址
+        """
+        if len(address) <= length * 2:
+            return address
+        return f"{address[:length]}...{address[-length:]}"
