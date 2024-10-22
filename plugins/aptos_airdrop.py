@@ -84,29 +84,29 @@ class aptos_airdrop(PluginInterface):
             logger.error(f"加载配置文件失败: {e}")
             raise
 
-    def parse_send_command(self, content: list) -> Tuple[float, int]:
-        """
-        解析发红包命令参数
-        返回: (total_amount, packet_count)
-        """
-        try:
-            args = [arg for arg in content[1:] if arg.strip()]
-            if len(args) != 2:
-                raise ValueError("参数数量错误")
+    # def parse_send_command(self, content: list) -> Tuple[float, int]:
+    #     """
+    #     解析发红包命令参数
+    #     返回: (total_amount, packet_count)
+    #     """
+    #     try:
+    #         args = [arg for arg in content[1:] if arg.strip()]
+    #         if len(args) != 2:
+    #             raise ValueError("参数数量错误")
 
-            total_amount = float(args[0])
-            packet_count = int(args[1])
+    #         total_amount = float(args[0])
+    #         packet_count = int(args[1])
 
-            if not (self.plugin_config["min_amount"] <= total_amount <= self.plugin_config["max_amount"]):
-                raise ValueError(f"金额必须在 {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']} APT之间")
+    #         if not (self.plugin_config["min_amount"] <= total_amount <= self.plugin_config["max_amount"]):
+    #             raise ValueError(f"金额必须在 {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']} APT之间")
 
-            if not (1 <= packet_count <= self.plugin_config["max_packet"]):
-                raise ValueError(f"红包数量必须在 1 - {self.plugin_config['max_packet']} 之间")
+    #         if not (1 <= packet_count <= self.plugin_config["max_packet"]):
+    #             raise ValueError(f"红包数量必须在 1 - {self.plugin_config['max_packet']} 之间")
 
-            return total_amount, packet_count
+    #         return total_amount, packet_count
 
-        except ValueError as e:
-            raise ValueError(f"命令解析错误: {str(e)}")
+    #     except ValueError as e:
+    #         raise ValueError(f"命令解析错误: {str(e)}")
 
     def parse_claim_command(self, content: list) -> Tuple[str, Optional[str]]:
         """
@@ -129,6 +129,30 @@ class aptos_airdrop(PluginInterface):
         except ValueError as e:
             raise ValueError(f"命令解析错误: {str(e)}")
 
+    # async def run(self, recv):
+    #     try:
+    #         content = [item for item in recv["content"] if item.strip()]
+    #         logger.info(f"收到命令: {content}")
+            
+    #         if not content:
+    #             return await self.send_help(recv)
+
+    #         command = content[0].lower()
+            
+    #         if command in ["/redpack", "/发红包", "/airdrop"]:
+    #             await self._handle_send_packet(recv)
+    #         elif command in ["/claim", "/抢红包", "/领取"]:
+    #             await self._handle_claim_packet(recv)
+    #         else:
+    #             await self.send_help(recv)
+
+    #     except ValueError as e:
+    #         await self.send_error(recv, str(e))
+    #     except Exception as e:
+    #         logger.error(f"处理命令时发生错误: {e}")
+    #         await self.send_error(recv, f"处理命令失败: {e}")
+
+
     async def run(self, recv):
         try:
             content = [item for item in recv["content"] if item.strip()]
@@ -138,6 +162,10 @@ class aptos_airdrop(PluginInterface):
                 return await self.send_help(recv)
 
             command = content[0].lower()
+            
+            # 检查是否是帮助命令
+            if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
+                return await self.send_help(recv)
             
             if command in ["/redpack", "/发红包", "/airdrop"]:
                 await self._handle_send_packet(recv)
@@ -151,6 +179,145 @@ class aptos_airdrop(PluginInterface):
         except Exception as e:
             logger.error(f"处理命令时发生错误: {e}")
             await self.send_error(recv, f"处理命令失败: {e}")
+
+    def parse_send_command(self, content: list) -> Tuple[float, int]:
+        """解析发红包命令参数"""
+        try:
+            if content[1] in ["帮助", "help", "查看帮助"]:
+                raise ValueError("显示帮助信息")
+
+            args = [arg for arg in content[1:] if arg.strip()]
+            if len(args) != 2:
+                raise ValueError(
+                    "参数格式错误\n"
+                    "正确格式：/redpack <APT数量> <红包个数>\n"
+                    "例如：/redpack 10 5"
+                )
+
+            try:
+                total_amount = float(args[0])
+            except ValueError:
+                raise ValueError(
+                    "APT数量必须是数字\n"
+                    f"有效范围：{self.plugin_config['min_amount']} - {self.plugin_config['max_amount']} APT"
+                )
+
+            try:
+                packet_count = int(args[1])
+            except ValueError:
+                raise ValueError(
+                    "红包个数必须是整数\n"
+                    f"有效范围：1 - {self.plugin_config['max_packet']} 个"
+                )
+
+            if not (self.plugin_config["min_amount"] <= total_amount <= self.plugin_config["max_amount"]):
+                raise ValueError(
+                    f"APT数量超出范围\n"
+                    f"最小：{self.plugin_config['min_amount']} APT\n"
+                    f"最大：{self.plugin_config['max_amount']} APT"
+                )
+
+            if not (1 <= packet_count <= self.plugin_config["max_packet"]):
+                raise ValueError(
+                    f"红包个数超出范围\n"
+                    f"最小：1个\n"
+                    f"最大：{self.plugin_config['max_packet']}个"
+                )
+
+            per_amount = total_amount / packet_count
+            if per_amount < self.plugin_config["min_per_packet"]:
+                raise ValueError(
+                    f"单个红包金额太小\n"
+                    f"当前：{per_amount:.6f} APT\n"
+                    f"最小：{self.plugin_config['min_per_packet']} APT"
+                )
+
+            return total_amount, packet_count
+
+        except ValueError as e:
+            raise ValueError(str(e))
+
+    async def send_help(self, recv):
+        """发送帮助信息"""
+        help_message = (
+            f"\n🎁 Aptos链上红包/空投系统\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"📢 功能介绍：\n"
+            f"在群内发送APT代币红包，支持随机金额分配\n"
+            f"可保存钱包地址，方便多次领取\n\n"
+            f"📝 发红包命令：\n"
+            f"• /redpack <APT数量> <红包个数>\n"
+            f"• /发红包 <APT数量> <红包个数>\n"
+            f"• /airdrop <APT数量> <红包个数>\n\n"
+            f"🎯 抢红包命令：\n"
+            f"• /claim <验证码> [钱包地址]\n"
+            f"• /抢红包 <验证码> [钱包地址]\n"
+            f"• /领取 <验证码> [钱包地址]\n\n"
+            f"📋 参数说明:\n"
+            f"• APT数量: {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']} APT\n"
+            f"• 红包个数: 1 - {self.plugin_config['max_packet']} 个\n"
+            f"• 最小单个金额: {self.plugin_config['min_per_packet']} APT\n"
+            f"• 红包有效期: {self.plugin_config['max_time']}秒\n"
+            f"• 钱包地址: 可选参数，不填则使用历史地址\n\n"
+            f"💡 使用示例:\n"
+            f"1️⃣ 发送红包：\n"
+            f"   /redpack 10 5  (发10 APT分5个红包)\n\n"
+            f"2️⃣ 领取红包：\n"
+            f"   /claim abc12  (使用保存的地址)\n"
+            f"   /claim abc12 0x123...  (使用新地址)\n"
+            f"━━━━━━━━━━━━━━━"
+        )
+        await self.send_message(recv, help_message)
+
+    async def send_error(self, recv, message):
+        """发送错误消息"""
+        error_msg = (
+            f"\n❌ 操作失败\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"📛 错误信息：\n{message}\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"💡 发送 /redpack help 查看完整帮助"
+        )
+        await self.send_message(recv, error_msg, "error")
+
+    def _validate_claim(self, recv: dict, captcha: str, address: str) -> Optional[str]:
+        """验证领取红包请求"""
+        if captcha not in self.red_packets:
+            return (
+                "验证码错误或红包不存在\n"
+                "请检查验证码是否输入正确"
+            )
+            
+        red_packet = self.red_packets[captcha]
+        
+        if not red_packet.amount_list:
+            return "红包已被抢完\n请等待下一个红包"
+            
+        if recv['fromType'] == 'friend':
+            return "红包只能在群里抢\n请在群聊中使用此命令"
+            
+        if any(wxid == recv["sender"] for wxid, _ in red_packet.claimed):
+            return "你已经抢过这个红包了\n每人限领一次"
+            
+        if recv["sender"] == red_packet.sender:
+            return "不能抢自己的红包\n请等待其他红包"
+        
+        if not address.startswith("0x") or len(address) != 66:
+            return (
+                "无效的Aptos地址\n"
+                "地址格式：0x + 64位十六进制字符\n"
+                "例如：0x1234...abcd"
+            )
+            
+        # 检查红包是否超时
+        if time.time() - red_packet.created_time > self.plugin_config["max_time"]:
+            del self.red_packets[captcha]
+            return (
+                "红包已过期\n"
+                f"红包有效期为{self.plugin_config['max_time']}秒"
+            )
+            
+        return None
 
     async def _handle_send_packet(self, recv):
         try:
@@ -246,42 +413,42 @@ class aptos_airdrop(PluginInterface):
         getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
         self.bot.send_text_msg(recv["from"], message)
 
-    async def send_error(self, recv, message):
-        """发送错误消息"""
-        error_msg = (
-            f"\n❌ 操作失败\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"📛 错误信息：{message}\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"💡 输入 /redpack 查看帮助"
-        )
-        await self.send_message(recv, error_msg, "error")
+    # async def send_error(self, recv, message):
+    #     """发送错误消息"""
+    #     error_msg = (
+    #         f"\n❌ 操作失败\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"📛 错误信息：{message}\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"💡 输入 /redpack 查看帮助"
+    #     )
+    #     await self.send_message(recv, error_msg, "error")
 
-    async def send_help(self, recv):
-        """发送帮助信息"""
-        help_message = (
-            f"\n🌊 Aptos链上红包\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"📝 发红包命令：\n"
-            f"/redpack <APT数量> <红包个数>\n"
-            f"/发红包 <APT数量> <红包个数>\n"
-            f"/airdrop <APT数量> <红包个数>\n\n"
-            f"📝 抢红包命令：\n"
-            f"/claim <验证码> [钱包地址]\n"
-            f"/抢红包 <验证码> [钱包地址]\n"
-            f"/领取 <验证码> [钱包地址]\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"🌐 参数说明:\n"
-            f"• APT数量: {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']}\n"
-            f"• 红包个数: 最大 {self.plugin_config['max_packet']} 个\n"
-            f"• 钱包地址: 可选，不填则使用上次地址\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"📌 示例:\n"
-            f"/redpack 10 5\n"
-            f"/claim ab2c9\n"
-            f"/抢红包 ab2c9 0x123..."
-        )
-        await self.send_message(recv, help_message)
+    # async def send_help(self, recv):
+    #     """发送帮助信息"""
+    #     help_message = (
+    #         f"\n🌊 Aptos链上红包\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"📝 发红包命令：\n"
+    #         f"/redpack <APT数量> <红包个数>\n"
+    #         f"/发红包 <APT数量> <红包个数>\n"
+    #         f"/airdrop <APT数量> <红包个数>\n\n"
+    #         f"📝 抢红包命令：\n"
+    #         f"/claim <验证码> [钱包地址]\n"
+    #         f"/抢红包 <验证码> [钱包地址]\n"
+    #         f"/领取 <验证码> [钱包地址]\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"🌐 参数说明:\n"
+    #         f"• APT数量: {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']}\n"
+    #         f"• 红包个数: 最大 {self.plugin_config['max_packet']} 个\n"
+    #         f"• 钱包地址: 可选，不填则使用上次地址\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"📌 示例:\n"
+    #         f"/redpack 10 5\n"
+    #         f"/claim ab2c9\n"
+    #         f"/抢红包 ab2c9 0x123..."
+    #     )
+    #     await self.send_message(recv, help_message)
 
     @staticmethod
     def _ensure_cache_directory() -> None:
@@ -297,34 +464,35 @@ class aptos_airdrop(PluginInterface):
         if len(address) <= length * 2:
             return address
         return f"{address[:length]}...{address[-length:]}"
-    def _validate_claim(self, recv: dict, captcha: str, address: str) -> Optional[str]:
-        """验证领取红包请求"""
-        if captcha not in self.red_packets:
-            return "验证码错误或红包不存在"
+ 
+    # def _validate_claim(self, recv: dict, captcha: str, address: str) -> Optional[str]:
+    #     """验证领取红包请求"""
+    #     if captcha not in self.red_packets:
+    #         return "验证码错误或红包不存在"
             
-        red_packet = self.red_packets[captcha]
+    #     red_packet = self.red_packets[captcha]
         
-        if not red_packet.amount_list:
-            return "红包已被抢完"
+    #     if not red_packet.amount_list:
+    #         return "红包已被抢完"
             
-        if recv['fromType'] == 'friend':
-            return "红包只能在群里抢"
+    #     if recv['fromType'] == 'friend':
+    #         return "红包只能在群里抢"
             
-        if any(wxid == recv["sender"] for wxid, _ in red_packet.claimed):
-            return "你已经抢过这个红包了"
+    #     if any(wxid == recv["sender"] for wxid, _ in red_packet.claimed):
+    #         return "你已经抢过这个红包了"
             
-        if recv["sender"] == red_packet.sender:
-            return "不能抢自己的红包"
+    #     if recv["sender"] == red_packet.sender:
+    #         return "不能抢自己的红包"
         
-        if not address.startswith("0x") or len(address) != 66:
-            return "无效的Aptos地址"
+    #     if not address.startswith("0x") or len(address) != 66:
+    #         return "无效的Aptos地址"
             
-        # 检查红包是否超时
-        if time.time() - red_packet.created_time > self.plugin_config["max_time"]:
-            del self.red_packets[captcha]
-            return "红包已过期"
+    #     # 检查红包是否超时
+    #     if time.time() - red_packet.created_time > self.plugin_config["max_time"]:
+    #         del self.red_packets[captcha]
+    #         return "红包已过期"
             
-        return None
+    #     return None
 
     @staticmethod
     def _generate_captcha() -> Tuple[str, str]:
