@@ -130,32 +130,42 @@ class apt_faucet(PluginInterface):
             await self.send_error(recv, f"处理命令失败: {e}")
 
     async def process_faucet(self, recv, address, amount):
+        """处理水龙头请求"""
         try:
             account_address = AccountAddress.from_str(address)
             await self.faucet_client.fund_account(account_address, amount)
             balance = await self.rest_client.account_balance(account_address)
-            
-            # 转换为可读格式
-            amount_apt = amount / 100_000_000
-            balance_apt = balance / 100_000_000
-            
-            success_msg = (
-                f"\n✅ Gas 领取成功！\n"
-                f"网络: {self.current_network}\n"
-                f"地址: {address}\n"
-                f"领取数量: {amount_apt:.2f} APT\n"
-                f"当前余额: {balance_apt:.2f} APT"
-            )
-            await self.send_message(recv, success_msg)
+            await self.send_success(recv, address, amount, balance)
         except Exception as e:
             logger.error(f"领取 Gas 时发生错误: {e}")
             await self.send_error(recv, f"领取 Gas 失败: {e}")
 
+    async def send_success(self, recv, address, amount, balance):
+        """发送成功消息"""
+        # 转换为可读格式
+        amount_apt = amount / 100_000_000
+        balance_apt = balance / 100_000_000
+        
+        success_msg = (
+            f"\n✅ Gas 领取成功！\n"
+            f"网络: {self.current_network}\n"
+            f"地址: {address}\n"
+            f"领取数量: {amount_apt:.2f} APT\n"
+            f"当前余额: {balance_apt:.2f} APT"
+        )
+        await self.send_message(recv, success_msg)
+
     async def send_message(self, recv, message, log_level="info"):
+        """发送消息的通用方法"""
         getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
         self.bot.send_text_msg(recv["from"], message)
 
+    async def send_error(self, recv, message):
+        """发送错误消息"""
+        await self.send_message(recv, f"\n❌ 错误：{message}", "error")
+
     async def send_help(self, recv):
+        """发送帮助信息"""
         help_message = (
             "\n🌊 Aptos 测试网 Gas 领取帮助\n\n"
             "命令格式:\n"
@@ -171,7 +181,3 @@ class apt_faucet(PluginInterface):
             "- devnet (dev)\n"
         )
         await self.send_message(recv, help_message)
-
-    async def send_error(self, recv, message):
-        await self.send_message(recv, f"\n❌ 错误：{message}", "error")
-```
