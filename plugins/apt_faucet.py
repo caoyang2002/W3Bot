@@ -4,7 +4,7 @@ import pywxdll
 from utils.plugin_interface import PluginInterface
 from sdk.aptos_python.async_client import FaucetClient, RestClient
 from sdk.aptos_python.account_address import AccountAddress
-from typing import Union, Optional, Dict, List
+from typing import Tuple, Union, Optional, Dict, List
 import asyncio
 
 class apt_faucet(PluginInterface):
