@@ -60,7 +60,7 @@ class apt_faucet(PluginInterface):
         返回: (network, amount, address)
         """
         network = "testnet"  # 默认网络
-        amount = 10.0  # 默认金额
+        amount = 1.0  # 默认金额
         address = None
 
         try:
@@ -119,7 +119,7 @@ class apt_faucet(PluginInterface):
             self.set_network(network)
             
             # 转换金额为 octas
-            amount_octas = int(amount * 1_000_000_000)
+            amount_octas = int(amount * 100_000_000)
             
             # 处理请求
             await self.process_faucet(recv, address, amount_octas)
