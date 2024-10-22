@@ -76,6 +76,7 @@ class aptos_airdrop(PluginInterface):
     #         logger.error(f"初始化插件失败: {e}")
     #         raise
 
+
     def __init__(self):
         try:
             super().__init__()  # 调用父类初始化
@@ -113,15 +114,133 @@ class aptos_airdrop(PluginInterface):
             self.red_packets = {}
             self._ensure_cache_directory()
 
-            # 初始化事件循环
-            self.loop = asyncio.get_event_loop()
-            
             logger.info("Aptos红包插件初始化成功")
 
         except Exception as e:
             logger.error(f"初始化插件失败: {e}")
             raise
 
+
+
+    def sync_transfer(self, from_account, to_address, amount):
+        """同步方式执行转账"""
+        try:
+            txn_hash = self.rest_client.transfer(
+                from_account,
+                to_address,
+                amount
+            )
+            return txn_hash
+        except Exception as e:
+            logger.error(f"转账失败: {e}")
+            raise
+
+    async def run(self, recv):
+        """处理接收到的消息"""
+        try:
+            content = [item for item in recv["content"] if item.strip()]
+            logger.info(f"收到命令: {content}")
+            
+            if not content:
+                self.send_help(recv)
+                return
+
+            command = content[0].lower()
+            
+            # 检查是否是帮助命令
+            if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
+                self.send_help(recv)
+                return
+            
+            if command in ["/redpack", "/发红包", "/airdrop"]:
+                try:
+                    total_amount, packet_count = self.parse_send_command(content)
+                    self._handle_send_packet(recv, total_amount, packet_count)
+                except ValueError as e:
+                    self.send_error(recv, str(e))
+            elif command in ["/claim", "/抢红包", "/领取"]:
+                try:
+                    captcha, address = self.parse_claim_command(content)
+                    self._handle_claim_packet(recv, captcha, address)
+                except ValueError as e:
+                    self.send_error(recv, str(e))
+            else:
+                self.send_help(recv)
+
+        except Exception as e:
+            logger.error(f"处理命令时发生错误: {e}")
+            self.send_error(recv, f"处理命令失败: {e}")
+
+    def _handle_claim_packet(self, recv, captcha: str, address: Optional[str]):
+        """处理领取红包命令 - 同步版本"""
+        try:
+            # 检查红包是否存在
+            if captcha not in self.red_packets:
+                self.send_error(recv, "验证码错误或红包不存在")
+                return
+
+            # 获取红包信息
+            red_packet = self.red_packets[captcha]
+            
+            # 获取用户数据
+            user_data = self.user_db.get_user_data(recv["sender"])
+            
+            # 处理地址逻辑
+            if not address and (not user_data or not user_data.get('WALLET_ADDRESS')):
+                self.send_error(recv, "请提供钱包地址或先绑定地址")
+                return
+            
+            if not address:
+                address = user_data['WALLET_ADDRESS']
+                self.send_message(recv, f"\n📝 使用已保存的地址: {self.format_address(address)}")
+
+            # 验证领取请求
+            error = self._validate_claim(recv, red_packet, address)
+            if error:
+                self.send_error(recv, error)
+                return
+
+            # 获取红包金额
+            try:
+                apt_amount = red_packet.amount_list.pop()
+            except IndexError:
+                self.send_error(recv, "红包已被抢完")
+                return
+
+            try:
+                # 执行转账 - 使用同步方式
+                receipt_address = AccountAddress.from_hex(address)
+                txn_hash = self.sync_transfer(
+                    self.contract_account,
+                    receipt_address,
+                    int(apt_amount * 100_000_000)
+                )
+
+                # 更新用户数据
+                self.user_db.add_or_update_user({
+                    'wxid': recv["sender"],
+                    'wallet_address': address,
+                    'nickname': self.bot.get_contact_profile(recv["sender"])["nickname"]
+                })
+                
+                # 记录领取
+                red_packet.claimed.append((recv["sender"], address))
+
+                # 发送成功消息
+                self._send_claim_success(recv, address, apt_amount, txn_hash, red_packet)
+
+                # 检查是否领完
+                if not red_packet.amount_list:
+                    self._cleanup_redpacket(captcha)
+
+            except Exception as e:
+                logger.error(f"转账失败: {e}")
+                red_packet.amount_list.append(apt_amount)  # 恢复金额
+                self.send_error(recv, f"转账失败，请重试")
+
+        except Exception as e:
+            logger.error(f"领取红包失败: {e}")
+            self.send_error(recv, "领取失败，请重试")
     
     def load_config(self):
         """加载主配置文件"""
@@ -449,41 +568,41 @@ class aptos_airdrop(PluginInterface):
     #         logger.error(f"处理命令时发生错误: {e}")
     #         self.send_error(recv, "处理命令失败，请重试")
 
-    async def run(self, recv):
-        """处理接收到的消息"""
-        try:
-            content = [item for item in recv["content"] if item.strip()]
-            logger.info(f"收到命令: {content}")
+    # async def run(self, recv):
+    #     """处理接收到的消息"""
+    #     try:
+    #         content = [item for item in recv["content"] if item.strip()]
+    #         logger.info(f"收到命令: {content}")
             
-            if not content:
-                self.send_help(recv)
-                return
+    #         if not content:
+    #             self.send_help(recv)
+    #             return
 
-            command = content[0].lower()
+    #         command = content[0].lower()
             
-            # 检查是否是帮助命令
-            if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
-                self.send_help(recv)
-                return
+    #         # 检查是否是帮助命令
+    #         if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
+    #             self.send_help(recv)
+    #             return
             
-            if command in ["/redpack", "/发红包", "/airdrop"]:
-                try:
-                    total_amount, packet_count = self.parse_send_command(content)
-                    await self._handle_send_packet(recv, total_amount, packet_count)
-                except ValueError as e:
-                    self.send_error(recv, str(e))
-            elif command in ["/claim", "/抢红包", "/领取"]:
-                try:
-                    captcha, address = self.parse_claim_command(content)
-                    await self._handle_claim_packet(recv, captcha, address)
-                except ValueError as e:
-                    self.send_error(recv, str(e))
-            else:
-                self.send_help(recv)
+    #         if command in ["/redpack", "/发红包", "/airdrop"]:
+    #             try:
+    #                 total_amount, packet_count = self.parse_send_command(content)
+    #                 await self._handle_send_packet(recv, total_amount, packet_count)
+    #             except ValueError as e:
+    #                 self.send_error(recv, str(e))
+    #         elif command in ["/claim", "/抢红包", "/领取"]:
+    #             try:
+    #                 captcha, address = self.parse_claim_command(content)
+    #                 await self._handle_claim_packet(recv, captcha, address)
+    #             except ValueError as e:
+    #                 self.send_error(recv, str(e))
+    #         else:
+    #             self.send_help(recv)
 
-        except Exception as e:
-            logger.error(f"处理命令时发生错误: {e}")
-            self.send_error(recv, f"处理命令失败: {e}")
+    #     except Exception as e:
+    #         logger.error(f"处理命令时发生错误: {e}")
+    #         self.send_error(recv, f"处理命令失败: {e}")
         
     async def _handle_send_packet(self, recv, total_amount: float, packet_count: int):
         """处理发送红包命令"""
@@ -560,81 +679,81 @@ class aptos_airdrop(PluginInterface):
             logger.error(f"发送红包消息失败: {e}")
             raise
 
-    async def _handle_claim_packet(self, recv, captcha: str, address: Optional[str]):
-        """处理领取红包命令"""
-        if not self.loop or not self.loop.is_running():
-            self.send_error(recv, "系统繁忙，请稍后重试")
-            return
+    # async def _handle_claim_packet(self, recv, captcha: str, address: Optional[str]):
+    #     """处理领取红包命令"""
+    #     if not self.loop or not self.loop.is_running():
+    #         self.send_error(recv, "系统繁忙，请稍后重试")
+    #         return
 
-        try:
-            # 检查红包是否存在
-            if captcha not in self.red_packets:
-                self.send_error(recv, "验证码错误或红包不存在")
-                return
+    #     try:
+    #         # 检查红包是否存在
+    #         if captcha not in self.red_packets:
+    #             self.send_error(recv, "验证码错误或红包不存在")
+    #             return
 
-            # 获取红包信息
-            red_packet = self.red_packets[captcha]
+    #         # 获取红包信息
+    #         red_packet = self.red_packets[captcha]
             
-            # 获取用户数据
-            user_data = self.user_db.get_user_data(recv["sender"])
+    #         # 获取用户数据
+    #         user_data = self.user_db.get_user_data(recv["sender"])
             
-            # 处理地址逻辑
-            if not address and (not user_data or not user_data.get('WALLET_ADDRESS')):
-                self.send_error(recv, "请提供钱包地址或先绑定地址")
-                return
+    #         # 处理地址逻辑
+    #         if not address and (not user_data or not user_data.get('WALLET_ADDRESS')):
+    #             self.send_error(recv, "请提供钱包地址或先绑定地址")
+    #             return
             
-            if not address:
-                address = user_data['WALLET_ADDRESS']
-                self.send_message(recv, f"\n📝 使用已保存的地址: {self.format_address(address)}")
+    #         if not address:
+    #             address = user_data['WALLET_ADDRESS']
+    #             self.send_message(recv, f"\n📝 使用已保存的地址: {self.format_address(address)}")
 
-            # 验证领取请求
-            error = self._validate_claim(recv, red_packet, address)
-            if error:
-                self.send_error(recv, error)
-                return
+    #         # 验证领取请求
+    #         error = self._validate_claim(recv, red_packet, address)
+    #         if error:
+    #             self.send_error(recv, error)
+    #             return
 
-            # 获取红包金额
-            try:
-                apt_amount = red_packet.amount_list.pop()
-            except IndexError:
-                self.send_error(recv, "红包已被抢完")
-                return
+    #         # 获取红包金额
+    #         try:
+    #             apt_amount = red_packet.amount_list.pop()
+    #         except IndexError:
+    #             self.send_error(recv, "红包已被抢完")
+    #             return
 
-            try:
-                # 执行转账
-                receipt_address = AccountAddress.from_hex(address)
-                txn_hash = await self.rest_client.bcs_transfer(
-                    self.contract_account,
-                    receipt_address,
-                    int(apt_amount * 100_000_000)
-                )
-                await self.rest_client.wait_for_transaction(txn_hash)
+    #         try:
+    #             # 执行转账
+    #             receipt_address = AccountAddress.from_hex(address)
+    #             txn_hash = await self.rest_client.bcs_transfer(
+    #                 self.contract_account,
+    #                 receipt_address,
+    #                 int(apt_amount * 100_000_000)
+    #             )
+    #             await self.rest_client.wait_for_transaction(txn_hash)
 
-                # 更新用户数据
-                self.user_db.add_or_update_user({
-                    'wxid': recv["sender"],
-                    'wallet_address': address,
-                    'nickname': self.bot.get_contact_profile(recv["sender"])["nickname"]
-                })
+    #             # 更新用户数据
+    #             self.user_db.add_or_update_user({
+    #                 'wxid': recv["sender"],
+    #                 'wallet_address': address,
+    #                 'nickname': self.bot.get_contact_profile(recv["sender"])["nickname"]
+    #             })
                 
-                # 记录领取
-                red_packet.claimed.append((recv["sender"], address))
+    #             # 记录领取
+    #             red_packet.claimed.append((recv["sender"], address))
 
-                # 发送成功消息
-                self._send_claim_success(recv, address, apt_amount, txn_hash, red_packet)
+    #             # 发送成功消息
+    #             self._send_claim_success(recv, address, apt_amount, txn_hash, red_packet)
 
-                # 检查是否领完
-                if not red_packet.amount_list:
-                    self._cleanup_redpacket(captcha)
+    #             # 检查是否领完
+    #             if not red_packet.amount_list:
+    #                 self._cleanup_redpacket(captcha)
 
-            except Exception as e:
-                logger.error(f"转账失败: {e}")
-                red_packet.amount_list.append(apt_amount)  # 恢复金额
-                self.send_error(recv, f"转账失败: {str(e)}")
+    #         except Exception as e:
+    #             logger.error(f"转账失败: {e}")
+    #             red_packet.amount_list.append(apt_amount)  # 恢复金额
+    #             self.send_error(recv, f"转账失败: {str(e)}")
 
-        except Exception as e:
-            logger.error(f"领取红包失败: {e}")
-            self.send_error(recv, "领取失败，请重试")
+    #     except Exception as e:
+    #         logger.error(f"领取红包失败: {e}")
+    #         self.send_error(recv, "领取失败，请重试")
 
     def _send_claim_success(self, recv: dict, address: str, amount: float, txn_hash: str, red_packet: RedPacketInfo):
         """发送领取成功消息"""
