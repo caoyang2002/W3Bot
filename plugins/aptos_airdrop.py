@@ -716,33 +716,33 @@ class aptos_airdrop(PluginInterface):
             logger.error(f"加载配置文件失败: {e}")
             raise
 
-    async def run(self, recv):
-        """处理接收到的消息"""
-        try:
-            content = [item for item in recv["content"] if item.strip()]
-            logger.info(f"收到命令: {content}")
+    # async def run(self, recv):
+    #     """处理接收到的消息"""
+    #     try:
+    #         content = [item for item in recv["content"] if item.strip()]
+    #         logger.info(f"收到命令: {content}")
             
-            if not content:
-                return await self.send_help(recv)
+    #         if not content:
+    #             return await self.send_help(recv)
 
-            command = content[0].lower()
+    #         command = content[0].lower()
             
-            # 检查是否是帮助命令
-            if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
-                return await self.send_help(recv)
+    #         # 检查是否是帮助命令
+    #         if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
+    #             return await self.send_help(recv)
             
-            if command in ["/redpack", "/发红包", "/airdrop"]:
-                await self._handle_send_packet(recv)
-            elif command in ["/claim", "/抢红包", "/领取"]:
-                await self._handle_claim_packet(recv)
-            else:
-                await self.send_help(recv)
+    #         if command in ["/redpack", "/发红包", "/airdrop"]:
+    #             await self._handle_send_packet(recv)
+    #         elif command in ["/claim", "/抢红包", "/领取"]:
+    #             await self._handle_claim_packet(recv)
+    #         else:
+    #             await self.send_help(recv)
 
-        except ValueError as e:
-            await self.send_error(recv, str(e))
-        except Exception as e:
-            logger.error(f"处理命令时发生错误: {e}")
-            await self.send_error(recv, f"处理命令失败: {e}")
+    #     except ValueError as e:
+    #         await self.send_error(recv, str(e))
+    #     except Exception as e:
+    #         logger.error(f"处理命令时发生错误: {e}")
+    #         await self.send_error(recv, f"处理命令失败: {e}")
 
     def parse_send_command(self, content: list) -> Tuple[float, int]:
         """解析发红包命令"""
@@ -1200,13 +1200,76 @@ class aptos_airdrop(PluginInterface):
             
         return None
 
-    async def send_message(self, recv, message, log_level="info"):
-        """发送消息"""
-        getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
-        self.bot.send_text_msg(recv["from"], message)
+    # async def send_message(self, recv, message, log_level="info"):
+    #     """发送消息"""
+    #     getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
+    #     self.bot.send_text_msg(recv["from"], message)
 
-    async def send_help(self, recv):
-        """发送帮助信息"""
+    # async def send_help(self, recv):
+    #     """发送帮助信息"""
+    #     help_message = (
+    #         f"\n🎁 Aptos链上红包/空投系统\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"📢 功能介绍：\n"
+    #         f"在群内发送APT代币红包，支持随机金额分配\n"
+    #         f"可保存钱包地址，方便多次领取\n\n"
+    #         f"📝 发红包命令：\n"
+    #         f"• /redpack <APT数量> <红包个数>\n"
+    #         f"• /发红包 <APT数量> <红包个数>\n"
+    #         f"• /airdrop <APT数量> <红包个数>\n\n"
+    #         f"🎯 抢红包命令：\n"
+    #         f"• /claim <验证码> [钱包地址]\n"
+    #         f"• /抢红包 <验证码> [钱包地址]\n"
+    #         f"• /领取 <验证码> [钱包地址]\n\n"
+    #         f"📋 参数说明:\n"
+    #         f"• APT数量: {self.plugin_config['min_amount']} - {self.plugin_config['max_amount']} APT\n"
+    #         f"• 红包个数: 1 - {self.plugin_config['max_packet']} 个\n"
+    #         f"• 最小单个金额: {self.plugin_config['min_per_packet']} APT\n"
+    #         f"• 红包有效期: {self.plugin_config['max_time']}秒\n"
+    #         f"• 钱包地址: 可选参数，不填则使用历史地址\n\n"
+    #         f"💡 使用示例:\n"
+    #         f"1️⃣ 发送红包：\n"
+    #         f"   /redpack 10 5  (发10 APT分5个红包)\n\n"
+    #         f"2️⃣ 领取红包：\n"
+    #         f"   /claim abc12  (使用保存的地址)\n"
+    #         f"   /claim abc12 0x123...  (使用新地址)\n"
+    #         f"━━━━━━━━━━━━━━━"
+    #     )
+    #     await self.send_message(recv, help_message)
+
+    # async def send_error(self, recv, message):
+    #     """发送错误消息"""
+    #     error_msg = (
+    #         f"\n❌ 操作失败\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"📛 错误信息：\n{message}\n"
+    #         f"━━━━━━━━━━━━━━━\n"
+    #         f"💡 发送 /redpack help 查看完整帮助"
+    #     )
+    #     await self.send_message(recv, error_msg, "error")
+
+
+    def send_message(self, recv, message, log_level="info"):
+        """发送消息 - 同步版本"""
+        try:
+            getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
+            self.bot.send_text_msg(recv["from"], message)
+        except Exception as e:
+            logger.error(f"发送消息失败: {e}")
+
+    def send_error(self, recv, message):
+        """发送错误消息 - 同步版本"""
+        error_msg = (
+            f"\n❌ 操作失败\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"📛 错误信息：\n{message}\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"💡 发送 /redpack help 查看完整帮助"
+        )
+        self.send_message(recv, error_msg, "error")
+
+    def send_help(self, recv):
+        """发送帮助信息 - 同步版本"""
         help_message = (
             f"\n🎁 Aptos链上红包/空投系统\n"
             f"━━━━━━━━━━━━━━━\n"
@@ -1235,18 +1298,113 @@ class aptos_airdrop(PluginInterface):
             f"   /claim abc12 0x123...  (使用新地址)\n"
             f"━━━━━━━━━━━━━━━"
         )
-        await self.send_message(recv, help_message)
+        self.send_message(recv, help_message)
 
-    async def send_error(self, recv, message):
-        """发送错误消息"""
-        error_msg = (
-            f"\n❌ 操作失败\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"📛 错误信息：\n{message}\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"💡 发送 /redpack help 查看完整帮助"
-        )
-        await self.send_message(recv, error_msg, "error")
+    async def run(self, recv):
+        """处理接收到的消息"""
+        try:
+            content = [item for item in recv["content"] if item.strip()]
+            logger.info(f"收到命令: {content}")
+            
+            if not content:
+                self.send_help(recv)
+                return
+
+            command = content[0].lower()
+            
+            # 检查是否是帮助命令
+            if len(content) > 1 and content[1] in ["帮助", "help", "查看帮助"]:
+                self.send_help(recv)
+                return
+            
+            if command in ["/redpack", "/发红包", "/airdrop"]:
+                try:
+                    total_amount, packet_count = self.parse_send_command(content)
+                    await self._handle_send_packet(recv, total_amount, packet_count)
+                except ValueError as e:
+                    self.send_error(recv, str(e))
+            elif command in ["/claim", "/抢红包", "/领取"]:
+                try:
+                    captcha, address = self.parse_claim_command(content)
+                    await self._handle_claim_packet(recv, captcha, address)
+                except ValueError as e:
+                    self.send_error(recv, str(e))
+            else:
+                self.send_help(recv)
+
+        except Exception as e:
+            logger.error(f"处理命令时发生错误: {e}")
+            self.send_error(recv, f"处理命令失败: {e}")
+
+    async def _handle_send_packet(self, recv, total_amount: float, packet_count: int):
+        """处理发送红包命令"""
+        try:
+            # 检查发送者账户余额
+            try:
+                balance = await self.rest_client.account_balance(self.contract_account.address())
+                if balance < total_amount * 100_000_000:
+                    error_msg = (
+                        "合约账户余额不足\n"
+                        f"需要: {total_amount:.4f} APT\n"
+                        f"当前: {balance/100_000_000:.4f} APT"
+                    )
+                    self.send_error(recv, error_msg)
+                    return
+            except Exception as e:
+                logger.error(f"检查余额失败: {e}")
+                self.send_error(recv, "检查余额失败，请稍后重试")
+                return
+                
+            # 生成红包信息
+            captcha, image_path = self._generate_captcha()
+            amount_list = self._split_amount(total_amount, packet_count)
+            
+            red_packet = RedPacketInfo(
+                total_amount=total_amount,
+                amount=packet_count,
+                sender=recv["sender"],
+                amount_list=amount_list,
+                claimed=[],
+                created_time=time.time(),
+                chatroom=recv["from"],
+                sender_nick=self.bot.get_contact_profile(recv["sender"])["nickname"]
+            )
+            
+            self.red_packets[captcha] = red_packet
+            
+            # 发送红包消息
+            self._send_redpacket_message(recv, red_packet, captcha, image_path)
+            
+        except Exception as e:
+            logger.error(f"发送红包失败: {e}")
+            self.send_error(recv, str(e))
+
+    def _send_redpacket_message(self, recv: dict, red_packet: RedPacketInfo, captcha: str, image_path: str):
+        """发送红包消息 - 同步版本"""
+        try:
+            # 发送验证码图片
+            self.bot.send_image_msg(recv["from"], image_path)
+            
+            # 构建红包消息
+            message = (
+                f"\n🧧 收到一个APT红包\n"
+                f"━━━━━━━━━━━━━━━\n"
+                f"👤 发送者: {red_packet.sender_nick}\n"
+                f"💰 金额: {red_packet.total_amount:.4f} APT\n"
+                f"📦 数量: {red_packet.amount}个\n"
+                f"🎯 口令: {captcha}\n"
+                f"━━━━━━━━━━━━━━━\n"
+                f"📝 使用以下命令领取:\n"
+                f"/claim {captcha} <钱包地址>\n"
+                f"或\n"
+                f"/抢红包 {captcha} <钱包地址>\n"
+                f"提示: 不填地址则使用上次地址"
+            )
+            self.send_message(recv, message)
+            
+        except Exception as e:
+            logger.error(f"发送红包消息失败: {e}")
+            raise
 
     @staticmethod
     def _ensure_cache_directory() -> None:
@@ -1312,35 +1470,35 @@ class aptos_airdrop(PluginInterface):
             logger.error(f"创建过期检查任务失败: {e}")
             return None
 
-    async def _send_redpacket_message(self, recv: dict, red_packet: RedPacketInfo, captcha: str, image_path: str):
-        """发送红包消息"""
-        try:
-            # 发送验证码图片
-            self.bot.send_image_msg(recv["from"], image_path)
+    # async def _send_redpacket_message(self, recv: dict, red_packet: RedPacketInfo, captcha: str, image_path: str):
+    #     """发送红包消息"""
+    #     try:
+    #         # 发送验证码图片
+    #         self.bot.send_image_msg(recv["from"], image_path)
             
-            # 构建红包消息
-            message = (
-                f"\n🧧 收到一个APT红包\n"
-                f"━━━━━━━━━━━━━━━\n"
-                f"👤 发送者: {red_packet.sender_nick}\n"
-                f"💰 金额: {red_packet.total_amount:.4f} APT\n"
-                f"📦 数量: {red_packet.amount}个\n"
-                f"🎯 口令: {captcha}\n"
-                f"━━━━━━━━━━━━━━━\n"
-                f"📝 使用以下命令领取:\n"
-                f"/claim {captcha} <钱包地址>\n"
-                f"或\n"
-                f"/抢红包 {captcha} <钱包地址>\n"
-                f"提示: 不填地址则使用上次地址"
-            )
-            await self.send_message(recv, message)
+    #         # 构建红包消息
+    #         message = (
+    #             f"\n🧧 收到一个APT红包\n"
+    #             f"━━━━━━━━━━━━━━━\n"
+    #             f"👤 发送者: {red_packet.sender_nick}\n"
+    #             f"💰 金额: {red_packet.total_amount:.4f} APT\n"
+    #             f"📦 数量: {red_packet.amount}个\n"
+    #             f"🎯 口令: {captcha}\n"
+    #             f"━━━━━━━━━━━━━━━\n"
+    #             f"📝 使用以下命令领取:\n"
+    #             f"/claim {captcha} <钱包地址>\n"
+    #             f"或\n"
+    #             f"/抢红包 {captcha} <钱包地址>\n"
+    #             f"提示: 不填地址则使用上次地址"
+    #         )
+    #         await self.send_message(recv, message)
             
-            # 创建过期检查任务
-            await self._create_expiry_task(captcha, recv["from"])
+    #         # 创建过期检查任务
+    #         await self._create_expiry_task(captcha, recv["from"])
             
-        except Exception as e:
-            logger.error(f"发送红包消息失败: {e}")
-            raise
+    #     except Exception as e:
+    #         logger.error(f"发送红包消息失败: {e}")
+    #         raise
 
     def __del__(self):
         """清理资源"""
