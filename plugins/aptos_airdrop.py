@@ -56,7 +56,7 @@ class aptos_airdrop(PluginInterface):
         self.bot = pywxdll.Pywxdll(self.config["ip"], self.config["port"])
         
         # 初始化合约账户
-        self.contract_account = Account.load_key(self.plugin_config["contract_private_key"])
+        self.contract_account = Account.load_key(self.config["aptos_private_key"])
         
         # 初始化数据库和红包存储
         self.user_db = AptosUserDatabase()
