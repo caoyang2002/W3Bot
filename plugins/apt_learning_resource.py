@@ -2,22 +2,36 @@ import yaml
 from loguru import logger
 import pywxdll
 from utils.plugin_interface import PluginInterface
-from typing import Tuple, Optional
+from typing import Optional
 
 class apt_learning_resource(PluginInterface):
-    def __init__(self):
-        # 加载插件配置
-        config_path = "plugins/apt_learning.yml"
-        with open(config_path, "r", encoding="utf-8") as f:
-            self.plugin_config = yaml.safe_load(f.read())
-        
-        # 初始化资源和帮助信息
-        self.resources = self.plugin_config["resources"]
-        self.command_help = self.plugin_config["command_help"]
+    def load_config(self):
+        """加载主配置文件"""
+        try:
+            with open("main_config.yml", "r", encoding="utf-8") as f:
+                return yaml.safe_load(f.read())
+        except Exception as e:
+            logger.error(f"加载配置文件失败: {e}")
+            raise
 
-        # 加载主配置
-        self.config = self.load_config()
-        self.bot = pywxdll.Pywxdll(self.config["ip"], self.config["port"])
+    def __init__(self):
+        try:
+            # 加载插件配置
+            config_path = "plugins/apt_learning_resource.yml"
+            with open(config_path, "r", encoding="utf-8") as f:
+                self.plugin_config = yaml.safe_load(f.read())
+            
+            # 初始化资源和帮助信息
+            self.resources = self.plugin_config["resources"]
+            self.command_help = self.plugin_config["command_help"]
+
+            # 加载主配置
+            self.config = self.load_config()
+            self.bot = pywxdll.Pywxdll(self.config["ip"], self.config["port"])
+            
+        except Exception as e:
+            logger.error(f"初始化插件失败: {e}")
+            raise
     
     def parse_command(self, content: list) -> Optional[str]:
         """
