@@ -223,7 +223,7 @@ class apt_faucet(PluginInterface):
             f"\n🌊 Aptos Gas 领取助手\n"
             f"━━━━━━━━━━━━━━━\n"
             f"📝 命令格式：\n\n"
-            f"1️⃣ 默认领取 10 APT (testnet):\n"
+            f"1️⃣ 默认领取 1 APT (testnet):\n"
             f"   /gas 0x<地址>\n\n"
             f"2️⃣ 指定数量:\n"
             f"   /gas <数量> 0x<地址>\n\n"
