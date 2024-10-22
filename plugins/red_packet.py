@@ -277,7 +277,7 @@ class RedPacketInfo:
     chatroom: str
     sender_nick: str
 
-class RedPacketPlugin(PluginInterface):
+class red_packet(PluginInterface):
     """红包插件实现类"""
     
     def __init__(self):
