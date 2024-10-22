@@ -1,0 +1,10 @@
+keywords: ["/学习资源", "/aptlearn"]
+plugin_name: "apt_learning_resource"
+
+command_help: "命令：/aptlearn，获取Aptos学习资源"
+
+resources:
+  {
+    notion: "https://alcove-pro.notion.site/Move-on-Aptos-1ae5da241d71427495d78ace299ac85e",
+    google_drive: "https://drive.google.com/drive/folders/1-EmZXvuPuVH60XmbmFxUg1jDm6-uDDG2",
+  }

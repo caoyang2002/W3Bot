@@ -15,7 +15,8 @@
 
 ## 链上功能
 
-领取 Aptos Gas
+### 领取 Aptos Gas
+
 <!-- chat:start -->
 
 #### **Simons**
@@ -80,6 +81,7 @@
 
 <!-- chat:end -->
 
+### 创建地址
 
 大部分管理员功能需要管理员权限，可以在位于项目根目录的主设置 `main_config.yml` 中设置管理员 `wxid`。
 
