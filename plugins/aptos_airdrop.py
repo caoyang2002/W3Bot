@@ -530,10 +530,6 @@ class aptos_airdrop(PluginInterface):
 
     async def _handle_send_packet(self, recv, total_amount: float, packet_count: int):
         """处理发送红包命令"""
-        if not self.loop or not self.loop.is_running():
-            self.send_error(recv, "系统繁忙，请稍后重试")
-            return
-
         try:
             # 检查发送者账户余额
             try:
@@ -573,7 +569,7 @@ class aptos_airdrop(PluginInterface):
         except Exception as e:
             logger.error(f"发送红包失败: {e}")
             self.send_error(recv, str(e))
-
+        
     def _send_redpacket_message(self, recv: dict, red_packet: RedPacketInfo, captcha: str, image_path: str):
         """发送红包消息"""
         try:
