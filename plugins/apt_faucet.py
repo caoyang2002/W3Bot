@@ -130,41 +130,77 @@ class apt_faucet(PluginInterface):
             await self.send_error(recv, f"处理命令失败: {e}")
 
     async def process_faucet(self, recv, address, amount):
-        """处理水龙头请求"""
+        """
+        处理水龙头请求
+        :param recv: 接收消息的信息
+        :param address: 钱包地址
+        :param amount: 请求数量（octas）
+        """
         try:
+            logger.info(f"开始处理 Gas 领取请求: 地址={address}, 请求数量={amount/100_000_000}APT, 网络={self.current_network}")
+            
             account_address = AccountAddress.from_str(address)
+            
+            # 获取领取前余额
+            pre_balance = await self.rest_client.account_balance(account_address)
+            logger.info(f"领取前余额: {pre_balance/100_000_000}APT")
+            
+            # 执行领取
             await self.faucet_client.fund_account(account_address, amount)
-            balance = await self.rest_client.account_balance(account_address)
-            await self.send_success(recv, address, amount, balance)
+            
+            # 等待一小段时间确保余额更新
+            await asyncio.sleep(2)
+            
+            # 获取领取后余额
+            post_balance = await self.rest_client.account_balance(account_address)
+            logger.info(f"领取后余额: {post_balance/100_000_000}APT")
+            
+            # 计算实际到账金额
+            actual_amount = post_balance - pre_balance
+            logger.info(f"实际到账: {actual_amount/100_000_000}APT")
+            
+            # 发送成功消息，使用实际到账金额
+            await self.send_success(recv, address, actual_amount, post_balance)
+            
         except Exception as e:
             logger.error(f"领取 Gas 时发生错误: {e}")
-            await self.send_error(recv, f"领取 Gas 失败: {e}")
+            await self.send_error(recv, f"领取失败: {str(e)}")
 
     async def send_success(self, recv, address, amount, balance):
-        """发送成功消息"""
+        """
+        发送成功消息
+        :param recv: 接收消息的信息
+        :param address: 领取地址
+        :param amount: 实际到账金额（octas）
+        :param balance: 当前余额（octas）
+        """
         # 转换为可读格式
         amount_apt = amount / 100_000_000
         balance_apt = balance / 100_000_000
-        formatted_address = f"{address[:6]}...{address[-6:]}" if len(address) > 12 else address
-      
+        
+        # 格式化地址显示
+        formatted_address = f"{address[:6]}...{address[-6:]}"
+        
         success_msg = (
             f"\n✅ Gas 领取成功！\n"
             f"━━━━━━━━━━━━━━━\n"
             f"🌐 网络: {self.current_network.upper()}\n"
             f"📜 地址: {formatted_address}\n"
-            f"💧 领取: {amount_apt:.2f} APT\n"
-            f"💰 余额: {balance_apt:.2f} APT\n"
+            f"💧 实际到账: {amount_apt:.2f} APT\n"
+            f"💰 当前余额: {balance_apt:.2f} APT\n"
             f"━━━━━━━━━━━━━━━\n"
             f"🔍 浏览器: https://explorer.aptoslabs.com/account/{address}?network={self.current_network}"
         )
-
         await self.send_message(recv, success_msg)
+        
+        # 如果实际到账金额与请求金额不符，记录日志
+        if amount != amount:
+            logger.warning(f"实际到账金额 ({amount_apt:.2f} APT) 与请求金额不符")
 
     async def send_message(self, recv, message, log_level="info"):
         """发送消息的通用方法"""
         getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
         self.bot.send_text_msg(recv["from"], message)
-
     async def send_error(self, recv, message):
         """
         发送错误消息
