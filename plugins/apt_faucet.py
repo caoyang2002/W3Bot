@@ -4,9 +4,11 @@ import pywxdll
 from utils.database import BotDatabase
 from utils.plugin_interface import PluginInterface
 import asyncio
-from aptos_sdk.async_client import FaucetClient, RestClient
-from aptos_sdk.account import Account
-from aptos_sdk.account_address import AccountAddress
+from sdk.aptos_python.async_client import FaucetClient, RestClient
+from sdk.aptos_python.account import Account
+from sdk.aptos_python.account_address import AccountAddress
+
+
 
 class apt_faucet(PluginInterface):
     def __init__(self):
@@ -35,8 +37,7 @@ class apt_faucet(PluginInterface):
         if len(content) < 3:
             return await self.send_help(recv)
 
-        if admin_wxid not in self.admin_list:
-            return await self.send_error(recv, "你没有权限使用此指令")
+
 
         wxid = self.get_wxid(content)
         if not wxid:
@@ -44,7 +45,7 @@ class apt_faucet(PluginInterface):
 
         action = content[-1]  # 取最后一个非空元素作为操作
 
-        await self.process_action(recv, wxid, action)
+
 
     def get_wxid(self, content):
         for item in content[1:]:  # 从第二个元素开始查找
@@ -54,19 +55,7 @@ class apt_faucet(PluginInterface):
                 return item
         return None
 
-    async def process_action(self, recv, wxid, action):
-        try:
-            if action == "加入":
-                self.db.set_whitelist(wxid, 1)
-                await self.send_success(recv, wxid, "加入")
-            elif action == "删除":
-                self.db.set_whitelist(wxid, 0)
-                await self.send_success(recv, wxid, "删除")
-            else:
-                await self.send_error(recv, f"未知的操作: {action}")
-        except Exception as e:
-            logger.error(f"执行白名单操作时发生错误: {e}")
-            await self.send_error(recv, f"操作失败: {e}")
+
 
     async def send_message(self, recv, message, log_level="info"):
         getattr(logger, log_level)(f'[发送信息]{message}| [发送到] {recv["from"]}')
