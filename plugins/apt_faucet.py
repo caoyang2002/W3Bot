@@ -118,7 +118,7 @@ class apt_faucet(PluginInterface):
             self.set_network(network)
             
             # 转换金额为 octas
-            amount_octas = int(amount * 100_000_000)
+            amount_octas = int(amount * 1_000_000_000)
             
             # 处理请求
             await self.process_faucet(recv, address, amount_octas)
