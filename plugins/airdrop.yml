@@ -1,0 +1,48 @@
+# 插件基本信息
+plugin_name: "aptos_redpacket"
+version: "1.0.0"
+description: "Aptos链上红包插件"
+
+# 命令关键词
+keywords:
+  - "/redpack"
+  - "/发红包"
+  - "/airdrop"
+  - "/claim"
+  - "/抢红包"
+  - "/领取"
+
+# 红包配置
+min_amount: 0.1 # 最小红包金额(APT)
+max_amount: 100.0 # 最大红包金额(APT)
+max_packet: 100 # 最大红包个数
+min_per_packet: 0.000001 # 最小单位(APT)
+max_time: 3600 # 红包过期时间(秒)
+
+# 网络配置
+testnet_node_url: "https://fullnode.testnet.aptoslabs.com/v1"
+testnet_explorer_url: "https://explorer.aptoslabs.com"
+mainnet_node_url: "https://fullnode.mainnet.aptoslabs.com/v1"
+mainnet_explorer_url: "https://explorer.aptoslabs.com"
+
+# 合约配置
+contract_private_key: "0x..." # 红包合约私钥
+contract_address: "0x..." # 红包合约地址
+
+# 数据库配置
+database:
+  path: "data/aptos_redpacket.db"
+  backup_path: "data/backup/"
+  backup_interval: 86400 # 备份间隔(秒)
+
+# 缓存配置
+cache:
+  path: "resources/cache"
+  clean_interval: 3600 # 清理间隔(秒)
+  max_size: 100 # 最大缓存文件数
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "[{time}] [{level}] {message}"
+  file: "logs/aptos_redpacket.log"
