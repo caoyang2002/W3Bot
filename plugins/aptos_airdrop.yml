@@ -1,7 +1,7 @@
 # 插件基本信息
 plugin_name: "aptos_airdrop"
 version: "1.0.0"
-description: "Aptos链上红包插件"
+description: "Aptos链上红包/空投插件"
 
 # 命令关键词
 keywords:
@@ -25,13 +25,9 @@ testnet_explorer_url: "https://explorer.aptoslabs.com"
 mainnet_node_url: "https://fullnode.mainnet.aptoslabs.com/v1"
 mainnet_explorer_url: "https://explorer.aptoslabs.com"
 
-# 合约配置
-contract_private_key: "0x..." # 红包合约私钥
-contract_address: "0x..." # 红包合约地址
-
 # 数据库配置
 database:
-  path: "data/aptos_redpacket.db"
+  path: "data/aptos_airdrop.db"
   backup_path: "data/backup/"
   backup_interval: 86400 # 备份间隔(秒)
 
@@ -45,4 +41,4 @@ cache:
 logging:
   level: "INFO"
   format: "[{time}] [{level}] {message}"
-  file: "logs/aptos_redpacket.log"
+  file: "logs/airdrop.log"
