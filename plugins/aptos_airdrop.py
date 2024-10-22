@@ -733,7 +733,7 @@ class aptos_airdrop(PluginInterface):
         """发送红包消息"""
         try:
             # 发送验证码图片
-            self.bot.send_image(recv["from"], image_path)
+            self.bot.send_image_msg(recv["from"], image_path)
             
             # 构建红包消息
             message = (
