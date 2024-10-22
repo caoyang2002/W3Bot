@@ -12,15 +12,24 @@ from sdk.aptos_python.account_address import AccountAddress
 
 class apt_faucet(PluginInterface):
     def __init__(self):
+        config_path = "plugins/apt_faucet.yml"
+        with open(config_path, "r", encoding="utf-8") as f:  # 读取设置
+            config = yaml.safe_load(f.read())
+        self.node_url = config["node_url"]  
+        self.faucet_url = config["faucet_url"] 
+
         self.config = self.load_config()
         self.bot = pywxdll.Pywxdll(self.config["ip"], self.config["port"])
-        self.faucet_url= self.config["faucet_url"]
-        self.node_url = self.config["node_url"]
+        
+ 
         # self.db = BotDatabase()
-        self.rest_client = RestClient("https://api.testnet.aptoslabs.com/v1")
-        self.faucet_client = FaucetClient("https://faucet.testnet.aptoslabs.com", self.rest_client)
+        self.rest_client = RestClient(self.node_url)
+        self.faucet_client = FaucetClient(self.faucet_url, self.rest_client)
 
     def load_config(self):
+        """
+        加载配置文件
+        """
         try:
             with open("main_config.yml", "r", encoding="utf-8") as f:
                 return yaml.safe_load(f.read())
