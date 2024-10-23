@@ -199,7 +199,7 @@ class aptos_airdrop(PluginInterface):
 
             # 参数验证
             if len(content) < 3:
-                self.send_message(recv, "❌参数不足! 格式: /发红包 金额 数量 [可选:钱包地址]")
+                self.send_message(recv, "❌参数不足! 格式:\n/发红包 金额 数量 [可选:钱包地址]")
                 return
 
             try:
@@ -293,12 +293,15 @@ class aptos_airdrop(PluginInterface):
     🎉 {nickname} 发送了一个红包!
     💰 总金额: {amount} APT
     📦 数量: {count} 个
+    code: {captcha}
     🔗 交易hash: {txn_hash}
                 
     请使用 /抢红包 验证码 [可选:钱包地址] 来领取
                 """
                 self.send_message(recv, message)
+                logger.info(f"发送消息: {message}")
                 self.bot.send_image_msg(recv["from"], captcha_path)
+                logger.info(f"发送图片: {captcha_path}")
 
             except Exception as e:
                 exc_info = sys.exc_info()
@@ -398,7 +401,7 @@ class aptos_airdrop(PluginInterface):
     
 
     @staticmethod
-    def generate_captcha(length=5):
+    def generate_captcha(length=4):
         """生成验证码"""
         chars = "abdefghknpqtwxy23467889"
         code = "".join(random.sample(chars, length))
