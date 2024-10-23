@@ -4,6 +4,8 @@ import time
 import asyncio
 from typing import Optional, Dict, List
 from datetime import datetime
+import traceback
+import sys
 
 import yaml
 from captcha.image import ImageCaptcha
@@ -66,25 +68,128 @@ class aptos_airdrop(PluginInterface):
             os.makedirs(cache_path)
             logger.info("Created cache directory")
 
+    # @staticmethod
+    # def create_account_from_private_key(key: str) -> Account:
+    #     """
+    #     从私钥创建 Aptos 账户
+    #     :param key: 私钥（hex字符串，可选0x前缀）
+    #     :return: Account 对象
+    #     """
+    #     # 移除可能的0x前缀
+    #     if key.startswith('0x'):
+    #         key = key[2:]
+            
+    #     # 创建 SigningKey 和 ed25519.PrivateKey
+    #     signing_key = SigningKey(bytes.fromhex(key))
+    #     # 使用 ed25519.PrivateKey 而不是 PrivateKey 协议
+    #     private_key = ed25519.PrivateKey(signing_key)
+    #     # 创建账户
+    #     account_address = AccountAddress.from_key(private_key.public_key())
+    #     return Account(account_address, private_key)
+
     @staticmethod
     def create_account_from_private_key(key: str) -> Account:
-        """
-        从私钥创建 Aptos 账户
-        :param key: 私钥（hex字符串，可选0x前缀）
-        :return: Account 对象
-        """
-        # 移除可能的0x前缀
-        if key.startswith('0x'):
-            key = key[2:]
-            
-        # 创建 SigningKey 和 ed25519.PrivateKey
-        signing_key = SigningKey(bytes.fromhex(key))
-        # 使用 ed25519.PrivateKey 而不是 PrivateKey 协议
-        private_key = ed25519.PrivateKey(signing_key)
-        # 创建账户
-        account_address = AccountAddress.from_key(private_key.public_key())
-        return Account(account_address, private_key)
+        """从私钥创建 Aptos 账户"""
+        # try:
+        #     # 记录初始输入（注意不要记录完整私钥）
+        #     logger.info(f"开始创建账户 (私钥前4字符: {key[:4]}...)")
 
+        #     # 移除前缀
+        #     if key.startswith('0x'):
+        #         key = key[2:]
+        #         logger.info("已移除0x前缀")
+
+        #     # 转换为字节
+        #     try:
+        #         key_bytes = bytes.fromhex(key)
+        #         logger.info(f"私钥已转换为字节，长度: {len(key_bytes)}")
+        #     except ValueError as e:
+        #         logger.error(f"私钥格式错误: {str(e)}")
+        #         raise
+                
+        #     # 创建 SigningKey
+        #     try:
+        #         signing_key = SigningKey(key_bytes)
+        #         logger.info("SigningKey 创建成功")
+        #     except Exception as e:
+        #         logger.error(f"创建 SigningKey 失败: {str(e)}")
+        #         raise
+
+        #     # 创建 PrivateKey
+        #     try:
+        #         private_key = ed25519.PrivateKey(signing_key)
+        #         logger.info("PrivateKey 创建成功")
+        #     except Exception as e:
+        #         logger.error(f"创建 PrivateKey 失败: {str(e)}")
+        #         raise
+
+        #     # 创建账户
+        #     try:
+        #         account_address = AccountAddress.from_key(private_key.public_key())
+        #         account = Account(account_address, private_key)
+        #         logger.info(f"账户创建成功，地址: {account.address()}")
+        #         return account
+        #     except Exception as e:
+        #         logger.error(f"创建账户失败: {str(e)}")
+        #         raise
+
+        # except Exception as e:
+        #     logger.error("创建账户过程中发生错误:")
+        #     logger.error(f"错误类型: {type(e).__name__}")
+        #     logger.error(f"错误信息: {str(e)}")
+        #     logger.error("完整跟踪信息:")
+        #     logger.error(traceback.format_exc())
+        #     raise
+        try:
+            # 记录初始输入（注意不要记录完整私钥）
+            logger.info(f"开始创建账户 (私钥前4字符: {key[:4]}...)")
+
+            # 移除前缀
+            if key.startswith('0x'):
+                key = key[2:]
+                logger.info("已移除0x前缀")
+
+            # 转换为字节
+            try:
+                key_bytes = bytes.fromhex(key)
+                logger.info(f"私钥已转换为字节，长度: {len(key_bytes)}")
+            except ValueError as e:
+                logger.error(f"私钥格式错误: {str(e)}")
+                raise
+                
+            # 创建 SigningKey
+            try:
+                signing_key = SigningKey(key_bytes)
+                logger.info("SigningKey 创建成功")
+            except Exception as e:
+                logger.error(f"创建 SigningKey 失败: {str(e)}")
+                raise
+
+            # 创建 PrivateKey
+            try:
+                private_key = ed25519.PrivateKey(signing_key)
+                logger.info("PrivateKey 创建成功")
+            except Exception as e:
+                logger.error(f"创建 PrivateKey 失败: {str(e)}")
+                raise
+
+            # 创建账户
+            try:
+                account_address = AccountAddress.from_key(private_key.public_key())
+                account = Account(account_address, private_key)
+                logger.info(f"账户创建成功，地址: {account.address()}")
+                return account
+            except Exception as e:
+                logger.error(f"创建账户失败: {str(e)}")
+                raise
+
+        except Exception as e:
+            logger.error("创建账户过程中发生错误:")
+            logger.error(f"错误类型: {type(e).__name__}")
+            logger.error(f"错误信息: {str(e)}")
+            logger.error("完整跟踪信息:")
+            logger.error(traceback.format_exc())
+            raise
 
     @staticmethod
     def normalize_address(address: str) -> str:
@@ -95,14 +200,60 @@ class aptos_airdrop(PluginInterface):
 
     async def transfer_apt(self, from_account: Account, to_address: str, amount: int) -> str:
         """从账户向指定地址转账"""
-        to_address_obj = AccountAddress.from_str(to_address)
-        txn_hash = await self.rest_client.bcs_transfer(
-            from_account,
-            to_address_obj,
-            amount
-        )
-        await self.rest_client.wait_for_transaction(txn_hash)
-        return txn_hash
+        # to_address_obj = AccountAddress.from_str(to_address)
+        # txn_hash = await self.rest_client.bcs_transfer(
+        #     from_account,
+        #     to_address_obj,
+        #     amount
+        # )
+        # await self.rest_client.wait_for_transaction(txn_hash)
+        # return txn_hash
+        try:
+            # 打印转账参数
+            logger.info(f"转账参数:")
+            logger.info(f"- 发送方: {from_account.address()}")
+            logger.info(f"- 接收方: {to_address}")
+            logger.info(f"- 金额: {amount} Octas")
+
+            # 验证并转换地址
+            try:
+                to_address_obj = AccountAddress.from_str(to_address)
+                logger.info(f"地址转换成功: {to_address} -> {to_address_obj}")
+            except Exception as addr_error:
+                logger.error(f"地址转换失败: {str(addr_error)}")
+                raise ValueError(f"无效的地址格式: {to_address}") from addr_error
+
+            # 执行转账
+            try:
+                txn_hash = await self.rest_client.bcs_transfer(
+                    from_account,
+                    to_address_obj,
+                    amount
+                )
+                logger.info(f"交易已提交，hash: {txn_hash}")
+            except Exception as tx_error:
+                logger.error(f"交易提交失败: {str(tx_error)}")
+                logger.error(traceback.format_exc())
+                raise
+
+            # 等待交易确认
+            try:
+                await self.rest_client.wait_for_transaction(txn_hash)
+                logger.info(f"交易已确认: {txn_hash}")
+            except Exception as wait_error:
+                logger.error(f"等待交易确认失败: {str(wait_error)}")
+                raise
+
+            return txn_hash
+
+        except Exception as e:
+            logger.error("转账过程中发生错误:")
+            logger.error(f"错误类型: {type(e).__name__}")
+            logger.error(f"错误信息: {str(e)}")
+            logger.error("完整跟踪信息:")
+            logger.error(traceback.format_exc())
+            raise
+
 
 
     async def run(self, recv):
@@ -193,13 +344,30 @@ class aptos_airdrop(PluginInterface):
                 "room": recv["from"]
             }
 
-            # 执行转账
-            txn_hash = await self.transfer_apt(
-                self.bot_account,
-                sender_address,
-                total_octas
-            )
-            logger.info(f"转账成功! 交易hash: {txn_hash}")  
+            try:
+                # 执行转账前打印详细信息
+                logger.info(f"准备执行转账:")
+                logger.info(f"- 发送方账户: {self.bot_account.address()}")
+                logger.info(f"- 接收方地址: {sender_address}")
+                logger.info(f"- 转账金额: {total_octas} Octas ({amount} APT)")
+
+                # 执行转账
+                txn_hash = await self.transfer_apt(
+                    self.bot_account,
+                    sender_address,
+                    total_octas
+                )
+                logger.info(f"转账成功! 交易hash: {txn_hash}")
+
+            except Exception as transfer_error:
+                # 捕获并记录转账错误的详细信息
+                logger.error("转账过程中发生错误:")
+                logger.error(f"错误类型: {type(transfer_error).__name__}")
+                logger.error(f"错误信息: {str(transfer_error)}")
+                logger.error("详细跟踪信息:")
+                logger.error(traceback.format_exc())
+                raise  # 重新抛出异常
+            # logger.info(f"转账成功! 交易hash: {txn_hash}")  
 
             # 发送消息
             nickname = recv.get("sender_nick", sender)
@@ -215,8 +383,18 @@ class aptos_airdrop(PluginInterface):
             self.bot.send_image_msg(recv["from"], captcha_path)
 
         except Exception as e:
-            logger.error(f"发送红包错误: {str(e)}")
-            self.send_message(recv, "❌发送红包失败，请稍后重试!")
+            # 记录完整的错误跟踪信息
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            logger.error("发送红包时发生错误:")
+            logger.error(f"错误类型: {exc_type.__name__}")
+            logger.error(f"错误信息: {str(e)}")
+            logger.error("调用栈:")
+            for frame in traceback.extract_tb(exc_traceback):
+                logger.error(f"  文件 {frame.filename}, 行 {frame.lineno}, 在 {frame.name}")
+                logger.error(f"    {frame.line}")
+            logger.error("完整跟踪信息:")
+            logger.error(traceback.format_exc())
+            self.send_message(recv, "❌发送红包失败，请稍后重试!\nError: {e}")
 
     async def grab_red_packet(self, recv):
         """抢红包"""
