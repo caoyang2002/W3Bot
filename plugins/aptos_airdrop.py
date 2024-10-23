@@ -184,6 +184,7 @@ class aptos_airdrop(PluginInterface):
         try:
             # 检查余额
             balance = await self.rest_client.account_balance(sender_address)
+            logger.info(f"用户 {sender} 有 {balance/100_000_000:.8f} APT")
             total_octas = int(amount * 100_000_000)
             
             if balance < total_octas:
@@ -223,7 +224,7 @@ class aptos_airdrop(PluginInterface):
 请使用 /抢红包 验证码 [可选:钱包地址] 来领取
             """
             self.send_message(recv, message)
-            self.bot.send_image(recv["from"], captcha_path)
+            self.bot.send_image_msg(recv["from"], captcha_path)
 
         except Exception as e:
             logger.error(f"发送红包错误: {str(e)}")
