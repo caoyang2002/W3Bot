@@ -9,7 +9,7 @@ import yaml
 from captcha.image import ImageCaptcha
 from loguru import logger
 import pywxdll
-from sdk.aptos_python import ed25519
+
 from sdk.aptos_python.ed25519 import PrivateKey  # 直接使用 SDK 的 PrivateKey
 from sdk.aptos_python.account import Account
 from sdk.aptos_python.account_address import AccountAddress
@@ -18,7 +18,7 @@ from sdk.aptos_python.async_client import RestClient
 from utils.aptos_user_database import AptosUserDatabase
 from utils.plugin_interface import PluginInterface
 from nacl.signing import SigningKey
-
+from sdk.aptos_python import ed25519  # 使用具体的ed25519实现
 
 class aptos_airdrop(PluginInterface):
     def __init__(self):
@@ -67,25 +67,23 @@ class aptos_airdrop(PluginInterface):
             logger.info("Created cache directory")
 
     @staticmethod
-    def create_account_from_private_key(private_key: str) -> Account:
+    def create_account_from_private_key(key: str) -> Account:
         """
         从私钥创建 Aptos 账户
-        :param private_key: 私钥（hex字符串，可选0x前缀）
+        :param key: 私钥（hex字符串，可选0x前缀）
         :return: Account 对象
         """
         # 移除可能的0x前缀
-        if private_key.startswith('0x'):
-            private_key = private_key[2:]
+        if key.startswith('0x'):
+            key = key[2:]
             
-        # 创建 SigningKey
-        signing_key = SigningKey(bytes.fromhex(private_key))
-        # 创建 PrivateKey
-        private_key_obj = PrivateKey(signing_key)
+        # 创建 SigningKey 和 ed25519.PrivateKey
+        signing_key = SigningKey(bytes.fromhex(key))
+        # 使用 ed25519.PrivateKey 而不是 PrivateKey 协议
+        private_key = ed25519.PrivateKey(signing_key)
         # 创建账户
-        account_address = AccountAddress.from_key(private_key_obj.public_key())
-        return Account(account_address, private_key_obj)
-
-
+        account_address = AccountAddress.from_key(private_key.public_key())
+        return Account(account_address, private_key)
 
 
     @staticmethod
