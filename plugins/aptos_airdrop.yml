@@ -1,44 +1,9 @@
-# 插件基本信息
-plugin_name: "aptos_airdrop"
-version: "1.0.0"
-description: "Aptos链上红包/空投插件"
+# 红包基础配置
+max_point: 100 # 最大金额(APT)
+min_point: 0.001 # 最小金额(APT)
+max_packet: 100 # 最大红包数量
+max_time: 43200 # 红包过期时间(秒)
 
-# 命令关键词
-keywords:
-  - "/redpack"
-  - "/发红包"
-  - "/airdrop"
-  - "/claim"
-  - "/抢红包"
-  - "/领取"
-
-# 红包配置
-min_amount: 0.1 # 最小红包金额(APT)
-max_amount: 100.0 # 最大红包金额(APT)
-max_packet: 100 # 最大红包个数
-min_per_packet: 0.000001 # 最小单位(APT)
-max_time: 3600 # 红包过期时间(秒)
-
-# 网络配置
-testnet_node_url: "https://fullnode.testnet.aptoslabs.com/v1"
-testnet_explorer_url: "https://explorer.aptoslabs.com"
-mainnet_node_url: "https://fullnode.mainnet.aptoslabs.com/v1"
-mainnet_explorer_url: "https://explorer.aptoslabs.com"
-
-# 数据库配置
-database:
-  path: "data/aptos_airdrop.db"
-  backup_path: "data/backup/"
-  backup_interval: 86400 # 备份间隔(秒)
-
-# 缓存配置
-cache:
-  path: "resources/cache"
-  clean_interval: 3600 # 清理间隔(秒)
-  max_size: 100 # 最大缓存文件数
-
-# 日志配置
-logging:
-  level: "INFO"
-  format: "[{time}] [{level}] {message}"
-  file: "logs/airdrop.log"
+# Aptos链配置
+node_url: "https://fullnode.testnet.aptoslabs.com/v1"
+bot_private_key: "YOUR_PRIVATE_KEY" # 机器人钱包私钥
