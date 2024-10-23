@@ -363,12 +363,13 @@ class aptos_airdrop(PluginInterface):
         content = recv["content"]
 
         if len(content) < 2:
-            self.send_message(recv, "❌参数不足! 格式: /抢红包 验证码 [可选:钱包地址]")
+            self.send_message(recv, "❌参数不足! 格式:\n/抢红包 验证码 [可选:钱包地址]")
             return
 
         captcha = content[1]
         wallet_address = content[2] if len(content) > 2 else None
-
+       
+      
         # 验证红包
         if captcha not in self.red_packets:
             self.send_message(recv, "❌红包不存在或已过期!")
@@ -381,12 +382,8 @@ class aptos_airdrop(PluginInterface):
         packet_time = packet["timestamp"]
         time_diff = current_time - packet_time
         
-        logger.info(f"红包时间检查:")
-        logger.info(f"- 当前时间: {datetime.fromtimestamp(current_time)}")
-        logger.info(f"- 红包创建时间: {datetime.fromtimestamp(packet_time)}")
-        logger.info(f"- 时间差: {time_diff} 秒")
-        logger.info(f"- 超时阈值: {self.max_time} 秒")
-        
+        logger.info(f"红包时间检查:\n- 当前时间: {datetime.fromtimestamp(current_time)}\n- 红包创建时间: {datetime.fromtimestamp(packet_time)}\n- 时间差: {time_diff} 秒\n- 超时阈值: {self.max_time} 秒")
+      
         # 验证状态
         if grabber in packet["claimed"]:
             self.send_message(recv, "❌您已经抢过这个红包了!")

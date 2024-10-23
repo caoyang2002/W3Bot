@@ -7,9 +7,9 @@ from utils.plans_interface import PlansInterface
 from utils.plugin_manager import plugin_manager
 
 
-class expired_red_packets_check(PlansInterface):
+class expired_aptos_airdrop_check(PlansInterface):
     def __init__(self):
-        config_path = "plugins/red_packet.yml"
+        config_path = "plugins/aptos_airdrop.yml"
         with open(config_path, "r", encoding="utf-8") as f:  # 读取设置
             config = yaml.safe_load(f.read())
 
@@ -25,7 +25,7 @@ class expired_red_packets_check(PlansInterface):
 
     def job(self):
         if "red_packet" in plugin_manager.plugins.keys():
-            plugin_manager.plugins["red_packet"].expired_red_packets_check()
+            plugin_manager.plugins["aptos_airdrop"].expired_aptos_airdrop_check()
 
     def run(self):
         schedule.every(self.max_time).minutes.do(self.job)  # 每60分钟执行一次
