@@ -11,8 +11,9 @@ from sdk.aptos_python.account import Account
 from sdk.aptos_python.async_client import RestClient
 # from sdk.aptos_python.bcs import BCS
 from utils.aptos_user_database import AptosUserDatabase
+from utils.plugin_interface import PluginInterface
 
-class aptos_airdrop:
+class aptos_airdrop(PluginInterface):
     def __init__(self):
         # 读取红包配置
         config_path = "plugins/aptos_airdrop.yml"
