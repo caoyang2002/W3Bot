@@ -10,6 +10,7 @@ from captcha.image import ImageCaptcha
 from loguru import logger
 import pywxdll
 from sdk.aptos_python import ed25519
+from sdk.aptos_python.ed25519 import PrivateKey  # 直接使用 SDK 的 PrivateKey
 from sdk.aptos_python.account import Account
 from sdk.aptos_python.account_address import AccountAddress
 from sdk.aptos_python.asymmetric_crypto import PrivateKey
