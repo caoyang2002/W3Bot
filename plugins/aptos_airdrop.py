@@ -57,7 +57,7 @@ class aptos_airdrop(PluginInterface):
         self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
 
         # 读取红包配置
-        config_path = "plugins/aptos_.yml"
+        config_path = "plugins/aptos_airdrop.yml"
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
 
