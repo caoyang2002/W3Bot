@@ -1,8 +1,9 @@
-keywords: ["/airdrop", "/发红包", "/抢红包"]
+keywords: ["/airdrop", "/发红包", "/抢红包", "/claim"]
 plugin_name: "aptos_airdrop"
+
 # 红包基础配置
 max_point: 100 # 最大金额(APT)
-min_point: 0.001 # 最小金额(APT)
+min_point: 0.0001 # 最小金额(APT)
 max_packet: 100 # 最大红包数量
 max_time: 43200 # 红包过期时间(秒)
 
