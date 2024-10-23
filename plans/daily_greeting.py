@@ -36,10 +36,10 @@ class daily_greeting(PlansInterface):
 
         message = f"早上好！☀️今天是{date_str} {week_name}。😆\n\n{daily_sentence}"
 
-        for contact in self.bot.get_contact_list():
-            if str(contact.get("wxid")).endswith("@chatroom"):  # 是一个群聊
-                self.bot.send_text_msg(contact.get("wxid"), message)
-                logger.info(f"[发送@信息]{message}| [发送到] {contact.get('wxid')}")
+        # for contact in self.bot.get_contact_list():
+        #     if str(contact.get("wxid")).endswith("@chatroom"):  # 是一个群聊
+        #         self.bot.send_text_msg(contact.get("wxid"), message)
+        #         logger.info(f"[发送@信息]{message}| [发送到] {contact.get('wxid')}")
 
     @staticmethod
     def get_daily_sentence_formatted() -> str:
