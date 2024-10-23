@@ -1,8 +1,32 @@
+# import os
+# import random
+# import time
+# import asyncio
+# from typing import Optional, Dict, List
+
+# import yaml
+# from captcha.image import ImageCaptcha
+# from loguru import logger
+# import pywxdll
+# from sdk.aptos_python.account import Account
+# from sdk.aptos_python.async_client import RestClient
+# # from sdk.aptos_python.bcs import BCS
+# from utils.aptos_user_database import AptosUserDatabase
+# from utils.plugin_interface import PluginInterface
+#  main_config_path = "main_config.yml"
+# with open(main_config_path, "r", encoding="utf-8") as f:  # 读取设置
+#     main_config = yaml.safe_load(f.read())
+
+# self.ip = main_config["ip"]  # 机器人ip
+# self.port = main_config["port"]  # 机器人端口
+# self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
+# self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
 import os
 import random
 import time
 import asyncio
 from typing import Optional, Dict, List
+from datetime import datetime
 
 import yaml
 from captcha.image import ImageCaptcha
@@ -10,12 +34,19 @@ from loguru import logger
 import pywxdll
 from sdk.aptos_python.account import Account
 from sdk.aptos_python.async_client import RestClient
-# from sdk.aptos_python.bcs import BCS
+from sdk.aptos_python.bcs import Serializer
+from sdk.aptos_python.transactions import (
+    EntryFunction,
+    TransactionArgument,
+    TransactionPayload
+)
+from sdk.aptos_python.type_tag import TypeTag, StructTag
 from utils.aptos_user_database import AptosUserDatabase
 from utils.plugin_interface import PluginInterface
 
 class aptos_airdrop(PluginInterface):
-    def __init__(self):    
+    def __init__(self):
+        # 主配置
         main_config_path = "main_config.yml"
         with open(main_config_path, "r", encoding="utf-8") as f:  # 读取设置
             main_config = yaml.safe_load(f.read())
@@ -24,11 +55,12 @@ class aptos_airdrop(PluginInterface):
         self.port = main_config["port"]  # 机器人端口
         self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
         self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
-        
-        # 红包基础配置
-        config_path = "plugins/aptos_airdrop.yml"
+
+        # 读取红包配置
+        config_path = "plugins/aptos_.yml"
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
+
         # 红包基础配置
         self.max_point = config["max_point"]  
         self.min_point = config["min_point"]  
@@ -45,13 +77,56 @@ class aptos_airdrop(PluginInterface):
         
         # 初始化红包存储
         self.red_packets = {}
-       
         
         # 创建缓存目录
         cache_path = "resources/cache"
         if not os.path.exists(cache_path):
             os.makedirs(cache_path)
+
+    async def transfer_apt(self, from_account: Account, to_address: str, amount: int) -> str:
+        """
+        执行APT代币转账
+        :param from_account: 发送方账户
+        :param to_address: 接收方地址
+        :param amount: 金额(octas)
+        :return: 交易哈希
+        """
+        try:
+            # 获取发送方账户序列号
+            sender = from_account.address()
+            sequence_number = await self.rest_client.account_sequence_number(sender)
             
+            # 构建转账交易payload
+            transaction_arguments = [
+                TransactionArgument(to_address, Serializer.struct),
+                TransactionArgument(amount, Serializer.u64),
+            ]
+            
+            payload = EntryFunction.natural(
+                "0x1::coin",  # 模块地址
+                "transfer",   # 函数名
+                [TypeTag(StructTag.from_str("0x1::aptos_coin::AptosCoin"))],  # 类型参数
+                transaction_arguments  # 函数参数
+            )
+
+            # 构建原始交易
+            raw_txn = await self.rest_client.create_bcs_transaction(
+                from_account,
+                TransactionPayload(payload)
+            )
+
+            # 签名交易
+            signed_txn = from_account.sign(raw_txn)
+
+            # 提交交易
+            txn_hash = await self.rest_client.submit_bcs_transaction(signed_txn)
+            
+            return txn_hash
+
+        except Exception as e:
+            logger.error(f"Transfer error: {str(e)}")
+            raise
+
     async def run(self, recv):
         """处理红包相关命令"""
         command = recv["content"][0]
@@ -73,9 +148,13 @@ class aptos_airdrop(PluginInterface):
             self.send_message(recv, "❌参数不足! 格式: /发红包 金额 数量 [可选:钱包地址]")
             return
 
-        amount = float(content[1])
-        count = int(content[2])
-        wallet_address = content[3] if len(content) > 3 else None
+        try:
+            amount = float(content[1])
+            count = int(content[2])
+            wallet_address = content[3] if len(content) > 3 else None
+        except ValueError:
+            self.send_message(recv, "❌参数格式错误！金额和数量必须是数字")
+            return
 
         # 验证参数
         if amount > self.max_point or amount < self.min_point:
@@ -104,8 +183,11 @@ class aptos_airdrop(PluginInterface):
                 self.send_message(recv, "❌余额不足!")
                 return
 
-            # 生成红包金额列表
-            amounts = self.split_amount(amount, count)
+            # 将 APT 转换为 Octas (1 APT = 100_000_000 Octas)
+            total_octas = int(amount * 100_000_000)
+            
+            # 生成红包金额列表 (以 Octas 为单位)
+            amounts = self.split_amount(total_octas, count)
             
             # 生成验证码
             captcha, captcha_path = self.generate_captcha()
@@ -179,14 +261,14 @@ class aptos_airdrop(PluginInterface):
             return
 
         try:
-            # 获取红包金额
-            amount = packet["amounts"].pop()
+            # 获取红包金额(Octas)
+            amount_octas = packet["amounts"].pop()
             
             # 执行链上转账
-            txn_hash = await self.rest_client.bcs_transfer(
-                Account.load_key(self.bot_private_key),
+            txn_hash = await self.transfer_apt(
+                self.bot_account,
                 grabber_address,
-                amount
+                amount_octas
             )
             await self.rest_client.wait_for_transaction(txn_hash)
 
@@ -195,9 +277,10 @@ class aptos_airdrop(PluginInterface):
             
             # 发送成功消息
             nickname = recv.get("sender_nick", grabber)
+            amount_apt = amount_octas / 100_000_000  # 转换回 APT
             self.send_message(
                 recv, 
-                f"🎉 恭喜 {nickname} 抢到了 {amount} APT!"
+                f"🎉 恭喜 {nickname} 抢到了 {amount_apt:.8f} APT!"
             )
 
             # 如果红包抢完了，清理数据
@@ -219,10 +302,12 @@ class aptos_airdrop(PluginInterface):
         return code, path
 
     @staticmethod
-    def split_amount(total: float, count: int) -> List[float]:
-        """随机分配红包金额"""
-        # 确保每个红包至少有0.0001 APT
-        min_amount = 0.0001
+    def split_amount(total: int, count: int) -> List[int]:
+        """
+        随机分配红包金额(以 Octas 为单位)
+        """
+        # 确保每个红包至少有0.0001 APT (10000 Octas)
+        min_amount = 10000
         remaining = total - min_amount * count
         
         if remaining < 0:
@@ -231,8 +316,8 @@ class aptos_airdrop(PluginInterface):
         # 随机分配剩余金额
         amounts = []
         for i in range(count - 1):
-            max_amount = remaining * 2 / (count - i)
-            amount = random.uniform(0, max_amount)
+            max_amount = remaining * 2 // (count - i)
+            amount = random.randint(0, max_amount)
             amounts.append(amount + min_amount)
             remaining -= amount
 
@@ -240,7 +325,7 @@ class aptos_airdrop(PluginInterface):
         amounts.append(remaining + min_amount)
         random.shuffle(amounts)
         
-        return [round(amount, 4) for amount in amounts]
+        return amounts
 
     def send_message(self, recv, message):
         """发送消息的统一接口"""
@@ -256,18 +341,19 @@ class aptos_airdrop(PluginInterface):
             if time.time() - packet["timestamp"] > self.max_time:
                 # 如果有未领取的金额，退回给发送者
                 if packet["amounts"]:
-                    total_remaining = sum(packet["amounts"])
+                    total_remaining_octas = sum(packet["amounts"])
                     try:
-                        txn_hash = await self.rest_client.bcs_transfer(
+                        txn_hash = await self.transfer_apt(
                             self.bot_account,
                             packet["sender_address"],
-                            total_remaining
+                            total_remaining_octas
                         )
                         await self.rest_client.wait_for_transaction(txn_hash)
                         
+                        total_remaining_apt = total_remaining_octas / 100_000_000
                         message = f"""
 📢 红包 {code} 已过期
-💰 剩余 {total_remaining} APT 已退回给发送者
+💰 剩余 {total_remaining_apt:.8f} APT 已退回给发送者
                         """
                         self.bot.send_text_msg(packet["room"], message)
                     except Exception as e:
