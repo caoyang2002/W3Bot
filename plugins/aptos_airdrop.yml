@@ -1,3 +1,5 @@
+keywords: ["/airdrop", "/发红包", "/抢红包"]
+plugin_name: "aptos_airdrop"
 # 红包基础配置
 max_point: 100 # 最大金额(APT)
 min_point: 0.001 # 最小金额(APT)
