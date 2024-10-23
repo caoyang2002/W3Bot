@@ -96,10 +96,15 @@ class aptos_airdrop(PluginInterface):
     async def transfer_apt(self, from_account: Account, to_address: str, amount: int) -> str:
         """执行APT转账"""
         try:
-            to_address = self.normalize_address(to_address)
+            # 确保地址格式正确并转换为 AccountAddress 对象
+            if not to_address.startswith("0x"):
+                to_address = f"0x{to_address}"
+            to_account_address = AccountAddress.from_str(to_address)
+            
+            # 执行转账
             txn_hash = await self.rest_client.bcs_transfer(
                 from_account,
-                AccountAddress.from_str(to_address),
+                to_account_address,  # 使用 AccountAddress 对象
                 amount
             )
             await self.rest_client.wait_for_transaction(txn_hash)
@@ -107,6 +112,19 @@ class aptos_airdrop(PluginInterface):
         except Exception as e:
             logger.error(f"Transfer error: {str(e)}")
             raise
+
+        # try:
+        #     to_address = self.normalize_address(to_address)
+        #     txn_hash = await self.rest_client.bcs_transfer(
+        #         from_account,
+        #         AccountAddress.from_str(to_address),
+        #         amount
+        #     )
+        #     await self.rest_client.wait_for_transaction(txn_hash)
+        #     return txn_hash
+        # except Exception as e:
+        #     logger.error(f"Transfer error: {str(e)}")
+        #     raise
 
     async def run(self, recv):
         """处理命令"""
