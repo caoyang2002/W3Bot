@@ -9,7 +9,7 @@ from captcha.image import ImageCaptcha
 from loguru import logger
 from sdk.aptos_python.account import Account
 from sdk.aptos_python.async_client import RestClient
-from sdk.aptos_python.bcs import BCS
+# from sdk.aptos_python.bcs import BCS
 from utils.aptos_user_database import AptosUserDatabase
 
 class aptos_airdrop:
