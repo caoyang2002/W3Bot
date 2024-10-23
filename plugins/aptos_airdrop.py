@@ -17,6 +17,8 @@ from sdk.aptos_python.asymmetric_crypto import PrivateKey
 from sdk.aptos_python.async_client import RestClient
 from utils.aptos_user_database import AptosUserDatabase
 from utils.plugin_interface import PluginInterface
+from nacl.signing import SigningKey
+
 
 class aptos_airdrop(PluginInterface):
     def __init__(self):
@@ -66,10 +68,25 @@ class aptos_airdrop(PluginInterface):
 
     @staticmethod
     def create_account_from_private_key(private_key: str) -> Account:
-        """从私钥创建账户"""
-        private_key = PrivateKey.from_str(private_key)
-        account_address = AccountAddress.from_key(private_key.public_key())
-        return Account(account_address, private_key)
+        """
+        从私钥创建 Aptos 账户
+        :param private_key: 私钥（hex字符串，可选0x前缀）
+        :return: Account 对象
+        """
+        # 移除可能的0x前缀
+        if private_key.startswith('0x'):
+            private_key = private_key[2:]
+            
+        # 创建 SigningKey
+        signing_key = SigningKey(bytes.fromhex(private_key))
+        # 创建 PrivateKey
+        private_key_obj = PrivateKey(signing_key)
+        # 创建账户
+        account_address = AccountAddress.from_key(private_key_obj.public_key())
+        return Account(account_address, private_key_obj)
+
+
+
 
     @staticmethod
     def normalize_address(address: str) -> str:
