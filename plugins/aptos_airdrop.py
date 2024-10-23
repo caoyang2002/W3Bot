@@ -7,6 +7,7 @@ from typing import Optional, Dict, List
 import yaml
 from captcha.image import ImageCaptcha
 from loguru import logger
+import pywxdll
 from sdk.aptos_python.account import Account
 from sdk.aptos_python.async_client import RestClient
 # from sdk.aptos_python.bcs import BCS
@@ -28,7 +29,6 @@ class aptos_airdrop(PluginInterface):
 
         # Aptos 配置
         self.node_url = config["node_url"]
-        self.bot_private_key = config["bot_private_key"]  # 机器人钱包私钥
         
         # 初始化数据库和客户端
         self.db = AptosUserDatabase()
@@ -37,6 +37,14 @@ class aptos_airdrop(PluginInterface):
         
         # 初始化红包存储
         self.red_packets = {}
+        main_config_path = "main_config.yml"
+        with open(main_config_path, "r", encoding="utf-8") as f:  # 读取设置
+            main_config = yaml.safe_load(f.read())
+
+        self.ip = main_config["ip"]  # 机器人ip
+        self.port = main_config["port"]  # 机器人端口
+        self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
+        self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
         
         # 创建缓存目录
         cache_path = "resources/cache"
