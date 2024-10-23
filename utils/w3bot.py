@@ -81,11 +81,11 @@ class W3Bot:
                 recv['atUserList'] = list(recv['atUserList'].split(','))
             else:
                 recv['atUserList'] = []
-            group_wxid = recv['from'] # chatroom id
-            user_wxid = recv['sender'] # wxid
-            username = recv['displayFullContent'].split(":")[0] # name
-            content = recv.get('content', '') # content
-            msg_type = recv.get('type', 'Unknown') # message type
+            # group_wxid = recv['from'] # chatroom id
+            # user_wxid = recv['sender'] # wxid
+            # username = recv['displayFullContent'].split(":")[0] # name
+            # content = recv.get('content', '') # content
+            # msg_type = recv.get('type', 'Unknown') # message type
 
             # 添加消息到数据库(这儿用来查看群里的红包机器人，现在可能有更好的方法，所以不用了)
             # self.db.add_message(group_wxid, user_wxid, username, content, msg_type)
@@ -151,11 +151,12 @@ class W3Bot:
     # 发送其他消息
     async def xml_message_handler(self, recv) -> None:
         logger.info(f"[收到其他消息]{recv}")
+       
         message_handle = MessageHandle()
         url = message_handle.extract_url_from_wechat_xml(recv['content'])
         out_message = url
-        logger.info(f'[发送信息]{out_message}| [发送到] {recv["fromUser"]}')
-        self.bot.send_text_msg(recv["fromUser"], out_message)
+        # logger.info(f'[发送信息]{out_message}| [发送到] {recv["fromUser"]}')
+        # self.bot.send_text_msg(recv["fromUser"], out_message)
 
 
     def ignorance_check(self, recv) -> bool:
