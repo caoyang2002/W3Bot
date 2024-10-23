@@ -94,25 +94,15 @@ class aptos_airdrop(PluginInterface):
         return address
 
     async def transfer_apt(self, from_account: Account, to_address: str, amount: int) -> str:
-        """执行APT转账"""
-        logger.info(f"转账 {amount} APT，从 {from_account.address} 到 {to_address}")
-        try:
-              # 转换地址字符串为 AccountAddress 对象
-              to_address_obj = AccountAddress.from_str(to_address)
-              
-              # 执行转账（使用 AccountAddress 对象）
-              txn_hash = await self.rest_client.bcs_transfer(
-                  from_account,
-                  to_address_obj,  # 使用地址对象而不是字符串
-                  amount
-              )
-              
-              # 等待交易确认
-              await self.rest_client.wait_for_transaction(txn_hash)
-              return txn_hash
-        except Exception as e:
-            logger.error(f"Transfer error: {e}")
-            raise
+        """从账户向指定地址转账"""
+        to_address_obj = AccountAddress.from_str(to_address)
+        txn_hash = await self.rest_client.bcs_transfer(
+            from_account,
+            to_address_obj,
+            amount
+        )
+        await self.rest_client.wait_for_transaction(txn_hash)
+        return txn_hash
 
 
     async def run(self, recv):
@@ -173,6 +163,14 @@ class aptos_airdrop(PluginInterface):
         try:
             # 检查余额
             balance = await self.rest_client.account_balance(sender_address)
+
+            try:
+                address_obj = AccountAddress.from_str(sender_address)
+                balance = await self.rest_client.account_balance(sender_address)
+            except ValueError:
+                self.send_message(recv, "❌钱包地址格式错误！")
+                return
+            
             logger.info(f"用户 {sender} 有 {balance/100_000_000:.8f} APT")
             total_octas = int(amount * 100_000_000)
             
