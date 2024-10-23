@@ -68,78 +68,9 @@ class aptos_airdrop(PluginInterface):
             os.makedirs(cache_path)
             logger.info("Created cache directory")
 
-    # @staticmethod
-    # def create_account_from_private_key(key: str) -> Account:
-    #     """
-    #     从私钥创建 Aptos 账户
-    #     :param key: 私钥（hex字符串，可选0x前缀）
-    #     :return: Account 对象
-    #     """
-    #     # 移除可能的0x前缀
-    #     if key.startswith('0x'):
-    #         key = key[2:]
-            
-    #     # 创建 SigningKey 和 ed25519.PrivateKey
-    #     signing_key = SigningKey(bytes.fromhex(key))
-    #     # 使用 ed25519.PrivateKey 而不是 PrivateKey 协议
-    #     private_key = ed25519.PrivateKey(signing_key)
-    #     # 创建账户
-    #     account_address = AccountAddress.from_key(private_key.public_key())
-    #     return Account(account_address, private_key)
-
     @staticmethod
     def create_account_from_private_key(key: str) -> Account:
         """从私钥创建 Aptos 账户"""
-        # try:
-        #     # 记录初始输入（注意不要记录完整私钥）
-        #     logger.info(f"开始创建账户 (私钥前4字符: {key[:4]}...)")
-
-        #     # 移除前缀
-        #     if key.startswith('0x'):
-        #         key = key[2:]
-        #         logger.info("已移除0x前缀")
-
-        #     # 转换为字节
-        #     try:
-        #         key_bytes = bytes.fromhex(key)
-        #         logger.info(f"私钥已转换为字节，长度: {len(key_bytes)}")
-        #     except ValueError as e:
-        #         logger.error(f"私钥格式错误: {str(e)}")
-        #         raise
-                
-        #     # 创建 SigningKey
-        #     try:
-        #         signing_key = SigningKey(key_bytes)
-        #         logger.info("SigningKey 创建成功")
-        #     except Exception as e:
-        #         logger.error(f"创建 SigningKey 失败: {str(e)}")
-        #         raise
-
-        #     # 创建 PrivateKey
-        #     try:
-        #         private_key = ed25519.PrivateKey(signing_key)
-        #         logger.info("PrivateKey 创建成功")
-        #     except Exception as e:
-        #         logger.error(f"创建 PrivateKey 失败: {str(e)}")
-        #         raise
-
-        #     # 创建账户
-        #     try:
-        #         account_address = AccountAddress.from_key(private_key.public_key())
-        #         account = Account(account_address, private_key)
-        #         logger.info(f"账户创建成功，地址: {account.address()}")
-        #         return account
-        #     except Exception as e:
-        #         logger.error(f"创建账户失败: {str(e)}")
-        #         raise
-
-        # except Exception as e:
-        #     logger.error("创建账户过程中发生错误:")
-        #     logger.error(f"错误类型: {type(e).__name__}")
-        #     logger.error(f"错误信息: {str(e)}")
-        #     logger.error("完整跟踪信息:")
-        #     logger.error(traceback.format_exc())
-        #     raise
         try:
             # 记录初始输入（注意不要记录完整私钥）
             logger.info(f"开始创建账户 (私钥前4字符: {key[:4]}...)")
@@ -200,14 +131,7 @@ class aptos_airdrop(PluginInterface):
 
     async def transfer_apt(self, from_account: Account, to_address: str, amount: int) -> str:
         """从账户向指定地址转账"""
-        # to_address_obj = AccountAddress.from_str(to_address)
-        # txn_hash = await self.rest_client.bcs_transfer(
-        #     from_account,
-        #     to_address_obj,
-        #     amount
-        # )
-        # await self.rest_client.wait_for_transaction(txn_hash)
-        # return txn_hash
+    
         try:
             # 打印转账参数
             logger.info(f"转账参数:")
@@ -339,16 +263,20 @@ class aptos_airdrop(PluginInterface):
                 amounts = self.split_amount(total_octas, count)
                 captcha, captcha_path = self.generate_captcha()
                 
-                # 存储红包信息
+                # 在 send_red_packet 方法中存储红包信息时
+                current_time = time.time()
                 self.red_packets[captcha] = {
                     "sender": sender,
                     "sender_address": sender_address,
                     "total_amount": amount,
                     "amounts": amounts,
                     "claimed": [],
-                    "timestamp": time.time(),
+                    "timestamp": current_time,  # 使用当前时间
                     "room": recv["from"]
                 }
+                logger.info(f"创建红包: captcha={captcha}")
+                logger.info(f"- 创建时间: {datetime.fromtimestamp(current_time)}")
+                logger.info(f"- 过期时间: {datetime.fromtimestamp(current_time + self.max_time)}")
 
                 logger.info(f"准备执行转账: {amount} APT -> {sender_address}")
                 # 执行转账 - 也使用 AccountAddress 对象
@@ -425,107 +353,6 @@ class aptos_airdrop(PluginInterface):
             logger.error("- 堆栈跟踪:")
             logger.error(traceback.format_exc())
             raise
-#         user_data = self.db.get_user_data(sender)
-#         if wallet_address:
-#             wallet_address = self.normalize_address(wallet_address)
-#             try:
-#                 # 验证地址格式
-#                 AccountAddress.from_str(wallet_address)
-#                 self.db.update_user_field(sender, "wallet_address", wallet_address)
-#                 sender_address = wallet_address
-#             except ValueError:
-#                 self.send_message(recv, "❌钱包地址格式错误！")
-#                 return
-#         elif user_data and user_data.get("wallet_address"):
-#             sender_address = user_data["wallet_address"]
-#         else:
-#             self.send_message(recv, "❌请先设置钱包地址!")
-#             return
-
-#         try:
-#             # 检查余额
-#             balance = await self.rest_client.account_balance(sender_address)
-
-#             try:
-#                 address_obj = AccountAddress.from_str(sender_address)
-#                 balance = await self.rest_client.account_balance(sender_address)
-#             except ValueError:
-#                 self.send_message(recv, "❌钱包地址格式错误！")
-#                 return
-            
-#             logger.info(f"用户 {sender} 有 {balance/100_000_000:.8f} APT")
-#             total_octas = int(amount * 100_000_000)
-            
-#             if balance < total_octas:
-#                 self.send_message(recv, f"❌余额不足! 当前余额: {balance/100_000_000:.8f} APT")
-#                 return
-
-#             # 生成红包
-#             amounts = self.split_amount(total_octas, count)
-#             captcha, captcha_path = self.generate_captcha()
-            
-#             # 存储红包信息
-#             self.red_packets[captcha] = {
-#                 "sender": sender,
-#                 "sender_address": sender_address,
-#                 "total_amount": amount,
-#                 "amounts": amounts,
-#                 "claimed": [],
-#                 "timestamp": time.time(),
-#                 "room": recv["from"]
-#             }
-
-#             try:
-#                 # 执行转账前打印详细信息
-#                 logger.info(f"准备执行转账:")
-#                 logger.info(f"- 发送方账户: {self.bot_account.address()}")
-#                 logger.info(f"- 接收方地址: {sender_address}")
-#                 logger.info(f"- 转账金额: {total_octas} Octas ({amount} APT)")
-
-#                 # 执行转账
-#                 txn_hash = await self.transfer_apt(
-#                     self.bot_account,
-#                     sender_address,
-#                     total_octas
-#                 )
-#                 logger.info(f"转账成功! 交易hash: {txn_hash}")
-
-#             except Exception as transfer_error:
-#                 # 捕获并记录转账错误的详细信息
-#                 logger.error("转账过程中发生错误:")
-#                 logger.error(f"错误类型: {type(transfer_error).__name__}")
-#                 logger.error(f"错误信息: {str(transfer_error)}")
-#                 logger.error("详细跟踪信息:")
-#                 logger.error(traceback.format_exc())
-#                 raise  # 重新抛出异常
-#             # logger.info(f"转账成功! 交易hash: {txn_hash}")  
-
-#             # 发送消息
-#             nickname = recv.get("sender_nick", sender)
-#             message = f"""
-# 🎉 {nickname} 发送了一个红包!
-# 💰 总金额: {amount} APT
-# 📦 数量: {count} 个
-# 🔗 交易hash: {txn_hash}
-            
-# 请使用 /抢红包 验证码 [可选:钱包地址] 来领取
-#             """
-#             self.send_message(recv, message)
-#             self.bot.send_image_msg(recv["from"], captcha_path)
-
-#         except Exception as e:
-#             # 记录完整的错误跟踪信息
-#             exc_type, exc_value, exc_traceback = sys.exc_info()
-#             logger.error("发送红包时发生错误:")
-#             logger.error(f"错误类型: {exc_type.__name__}")
-#             logger.error(f"错误信息: {str(e)}")
-#             logger.error("调用栈:")
-#             for frame in traceback.extract_tb(exc_traceback):
-#                 logger.error(f"  文件 {frame.filename}, 行 {frame.lineno}, 在 {frame.name}")
-#                 logger.error(f"    {frame.line}")
-#             logger.error("完整跟踪信息:")
-#             logger.error(traceback.format_exc())
-#             self.send_message(recv, "❌发送红包失败，请稍后重试!\nError: {e}")
 
     async def grab_red_packet(self, recv):
         """抢红包"""
@@ -546,6 +373,17 @@ class aptos_airdrop(PluginInterface):
 
         packet = self.red_packets[captcha]
         
+        # 添加时间检查的详细日志
+        current_time = time.time()
+        packet_time = packet["timestamp"]
+        time_diff = current_time - packet_time
+        
+        logger.info(f"红包时间检查:")
+        logger.info(f"- 当前时间: {datetime.fromtimestamp(current_time)}")
+        logger.info(f"- 红包创建时间: {datetime.fromtimestamp(packet_time)}")
+        logger.info(f"- 时间差: {time_diff} 秒")
+        logger.info(f"- 超时阈值: {self.max_time} 秒")
+        
         # 验证状态
         if grabber in packet["claimed"]:
             self.send_message(recv, "❌您已经抢过这个红包了!")
@@ -553,59 +391,11 @@ class aptos_airdrop(PluginInterface):
         if not packet["amounts"]:
             self.send_message(recv, "❌红包已被抢完!")
             return
-        if time.time() - packet["timestamp"] > self.max_time:
+        if time_diff > self.max_time:
+            logger.warning(f"红包超时: 时间差 {time_diff} 秒 > 阈值 {self.max_time} 秒")
             self.send_message(recv, "❌红包已过期!")
             return
-
-        # 获取钱包地址
-        user_data = self.db.get_user_data(grabber)
-        if wallet_address:
-            wallet_address = self.normalize_address(wallet_address)
-            try:
-                AccountAddress.from_str(wallet_address)
-                self.db.update_user_field(grabber, "wallet_address", wallet_address)
-                grabber_address = wallet_address
-            except ValueError:
-                self.send_message(recv, "❌钱包地址格式错误！")
-                return
-        elif user_data and user_data.get("wallet_address"):
-            grabber_address = user_data["wallet_address"]
-        else:
-            self.send_message(recv, "❌请先设置钱包地址!")
-            return
-
-        try:
-            # 获取红包金额
-            amount_octas = packet["amounts"].pop()
-            
-            # 执行转账
-            txn_hash = await self.transfer_apt(
-                self.bot_account,
-                grabber_address,
-                amount_octas
-            )
-
-            # 更新状态
-            packet["claimed"].append(grabber)
-            
-            # 发送消息
-            nickname = recv.get("sender_nick", grabber)
-            amount_apt = amount_octas / 100_000_000
-            self.send_message(
-                recv, 
-                f"""🎉 恭喜 {nickname} 抢到了 {amount_apt:.8f} APT!
-🔗 交易hash: {txn_hash}"""
-            )
-
-            # 清理完成的红包
-            if not packet["amounts"]:
-                del self.red_packets[captcha]
-
-        except Exception as e:
-            logger.error(f"抢红包错误: {str(e)}")
-            if 'amount_octas' in locals():
-                packet["amounts"].append(amount_octas)
-            self.send_message(recv, "❌领取红包失败，请稍后重试!")
+    
 
     @staticmethod
     def generate_captcha(length=5):
@@ -670,3 +460,61 @@ class aptos_airdrop(PluginInterface):
                         logger.error(f"退回红包失败: {e}")
                 
                 del self.red_packets[code]
+    
+    async def expired_aptos_airdrop_check(self):
+        """检查过期红包"""
+        try:
+            current_time = time.time()
+            logger.info(f"开始检查过期红包 - 当前时间: {datetime.fromtimestamp(current_time)}")
+            
+            for code in list(self.red_packets.keys()):
+                packet = self.red_packets[code]
+                packet_time = packet["timestamp"]
+                time_diff = current_time - packet_time
+                
+                logger.info(f"检查红包 {code}:")
+                logger.info(f"- 创建时间: {datetime.fromtimestamp(packet_time)}")
+                logger.info(f"- 存在时间: {time_diff} 秒")
+                
+                if time_diff > self.max_time:
+                    logger.info(f"发现超时红包 {code}:")
+                    logger.info(f"- 超时时间: {time_diff - self.max_time} 秒")
+                    
+                    if packet["amounts"]:
+                        total_remaining_octas = sum(packet["amounts"])
+                        total_remaining_apt = total_remaining_octas / 100_000_000
+                        
+                        try:
+                            logger.info(f"准备退还红包:")
+                            logger.info(f"- 金额: {total_remaining_apt} APT")
+                            logger.info(f"- 接收地址: {packet['sender_address']}")
+                            
+                            sender_address_obj = AccountAddress.from_str(packet['sender_address'])
+                            txn_hash = await self.transfer_apt(
+                                self.bot_account,
+                                sender_address_obj,
+                                total_remaining_octas
+                            )
+                            
+                            message = f"""
+    📢 红包 {code} 已过期
+    💰 剩余 {total_remaining_apt:.8f} APT 已退回给发送者
+    🔗 交易hash: {txn_hash}
+                            """
+                            self.bot.send_text_msg(packet["room"], message)
+                            logger.info(f"退还成功: {txn_hash}")
+                        except Exception as e:
+                            logger.error(f"退还红包失败:")
+                            logger.error(f"- 错误类型: {type(e).__name__}")
+                            logger.error(f"- 错误信息: {str(e)}")
+                            logger.error(traceback.format_exc())
+                    
+                    # 删除超时红包
+                    del self.red_packets[code]
+                    logger.info(f"已删除超时红包: {code}")
+                    
+        except Exception as e:
+            logger.error("检查超时红包时发生错误:")
+            logger.error(f"- 错误类型: {type(e).__name__}")
+            logger.error(f"- 错误信息: {str(e)}")
+            logger.error(traceback.format_exc())
