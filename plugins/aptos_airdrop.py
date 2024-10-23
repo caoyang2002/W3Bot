@@ -15,12 +15,20 @@ from utils.aptos_user_database import AptosUserDatabase
 from utils.plugin_interface import PluginInterface
 
 class aptos_airdrop(PluginInterface):
-    def __init__(self):
-        # 读取红包配置
+    def __init__(self):    
+        main_config_path = "main_config.yml"
+        with open(main_config_path, "r", encoding="utf-8") as f:  # 读取设置
+            main_config = yaml.safe_load(f.read())
+
+        self.ip = main_config["ip"]  # 机器人ip
+        self.port = main_config["port"]  # 机器人端口
+        self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
+        self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
+        
+        # 红包基础配置
         config_path = "plugins/aptos_airdrop.yml"
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
-
         # 红包基础配置
         self.max_point = config["max_point"]  
         self.min_point = config["min_point"]  
@@ -37,14 +45,7 @@ class aptos_airdrop(PluginInterface):
         
         # 初始化红包存储
         self.red_packets = {}
-        main_config_path = "main_config.yml"
-        with open(main_config_path, "r", encoding="utf-8") as f:  # 读取设置
-            main_config = yaml.safe_load(f.read())
-
-        self.ip = main_config["ip"]  # 机器人ip
-        self.port = main_config["port"]  # 机器人端口
-        self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
-        self.bot_private_key = main_config["aptos_private_key"]  # 机器人钱包私钥
+       
         
         # 创建缓存目录
         cache_path = "resources/cache"
