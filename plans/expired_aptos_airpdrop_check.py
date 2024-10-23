@@ -24,7 +24,7 @@ class expired_aptos_airdrop_check(PlansInterface):
         self.bot = pywxdll.Pywxdll(self.ip, self.port)  # 机器人api
 
     def job(self):
-        if "red_packet" in plugin_manager.plugins.keys():
+        if "aptos_airdrop" in plugin_manager.plugins.keys():
             plugin_manager.plugins["aptos_airdrop"].expired_aptos_airdrop_check()
 
     def run(self):
