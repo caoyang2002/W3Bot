@@ -1,4 +1,4 @@
-keywords: ["/gas", "/领水", "/faucet"]
+keywords: ["gas", "领水", "faucet"]
 plugin_name: "apt_faucet"
 
 devnet_faucet_url: "https://faucet.devnet.aptoslabs.com"

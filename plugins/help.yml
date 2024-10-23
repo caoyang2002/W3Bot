@@ -1,6 +1,4 @@
-keywords: ["/帮助", "/help", "/?"]
+keywords: ["帮助", "help", "?"]
 plugin_name: "help"
-
-plugin_setting: ""
 
 help_message: "帮助信息\n获取帮助信息:\n/help\n————————————\n领 gas:\n/gas 获取命令帮助\n获取学习资源: \n/aptlearn\n/学习资源"

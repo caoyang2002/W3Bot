@@ -87,8 +87,8 @@ class W3Bot:
             content = recv.get('content', '') # content
             msg_type = recv.get('type', 'Unknown') # message type
 
-            # 添加消息到数据库
-            self.db.add_message(group_wxid, user_wxid, username, content, msg_type)
+            # 添加消息到数据库(这儿用来查看群里的红包机器人，现在可能有更好的方法，所以不用了)
+            # self.db.add_message(group_wxid, user_wxid, username, content, msg_type)
 
         # 个人
         else:

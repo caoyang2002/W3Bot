@@ -1,4 +1,4 @@
-keywords: [ "抽奖","积分抽奖" ]
+keywords: ["抽奖", "积分抽奖"]
 plugin_name: "lucky_draw"
 
 max_draw: 100
@@ -6,24 +6,43 @@ max_draw: 100
 draw_per_guarantee: 10
 guaranteed_max_probability: 0.4
 
-lucky_draw_probability: {
-  "小": { "cost": 20, "probability": { "0.05": { "name": "金","points": 40, "symbol": "🟨" },
-                                       "0.1": { "name": "紫","points": 35, "symbol": "🟪" },
-                                       "0.2": { "name": "蓝","points": 21, "symbol": "🟦" },
-                                       "0.3": { "name": "绿","points": 15, "symbol": "🟩" },
-                                       "0.35": { "name": "白","points": 10, "symbol": "⬜️" } }
-  },
-  "中": { "cost": 40, "probability": { "0.05": { "name": "金","points": 70, "symbol": "🟨" },
-                                       "0.1": { "name": "紫","points": 55, "symbol": "🟪" },
-                                       "0.2": { "name": "蓝","points": 41, "symbol": "🟦" },
-                                       "0.3": { "name": "绿","points": 35, "symbol": "🟩" },
-                                       "0.35": { "name": "白","points": 25, "symbol": "⬜️" } }
-  },
-  "大": { "cost": 80, "probability": { "0.01": { "name": "红", "points": 170, "symbol": "🟥" },
-                                       "0.05": { "name": "金","points": 120, "symbol": "🟨" },
-                                       "0.1": { "name": "紫","points": 90, "symbol": "🟪" },
-                                       "0.2": { "name": "蓝","points": 81, "symbol": "🟦" },
-                                       "0.3": { "name": "绿","points": 75, "symbol": "🟩" },
-                                       "0.34": { "name": "白","points": 65, "symbol": "⬜️" } }
+lucky_draw_probability:
+  {
+    "小":
+      {
+        "cost": 20,
+        "probability":
+          {
+            "0.05": { "name": "金", "points": 40, "symbol": "🟨" },
+            "0.1": { "name": "紫", "points": 35, "symbol": "🟪" },
+            "0.2": { "name": "蓝", "points": 21, "symbol": "🟦" },
+            "0.3": { "name": "绿", "points": 15, "symbol": "🟩" },
+            "0.35": { "name": "白", "points": 10, "symbol": "⬜️" },
+          },
+      },
+    "中":
+      {
+        "cost": 40,
+        "probability":
+          {
+            "0.05": { "name": "金", "points": 70, "symbol": "🟨" },
+            "0.1": { "name": "紫", "points": 55, "symbol": "🟪" },
+            "0.2": { "name": "蓝", "points": 41, "symbol": "🟦" },
+            "0.3": { "name": "绿", "points": 35, "symbol": "🟩" },
+            "0.35": { "name": "白", "points": 25, "symbol": "⬜️" },
+          },
+      },
+    "大":
+      {
+        "cost": 80,
+        "probability":
+          {
+            "0.01": { "name": "红", "points": 170, "symbol": "🟥" },
+            "0.05": { "name": "金", "points": 120, "symbol": "🟨" },
+            "0.1": { "name": "紫", "points": 90, "symbol": "🟪" },
+            "0.2": { "name": "蓝", "points": 81, "symbol": "🟦" },
+            "0.3": { "name": "绿", "points": 75, "symbol": "🟩" },
+            "0.34": { "name": "白", "points": 65, "symbol": "⬜️" },
+          },
+      },
   }
-}

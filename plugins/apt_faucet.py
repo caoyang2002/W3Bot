@@ -221,6 +221,7 @@ class apt_faucet(PluginInterface):
         """发送帮助信息"""
         help_message = (
             f"\n🌊 Aptos Gas 领取助手\n"
+            f"\n最大支持 1 APT\n"
             f"━━━━━━━━━━━━━━━\n"
             f"📝 命令格式：\n\n"
             f"1️⃣ 默认领取 1 APT (testnet):\n"
@@ -234,8 +235,8 @@ class apt_faucet(PluginInterface):
             f"• testnet (test)\n"
             f"• devnet (dev)\n\n"
             f"📌 示例:\n"
-            f"/gas test 10 0x123...\n"
-            f"/gas dev 5 0x123...\n"
+            f"/gas test 0.1 0x123...\n"
+            f"/gas dev 0.5 0x123...\n"
             f"━━━━━━━━━━━━━━━"
         )
         await self.send_message(recv, help_message)

@@ -1,4 +1,4 @@
-keywords: ["/学习资源", "/aptlearn"]
+keywords: ["学习资源", "aptlearn"]
 plugin_name: "apt_learning_resource"
 
 command_help: "命令：/aptlearn，获取Aptos学习资源"
